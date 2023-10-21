@@ -4,8 +4,8 @@ const COLLIDE_BUMP_MULT = 2; // this needs to be improved.  This could potential
 function warriorClass() {
 	this.x = 600;
 	this.y = 800;
-	this.width = 30;
-	this.height = 30;
+	this.width = 40;
+	this.height = 40;
 	this.offSetWidth = 0;
 	this.offSetHeight = 0;
 	this.miniMapX = 630;
