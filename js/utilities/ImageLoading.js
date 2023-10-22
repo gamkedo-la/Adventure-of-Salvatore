@@ -64,6 +64,7 @@ function loadImages() {
 			{trackType: TILE_STAIRS, theFile: "track_stairs.png"},
 			{trackType: TILE_BOOKSHELF, theFile: "track_bookshelf.png"},
 			{trackType: TILE_BOOKSHELF_2, theFile: "bookshelf2.png"},
+			{trackType: TILE_BOOKSHELF_3, theFile: "bookshelf3.png"},
 			{trackType: TILE_FIRE_PLACE_LIT, theFile: "track_fireplace.png"},
 			{trackType: TILE_FIRE_PLACE, theFile: "track_fireplaceNotLit.png"},
 			{trackType: TILE_PITTRAP_ARMED, theFile: "track_road.png"},
