@@ -217,6 +217,8 @@ function drawTracks(){
 				}
 			}
 			//minimap:  This needs refactored and moved.  Minimap is moving with camera pan and needs to be seperated
+            // TODO: draw to a different canvas here while we have all the data we need in this loop,
+            // then draw that single image later, outside this loop (so it appears above vignette dark border)
 			if(trackTypeHere == 0){
 				colorRect(miniMapX, miniMapY, 4, 4, "white");
 			} else if (trackTypeHere == 1 || trackTypeHere == 11 || trackTypeHere == 12 ){

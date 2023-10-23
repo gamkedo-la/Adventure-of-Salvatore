@@ -258,13 +258,15 @@ function drawEverything() {
 			removeSmokeFromList();
 		}
 		finishedCameraPan();
-		canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
-		colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
 
         // darken the edges of the screen
         canvasContext.globalAlpha = VIGNETTE_BORDER_OPACITY;
         canvasContext.drawImage(vignetteBorderPic,0,0);
         canvasContext.globalAlpha = 1;
+
+		// gui is drawn above the vignette
+        canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
+		colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
 
 	}
 }
