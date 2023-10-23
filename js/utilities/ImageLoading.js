@@ -9,6 +9,8 @@ var feedbackGUIPic = document.createElement("img");
 var healthbarPic = document.createElement("img");
 var rockBulletPic = document.createElement("img");
 
+var vignetteBorderPic = document.createElement("img");
+const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is
 
 //var titlepagePic = document.createElement("img");
 var trackPics = [];
@@ -50,6 +52,7 @@ function loadImages() {
 			{varName: feedbackGUIPic, theFile: "feedbackGUI.png"},
 			{varName: healthbarPic, theFile: "healthbar.png"},
 			{varName: rockBulletPic, theFile: "rockBullet.png"},
+            {varName: vignetteBorderPic, theFile: "vignetteBorder.png"},
 	
 			{trackType: TILE_ROAD, theFile: "track_road.png"},
 			{trackType: TILE_WALL, theFile:  "track_wall2.png"},	
