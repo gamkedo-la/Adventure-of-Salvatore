@@ -24,7 +24,7 @@ var levelOne = [
 					11, 2, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 
 					 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					 1,11, 1,11, 1,11, 1,11, 1,11, 1,11, 1, 0, 0, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 6, 1, 
-					 1, 0, 0, 0, 0, 0, 0, 0,17, 0, 0, 0, 0, 0, 0, 1,13,27,26, 0, 0,25,24,26, 0, 1, 0, 0, 0, 0, 0, 0, 0,50,50,50, 0, 0, 0, 1, 
+					 1, 0, 0, 0, 0, 0, 0, 0,17, 0, 0, 0, 0, 0, 0, 1,13,27,26, 0, 0,25,24,26, 0, 1, 0, 0, 0, 0, 0, 0,51,50,50,50,52,51,51, 1, 
 					11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,24,24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					40, 0, 0, 1, 1, 6, 1, 1, 3, 1, 1, 1, 1, 1, 7, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 1,28,33,36,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					11, 9, 0, 1, 1, 0,10, 1, 0,14,10, 1,10,15, 0, 1,45, 0, 0, 0, 9, 0, 0, 0, 0, 1,29,33,33,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
@@ -135,6 +135,8 @@ var levelTwo = [
 	const TILE_BOOKSHELF_6 = 48;
 	const TILE_BOOKS = 49;
 	const TILE_WEAPON_RACK = 50;
+	const TILE_STORAGEBOX = 51;
+	const TILE_STORAGEBOX_2 = 52;
 
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
@@ -242,6 +244,9 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_BOOKSHELF_5 ||
 			checkTileType == TILE_BOOKSHELF_6 ||
 			checkTileType == TILE_BOOKS ||
+			checkTileType == TILE_WEAPON_RACK ||
+			checkTileType == TILE_STORAGEBOX ||
+			checkTileType == TILE_STORAGEBOX_2 ||
 			checkTileType == TILE_WEAPON_RACK ||
 			checkTileType == TILE_PITTRAP_UNARMED ||
 			checkTileType == TILE_SPIKES_UNARMED 

@@ -97,6 +97,8 @@ function loadImages() {
 			{trackType: TILE_WALL_TRAP2, theFile: "wallTrap2.png"},
 			{trackType: TILE_CURTAIN, theFile: "leftCurtains.png"},
 			{trackType: TILE_RIGHT_CURTAIN, theFile: "rightCurtains.png"},
+			{trackType: TILE_STORAGEBOX, theFile: "storageBox.png"},
+			{trackType: TILE_STORAGEBOX_2, theFile: "storageBox1.png"}
 		];
 			
 	picsToLoad = imageList.length;
