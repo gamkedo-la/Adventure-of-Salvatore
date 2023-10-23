@@ -32,7 +32,7 @@ var levelOne = [
 					11, 0, 0, 1, 1, 0, 0, 1, 0, 8, 0, 1, 0, 0, 0, 1,13,22, 0, 0, 0, 0, 0, 0, 0, 1,31,33,33,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					 1, 0, 0, 1, 1, 0, 9, 1, 5, 0, 0, 1, 0, 0, 0, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 1,32,37,35,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					11, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 8, 0, 0, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 				
-					 1, 0, 0, 1,13, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 1,13, 0,10, 0,46,46,46,46,46, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+					 1, 0, 0, 1,13, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 1,45,49,10, 0,46,47,48,47,46, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					11, 0, 0, 1,13, 0, 0, 0, 0, 1, 0, 0, 0, 0, 5, 1,44, 0, 0, 0, 0, 0, 9, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
 					 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
@@ -131,6 +131,9 @@ var levelTwo = [
 	const TILE_BOOKSHELF_2 = 44;
 	const TILE_BOOKSHELF_3 = 45;
 	const TILE_BOOKSHELF_4 = 46;
+	const TILE_BOOKSHELF_5 = 47;
+	const TILE_BOOKSHELF_6 = 48;
+	const TILE_BOOKS = 49;
 
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
@@ -229,12 +232,17 @@ function drawTracks(){
 	} // end of each row
 }
 
+//This function will not be required when layers are drawn - Vince 10/23/23
 function tileTypeHasRoadTransparency(checkTileType) {
 	return (checkTileType == TILE_BOOKSHELF ||
 		    checkTileType == TILE_BOOKSHELF_2 ||
 			checkTileType == TILE_BOOKSHELF_3 ||
+			checkTileType == TILE_BOOKSHELF_4 ||
+			checkTileType == TILE_BOOKSHELF_5 ||
+			checkTileType == TILE_BOOKSHELF_6 ||
+			checkTileType == TILE_BOOKS ||
 			checkTileType == TILE_PITTRAP_UNARMED ||
-				checkTileType == TILE_SPIKES_UNARMED 
+			checkTileType == TILE_SPIKES_UNARMED 
 			);
 }
 
