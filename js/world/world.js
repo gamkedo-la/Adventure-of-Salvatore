@@ -159,18 +159,14 @@ function drawTracks(){
 	var tileTopEdgeY = 0;
 	var isoTileLeftEdgeX = 0;
 	var isoTileTopEdgeY = 0;
-	var miniMapX = 0;
-	var miniMapY = 0;
 	sharedAnimCycle++;
 	
 	for(var eachRow = 0; eachRow < ROOM_ROWS; eachRow++){
 		tileLeftEdgeX = 7;
-		miniMapX = 0;
 		
 		for(var eachCol = 0; eachCol < ROOM_COLS; eachCol++) {
 			var trackTypeHere = roomGrid[tileIndex];
 			tileLeftEdgeX += ROOM_W;
-			miniMapX += 4;
 			isoTileLeftEdgeX = (tileLeftEdgeX - tileTopEdgeY)/2;
 			isoTileTopEdgeY = (tileLeftEdgeX + tileTopEdgeY)/4;
 			tileCoordToIsoCoord(eachCol, eachRow);	
@@ -216,12 +212,8 @@ function drawTracks(){
 					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 				}
 			}
-
-            updateMinimap(miniMapX,miniMapY,trackTypeHere);
-
             tileIndex++;
 		} // end of each col
-		miniMapY += 4;
 		tileTopEdgeY += ROOM_H;
 	} // end of each row
 }

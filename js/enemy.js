@@ -15,8 +15,6 @@ function enemyClass() {
 	this.isoEnemyFootY = 8;
 	this.offSetWidth = 0;
 	this.offSetHeight = 0;
-	this.miniMapX = 630;
-	this.miniMapY = 30;
 	
 	this.maxHealth = 2;
 	this.speed = 3;
@@ -73,36 +71,25 @@ function enemyClass() {
 			nextY -= PLAYER_MOVE_SPEED;
 		} else if(this.moveNorth && this.keyHeld_East){
 			nextX += PLAYER_MOVE_SPEED;
-			this.miniMapX += PLAYER_MOVE_SPEED/10;
-			this.miniMapY -= PLAYER_MOVE_SPEED/10;
 		} else if(this.keyHeld_South && this.keyHeld_West){
 			nextX -= PLAYER_MOVE_SPEED;
-			this.miniMapX -= PLAYER_MOVE_SPEED/10;
-			this.miniMapY += PLAYER_MOVE_SPEED/10;
 		} else if(this.keyHeld_South && this.keyHeld_East){
 			nextY += PLAYER_MOVE_SPEED;
-			this.miniMapX += PLAYER_MOVE_SPEED/10;
-			this.miniMapY += PLAYER_MOVE_SPEED/10; 
 		} else */ if(this.moveNorth && this.canMoveNorth){
 			nextY -= this.speed;
 			this.offSetHeight = this.height * 4;
 		} else if(this.moveEast && this.canMoveEast){
 			nextX += this.speed;
 			this.offSetHeight = this.height * 1;
-		//	this.miniMapX += PLAYER_MOVE_SPEED/5;
 		} else if(this.moveSouth && this.canMoveSouth){
 			nextY += this.speed;
 			this.offSetHeight = this.height * 2;
-		//	this.miniMapY += PLAYER_MOVE_SPEED/5;
 		} else if(this.moveWest && this.canMoveWest){
 			nextX -= this.speed;
 			this.offSetHeight = this.height * 3;
-		//	this.miniMapX -= PLAYER_MOVE_SPEED/5;
 		} else {
 			this.offSetHeight = 0;
 		}
-		this.miniMapX = nextX;
-		this.miniMapY = nextY;
 		
 		var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
 		var walkIntoTileType = TILE_WALL;
@@ -231,7 +218,5 @@ function enemyClass() {
 		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
 		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		
-        // TODO:this needs refactoring. all minimap stuff should be removed and done in minimap.js
-        //colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
 	}
 }
