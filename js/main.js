@@ -265,6 +265,7 @@ function drawEverything() {
         canvasContext.globalAlpha = 1;
 
 		// gui is drawn above the vignette
+        drawMinimap();
         canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
 		colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
 

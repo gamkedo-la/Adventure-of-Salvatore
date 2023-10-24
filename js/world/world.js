@@ -159,13 +159,13 @@ function drawTracks(){
 	var tileTopEdgeY = 0;
 	var isoTileLeftEdgeX = 0;
 	var isoTileTopEdgeY = 0;
-	var miniMapX = 750;
-	var miniMapY = 2;
+	var miniMapX = 0;
+	var miniMapY = 0;
 	sharedAnimCycle++;
 	
 	for(var eachRow = 0; eachRow < ROOM_ROWS; eachRow++){
 		tileLeftEdgeX = 7;
-		miniMapX = 730;
+		miniMapX = 0;
 		
 		for(var eachCol = 0; eachCol < ROOM_COLS; eachCol++) {
 			var trackTypeHere = roomGrid[tileIndex];
@@ -216,21 +216,10 @@ function drawTracks(){
 					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 				}
 			}
-			//minimap:  This needs refactored and moved.  Minimap is moving with camera pan and needs to be seperated
-            // TODO: draw to a different canvas here while we have all the data we need in this loop,
-            // then draw that single image later, outside this loop (so it appears above vignette dark border)
-			if(trackTypeHere == 0){
-				colorRect(miniMapX, miniMapY, 4, 4, "white");
-			} else if (trackTypeHere == 1 || trackTypeHere == 11 || trackTypeHere == 12 ){
-				colorRect(miniMapX, miniMapY, 4, 4, "gray");
-			} else if (trackTypeHere == 3 || trackTypeHere == 6 || trackTypeHere == 7){
-				colorRect(miniMapX, miniMapY, 4, 4, "blue");
-			} else if (trackTypeHere == 4 || trackTypeHere == 8){
-				colorRect(miniMapX, miniMapY, 4, 4, "purple");
-			} else if (trackTypeHere == 5){
-				colorRect(miniMapX, miniMapY, 4, 4, "orange");		
-			}
-			tileIndex++;
+
+            updateMinimap(miniMapX,miniMapY,trackTypeHere);
+
+            tileIndex++;
 		} // end of each col
 		miniMapY += 4;
 		tileTopEdgeY += ROOM_H;

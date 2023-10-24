@@ -230,6 +230,8 @@ function enemyClass() {
 		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
 		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
 		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
-		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
+		
+        // TODO:this needs refactoring. all minimap stuff should be removed and done in minimap.js
+        //colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
 	}
 }
