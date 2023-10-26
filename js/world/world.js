@@ -54,7 +54,7 @@ var roomGrid = [];
 var levelOne = [
 	
 	1, 11,  1,  1, 11,  1, 11, 42, 43, 11,  1, 11, 42, 43, 11,  1, 43,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-    1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0, 50,  8, 50, 51, 52, 51,  0,  0,  1,
+    1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 56, 50,  8, 50, 53, 54, 55,  0,  0,  1,
 	1,  0,  0,  2,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 36, 39,  0,  0,  1,  0,  0,  0, 51, 51, 51,  0,  0,  0,  1,
@@ -165,6 +165,10 @@ var levelTwo = [
 	const TILE_WEAPON_RACK = 50;
 	const TILE_STORAGEBOX = 51;
 	const TILE_STORAGEBOX_2 = 52;
+	const TILE_WEAPON_RACK_2 = 53;
+	const TILE_WEAPON_RACK_3 = 54;
+	const TILE_WEAPON_RACK_4 = 55;
+	const TILE_WEAPON_RACK_5 = 56;
 
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
@@ -256,6 +260,10 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_BOOKSHELF_6 ||
 			checkTileType == TILE_BOOKS ||
 			checkTileType == TILE_WEAPON_RACK ||
+			checkTileType == TILE_WEAPON_RACK_2 ||
+			checkTileType == TILE_WEAPON_RACK_3 ||
+			checkTileType == TILE_WEAPON_RACK_4 ||
+			checkTileType == TILE_WEAPON_RACK_5 ||
 			checkTileType == TILE_STORAGEBOX ||
 			checkTileType == TILE_STORAGEBOX_2 ||
 			checkTileType == TILE_WEAPON_RACK ||
