@@ -108,6 +108,8 @@ function loadImages() {
 			{trackType: TILE_STORAGEBOX_2, theFile: "storageBox1.png"},
 			{trackType: TILE_BARREL, theFile: "barrel.png"},
 			{trackType: TILE_BARREL_2, theFile: "barrel2.png"},
+			{trackType: TILE_BARREL_3, theFile: "barrel3.png"},
+			{trackType: TILE_BARREL_4, theFile: "barrel4.png"},
 		];
 			
 	picsToLoad = imageList.length;
