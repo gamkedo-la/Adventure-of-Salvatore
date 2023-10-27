@@ -110,6 +110,7 @@ function loadImages() {
 			{trackType: TILE_BARREL_2, theFile: "barrel2.png"},
 			{trackType: TILE_BARREL_3, theFile: "barrel3.png"},
 			{trackType: TILE_BARREL_4, theFile: "barrel4.png"},
+			{trackType: TILE_POTATO_SACK, theFile: "potatobag.png"}
 		];
 			
 	picsToLoad = imageList.length;
