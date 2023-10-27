@@ -105,7 +105,9 @@ function loadImages() {
 			{trackType: TILE_CURTAIN, theFile: "leftCurtains.png"},
 			{trackType: TILE_RIGHT_CURTAIN, theFile: "rightCurtains.png"},
 			{trackType: TILE_STORAGEBOX, theFile: "storageBox.png"},
-			{trackType: TILE_STORAGEBOX_2, theFile: "storageBox1.png"}
+			{trackType: TILE_STORAGEBOX_2, theFile: "storageBox1.png"},
+			{trackType: TILE_BARREL, theFile: "barrel.png"},
+			{trackType: TILE_BARREL_2, theFile: "barrel2.png"},
 		];
 			
 	picsToLoad = imageList.length;
