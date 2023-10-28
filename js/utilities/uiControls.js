@@ -33,11 +33,11 @@ function keyPressed(evt) {
 	evt.preventDefault();
 	
 	var paused = KEY_P;
-	var addRockBulletKey = KEY_SPACEBAR;
+	var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	if(paused == evt.keyCode){
 		changePauseState();
 	}
-	if(addRockBulletKey == evt.keyCode){
+	if(addRockBulletKey == evt.keyCode){ // just for toubleshooting wall trap (can be removed)
 		addRockBullet();
 	}
 	
@@ -50,10 +50,11 @@ function keyReleased(evt) {
 
 function setKeyHoldState(thisKey, thisWarrior, setTo) {
 	
+	document.getElementById("debugText").innerHTML = "Key: " +thisKey;
 	if(thisKey == thisWarrior.controlKeyForNorth){
 		thisWarrior.keyHeld_North = setTo;
 	}
-	if(thisKey == thisWarrior.controlKeyForEast){
+    if(thisKey == thisWarrior.controlKeyForEast){
 		thisWarrior.keyHeld_East = setTo;
 	}
 	if(thisKey == thisWarrior.controlKeyForSouth){

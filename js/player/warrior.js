@@ -72,36 +72,48 @@ function warriorClass() {
 		var collisionY = nextY;
 		
 		if(this.keyHeld_North && this.keyHeld_West){
+			nextX -= this.playerMovementSpeed; //need to determine sine speed for North West
 			nextY -= this.playerMovementSpeed;
 			collisionY = nextY 
+			console.log("Move NW");
 		} else if(this.keyHeld_North && this.keyHeld_East){
 			nextX += this.playerMovementSpeed;
+			nextY -= this.playerMovementSpeed; //need to determine sine speed for North East
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY -= this.playerMovementSpeed/10;
+			console.log("Move NE");
 		} else if(this.keyHeld_South && this.keyHeld_West){
 			nextX -= this.playerMovementSpeed;
-			this.miniMapX -= this.playerMovementSpeed/10;
+			nextY += this.playerMovementSpeed; //need to determine sine speed for South West
+			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
+			console.log("Move SW");
 		} else if(this.keyHeld_South && this.keyHeld_East){
+			nextX += this.playerMovementSpeed; //need to determine sine speed for South East
 			nextY += this.playerMovementSpeed;
 			this.miniMapX += this.playerMovementSpeed/10;
-			this.miniMapY += this.playerMovementSpeed/10; 
+			this.miniMapY += this.playerMovementSpeed/10;
+			console.log("Move SE"); 
 		} else if(this.keyHeld_North && this.canMoveNorth){
 			nextY -= this.playerMovementSpeed;
 			this.offSetHeight = this.height * 4;
 			this.miniMapY -= this.playerMovementSpeed/15;
+			console.log("Move N");
 		} else if(this.keyHeld_East && this.canMoveEast){
 			nextX += this.playerMovementSpeed;
 			this.offSetHeight = this.height * 1;
 			this.miniMapX += this.playerMovementSpeed/15;
+			console.log("Move E");
 		} else if(this.keyHeld_South && this.canMoveSouth){
 			nextY += this.playerMovementSpeed;
 			this.offSetHeight = this.height * 2;
 			this.miniMapY += this.playerMovementSpeed/15;
+			console.log("Move S");
 		} else if(this.keyHeld_West && this.canMoveWest){
 			nextX -= this.playerMovementSpeed;
 			this.offSetHeight = this.height * 3;
 			this.miniMapX -= this.playerMovementSpeed/15;
+			console.log("Move W");
 		} else {
 			this.offSetHeight = 0;
 		}
