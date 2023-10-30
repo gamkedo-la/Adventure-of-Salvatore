@@ -70,27 +70,29 @@ function warriorClass() {
 		var nextY = this.y; 
 		var collisionX = nextX;
 		var collisionY = nextY;
-		
 		if(this.keyHeld_North && this.keyHeld_West){
-			nextX -= this.playerMovementSpeed; //need to determine sine speed for North West
-			nextY -= this.playerMovementSpeed;
-			collisionY = nextY 
-			console.log("Move NW");
+			nextX -= this.playerMovementSpeed * Math.cos(45); 
+			nextY -= this.playerMovementSpeed * Math.sin(45);
+			this.offSetHeight = this.height * 5;
+			collisionY = nextY;
 		} else if(this.keyHeld_North && this.keyHeld_East){
-			nextX += this.playerMovementSpeed;
-			nextY -= this.playerMovementSpeed; //need to determine sine speed for North East
+			nextX += this.playerMovementSpeed * Math.cos(45); 
+			nextY -= this.playerMovementSpeed * Math.sin(45);
+			this.offSetHeight = this.height * 3 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY -= this.playerMovementSpeed/10;
-			console.log("Move NE");
+			console.log("Move NE")
 		} else if(this.keyHeld_South && this.keyHeld_West){
-			nextX -= this.playerMovementSpeed;
-			nextY += this.playerMovementSpeed; //need to determine sine speed for South West
+			nextX -= this.playerMovementSpeed * Math.cos(45);
+			nextY += this.playerMovementSpeed * Math.sin(45);
+			this.offSetHeight = this.height * 7 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
 			console.log("Move SW");
 		} else if(this.keyHeld_South && this.keyHeld_East){
-			nextX += this.playerMovementSpeed; //need to determine sine speed for South East
-			nextY += this.playerMovementSpeed;
+			nextX += this.playerMovementSpeed * Math.cos(45); 
+			nextY += this.playerMovementSpeed * Math.sin(45);
+			this.offSetHeight = this.height * 1;
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
 			console.log("Move SE"); 
@@ -101,19 +103,19 @@ function warriorClass() {
 			console.log("Move N");
 		} else if(this.keyHeld_East && this.canMoveEast){
 			nextX += this.playerMovementSpeed;
-			this.offSetHeight = this.height * 1;
+			this.offSetHeight = this.height * 2;
 			this.miniMapX += this.playerMovementSpeed/15;
 			console.log("Move E");
 		} else if(this.keyHeld_South && this.canMoveSouth){
 			nextY += this.playerMovementSpeed;
-			this.offSetHeight = this.height * 2;
+			this.offSetHeight = this.height * 8;
 			this.miniMapY += this.playerMovementSpeed/15;
 			console.log("Move S");
 		} else if(this.keyHeld_West && this.canMoveWest){
 			nextX -= this.playerMovementSpeed;
-			this.offSetHeight = this.height * 3;
+			this.offSetHeight = this.height * 6;
 			this.miniMapX -= this.playerMovementSpeed/15;
-			console.log("Move W");
+			console.log("Move West")
 		} else {
 			this.offSetHeight = 0;
 		}
