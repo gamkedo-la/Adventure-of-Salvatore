@@ -23,6 +23,9 @@ function warriorClass() {
 	this.maxHealth = 4;
 	this.trapCoolDownTimer = 0;
 	this.trapCoolDownCounter = 0;
+	//items
+	this.healthPotion = 0;
+	this.speedPotion = 0;
 
 	this.warriorPic = document.createElement("img");
 	
@@ -171,7 +174,10 @@ function warriorClass() {
 				crashIntoConeSound.play();
 				break;
 			case TILE_HEALING_POTION:
-				this.health = this.health + 1;
+				this.healthPotion++;
+				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+			case TILE_SPEED_POTION:
+				this.speedPotion++;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
 			case TILE_WALL:
 			case TILE_WALL_WITH_TORCH:

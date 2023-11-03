@@ -36,7 +36,7 @@ var levelOne = [
 	1, 57, 61, 60,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 13, 49, 47, 46, 45, 47, 48, 46, 47, 47,  1, 56, 50,  8, 50, 53, 54, 55,  0,  0,  1,
 	1, 59,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 13,  0,  0,  0, 44,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1, 59,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 44,  0,  0,  0, 44,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
-	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 45,  0,  0,  0, 44,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 45,  0,  0,  0, 44,  0,  0, 63,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 44,  0, 10,  0,  0,  0,  0, 49,  0,  0,  1,  0,  0,  0, 51, 51, 51,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 52,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 45,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0, 52,  0,  0,  0,  0,  0,  1,
@@ -142,6 +142,7 @@ var levelTwo = [
 	const TILE_BARREL_4 = 60;
 	const TILE_POTATO_SACK = 61;
 	const TILE_HEALING_POTION = 62;
+	const TILE_SPEED_POTION = 63;
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -197,11 +198,17 @@ function drawTracks(){
 				isoDrawY - ISO_TILE_GROUND_Y, 
 				ISO_TILE_DRAW_W, 
 				ISO_TILE_DRAW_H);
-
-				//canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
-				//	isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
-
-
+			} else if (trackTypeHere == TILE_SPEED_POTION){
+				var itemFrames = 4;
+				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
+				canvasContext.drawImage(trackPics[TILE_SPEED_POTION],
+				animOffset * ISO_TILE_DRAW_W, 
+				40, 
+				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
+				isoDrawX - ISO_GRID_W/2, 
+				isoDrawY - ISO_TILE_GROUND_Y, 
+				ISO_TILE_DRAW_W, 
+				ISO_TILE_DRAW_H);	
 			} else if (trackTypeHere == TILE_WALL_TRAP ||
 					   trackTypeHere == TILE_WALL_TRAP2){
 				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
@@ -253,6 +260,7 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_POTATO_SACK ||
 			checkTileType == TILE_FIRE_PLACE ||
 			checkTileType == TILE_HEALING_POTION ||
+			checkTileType == TILE_SPEED_POTION ||
 			checkTileType == TILE_FIRE_PLACE_2
 			);
 }
