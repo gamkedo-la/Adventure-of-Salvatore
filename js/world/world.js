@@ -18,44 +18,11 @@ var levelList = [levelOne, levelTwo];
 var levelNow = 0;
 var roomGrid = [];
 
-/*var levelOne = [
-					 1,11, 1,11, 1,11,42,43, 41, 1, 1,42,43, 1, 1,42,43, 1, 1, 1, 1,11, 1,11, 1,11, 1,11, 1,11, 1,11, 1,11, 1,11, 1,11, 1, 1,
-					 1,12, 5, 0, 0, 0, 0, 0, 0,23,18, 0,20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 
-					11, 2, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1,11, 1,11, 1,11, 1,11, 1,11, 1,11, 1, 0, 0, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 6, 1, 
-					 1, 0, 0, 0, 0, 0, 0, 0,17, 0, 0, 0, 0, 0, 0, 1,13,27,26, 0, 0,25,24,26, 0, 1, 0, 0, 0, 0, 0, 0,51,50,50,50,52,51,51, 1, 
-					11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0,24,24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					40, 0, 0, 1, 1, 6, 1, 1, 3, 1, 1, 1, 1, 1, 7, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 1,28,33,36,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					11, 9, 0, 1, 1, 0,10, 1, 0,14,10, 1,10,15, 0, 1,45, 0, 0, 0, 9, 0, 0, 0, 0, 1,29,33,33,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 1, 5, 0, 0, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 1,30,33,34,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					11, 0, 0, 1, 1, 0, 0, 1, 0, 8, 0, 1, 0, 0, 0, 1,13,22, 0, 0, 0, 0, 0, 0, 0, 1,31,33,33,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 9, 1, 5, 0, 0, 1, 0, 0, 0, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 1,32,37,35,39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					11, 0, 0, 1, 1, 0, 0, 1, 1, 1, 1, 1, 8, 0, 0, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 1, 				
-					 1, 0, 0, 1,13, 0, 4, 0, 0, 1, 0, 0, 0, 0, 0, 1,45,49,10, 0,46,47,48,47,46, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					11, 0, 0, 1,13, 0, 0, 0, 0, 1, 0, 0, 0, 0, 5, 1,44, 0, 0, 0, 0, 0, 9, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-					 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,44, 0, 0, 0, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,45, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,44, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1,28, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,11,29, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1,11, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
-					 1, 0, 0, 1, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
-					]; */
-
 var levelOne = [
 	
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 11,  1,  1, 11,  1, 11, 42, 43, 11,  1, 11, 42, 43, 11,  1, 43,  1,  1,  1,  1,  1,  1,  1,  1,  
     1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 59, 57, 61, 61,  0,  0,  0,  0,  0,  1,
-	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  2,  0,  1, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  2,  0,  1, 14,  0,  0,  0, 62,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 36, 39,  0,  0,  1,  0,  0,  0, 51, 51, 51, 52,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 33, 39,  0,  0,  1,  0,  0,  0, 51, 61,  0, 52,  0,  0,  1,
@@ -174,6 +141,7 @@ var levelTwo = [
 	const TILE_BARREL_3 = 59;
 	const TILE_BARREL_4 = 60;
 	const TILE_POTATO_SACK = 61;
+	const TILE_HEALING_POTION = 62;
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -193,8 +161,6 @@ function drawTracks(){
 	var tileIndex = 0;
 	var tileLeftEdgeX = 700
 	var tileTopEdgeY = 0;
-	var isoTileLeftEdgeX = 0;
-	var isoTileTopEdgeY = 0;
 	sharedAnimCycle++;
 	
 	for(var eachRow = 0; eachRow < ROOM_ROWS; eachRow++){
@@ -210,7 +176,7 @@ function drawTracks(){
 			if( tileTypeHasRoadTransparency(trackTypeHere) ) {
 				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 			}
-			//need a helper function here to eliminate the else if
+			//need two helper functions here to eliminate the else if.  One for walls, one for floors
 			if(trackTypeHere == TILE_WALL_WITH_TORCH){
 				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 				
@@ -220,6 +186,22 @@ function drawTracks(){
 				canvasContext.drawImage(trackPics[TILE_WALL_WITH_TORCH],
 				animOffset * ISO_TILE_DRAW_W, 0, ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
 				isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y, ISO_TILE_DRAW_W, ISO_TILE_DRAW_H);
+			} else if (trackTypeHere == TILE_HEALING_POTION){
+				var itemFrames = 4;
+				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
+				canvasContext.drawImage(trackPics[TILE_HEALING_POTION],
+				animOffset * ISO_TILE_DRAW_W, 
+				40, 
+				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
+				isoDrawX - ISO_GRID_W/2, 
+				isoDrawY - ISO_TILE_GROUND_Y, 
+				ISO_TILE_DRAW_W, 
+				ISO_TILE_DRAW_H);
+
+				//canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
+				//	isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
+
+
 			} else if (trackTypeHere == TILE_WALL_TRAP ||
 					   trackTypeHere == TILE_WALL_TRAP2){
 				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
@@ -232,6 +214,8 @@ function drawTracks(){
 					playerOne.y > tileTopEdgeY -100){
 					canvasContext.globalAlpha = 0.3;
 					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
+					canvasContext.globalAlpha = 1.0;
+					canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 				} else {
 					canvasContext.globalAlpha = 1.0;
 					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
@@ -268,6 +252,7 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_BARREL_4 ||
 			checkTileType == TILE_POTATO_SACK ||
 			checkTileType == TILE_FIRE_PLACE ||
+			checkTileType == TILE_HEALING_POTION ||
 			checkTileType == TILE_FIRE_PLACE_2
 			);
 }

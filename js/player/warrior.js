@@ -170,6 +170,9 @@ function warriorClass() {
 				roomGrid[walkIntoTileIndex] = TILE_SPIKES_UNARMED;
 				crashIntoConeSound.play();
 				break;
+			case TILE_HEALING_POTION:
+				this.health = this.health + 1;
+				roomGrid[walkIntoTileIndex] = TILE_ROAD;
 			case TILE_WALL:
 			case TILE_WALL_WITH_TORCH:
 			case TILE_TABLE:
