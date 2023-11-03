@@ -55,8 +55,8 @@ var levelOne = [
 	
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 11,  1,  1, 11,  1, 11, 42, 43, 11,  1, 11, 42, 43, 11,  1, 43,  1,  1,  1,  1,  1,  1,  1,  1,  
     1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 59, 57, 61, 61,  0,  0,  0,  0,  0,  1,
-	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  2,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
-	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  2,  0,  1, 14,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 36, 39,  0,  0,  1,  0,  0,  0, 51, 51, 51, 52,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 33, 39,  0,  0,  1,  0,  0,  0, 51, 61,  0, 52,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 34, 39,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
@@ -87,7 +87,7 @@ var levelTwo = [
 					 1,11, 1,11, 7,11, 1,11, 1,11, 1,11, 1, 0, 0, 1, 1, 1, 1, 7, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 3, 1, 1, 1, 1, 1, 1, 1, 6, 1, 
 					 1,12, 0, 0, 0, 0, 0, 1, 0, 0, 0,24, 0, 0, 0, 1,13, 0,10, 0, 0, 0,24, 0, 0, 1, 0,24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					11, 2, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
-					 1,28, 0, 9, 0, 0, 0, 1, 3, 1, 1, 1, 1, 1, 7, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
+					 1,28, 0, 9, 0, 0, 0, 1, 3, 1, 1, 1, 1,14, 7, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					11, 0, 0, 0, 1, 1, 1, 1, 0,14,10, 1,10,15, 0, 1,13, 0, 0, 0, 9, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 5, 0, 0, 1,13, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
 					11, 0, 0, 0, 1, 0, 0, 0, 0, 8, 0, 1, 0, 0, 0, 1,13,22, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 
@@ -126,7 +126,7 @@ var levelTwo = [
 	const TILE_WALL_WITH_TORCH = 11;
 	const TILE_STAIRS = 12;
 	const TILE_BOOKSHELF = 13;
-	const TILE_FIRE_PLACE_LIT = 14;
+	const TILE_FIRE_PLACE_2 = 14;
 	const TILE_FIRE_PLACE = 15;
 	const TILE_ORC = 16;
 	const TILE_OGRE = 17;
@@ -224,17 +224,6 @@ function drawTracks(){
 					   trackTypeHere == TILE_WALL_TRAP2){
 				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 				canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-
-			} else if (trackTypeHere == TILE_FIRE_PLACE_LIT){
-				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-				
-				var torchFrames = 4;
-				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % torchFrames;
-				
-				canvasContext.drawImage(trackPics[TILE_FIRE_PLACE_LIT],
-				animOffset * ISO_TILE_DRAW_W, 0, ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
-				isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y, ISO_TILE_DRAW_W, ISO_TILE_DRAW_H);
-				
 			} else {
 				if(trackTypeHere == TILE_WALL &&
 					playerOne.x < tileLeftEdgeX + 50 &&
@@ -277,7 +266,9 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_BARREL_2 ||
 			checkTileType == TILE_BARREL_3 ||
 			checkTileType == TILE_BARREL_4 ||
-			checkTileType == TILE_POTATO_SACK
+			checkTileType == TILE_POTATO_SACK ||
+			checkTileType == TILE_FIRE_PLACE ||
+			checkTileType == TILE_FIRE_PLACE_2
 			);
 }
 

@@ -77,8 +77,6 @@ function loadImages() {
 			{trackType: TILE_WEAPON_RACK_3, theFile: "weaponRack3.png"},
 			{trackType: TILE_WEAPON_RACK_4, theFile: "weaponRack4.png"},
 			{trackType: TILE_WEAPON_RACK_5, theFile: "weaponRack5.png"},
-			{trackType: TILE_FIRE_PLACE_LIT, theFile: "track_fireplace.png"},
-			{trackType: TILE_FIRE_PLACE, theFile: "track_fireplaceNotLit.png"},
 			{trackType: TILE_PITTRAP_ARMED, theFile: "track_road.png"},
 			{trackType: TILE_PITTRAP_UNARMED, theFile: "track_pittrap.png"},
 			{trackType: TILE_SPIKES_ARMED, theFile: "track_road.png"},
@@ -110,7 +108,9 @@ function loadImages() {
 			{trackType: TILE_BARREL_2, theFile: "barrel2.png"},
 			{trackType: TILE_BARREL_3, theFile: "barrel3.png"},
 			{trackType: TILE_BARREL_4, theFile: "barrel4.png"},
-			{trackType: TILE_POTATO_SACK, theFile: "potatobag.png"}
+			{trackType: TILE_POTATO_SACK, theFile: "potatobag.png"},
+			{trackType: TILE_FIRE_PLACE, theFile: "fireplace.png"},
+			{trackType: TILE_FIRE_PLACE_2, theFile: "fireplace2.png"}
 		];
 			
 	picsToLoad = imageList.length;
