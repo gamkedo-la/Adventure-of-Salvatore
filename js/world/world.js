@@ -29,7 +29,7 @@ var levelOne = [
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 34, 39,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 30, 33, 33, 39,  0,  0,  1,  0,  0,  0, 51,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 37, 35, 39,  0,  0,  1, 57,  0,  0, 52,  0,  0, 52,  0,  0,  1,
-	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 59,  0,  0, 51, 52, 52, 51,  0,  0,  1,
+	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0, 64,  0,  0,  0,  0,  0,  0,  1, 59,  0,  0, 51, 52, 52, 51,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
@@ -143,6 +143,7 @@ var levelTwo = [
 	const TILE_POTATO_SACK = 61;
 	const TILE_HEALING_POTION = 62;
 	const TILE_SPEED_POTION = 63;
+	const TILE_COIN = 64;
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -208,7 +209,19 @@ function drawTracks(){
 				isoDrawX - ISO_GRID_W/2, 
 				isoDrawY - ISO_TILE_GROUND_Y, 
 				ISO_TILE_DRAW_W, 
-				ISO_TILE_DRAW_H);	
+				ISO_TILE_DRAW_H);
+			} else if (trackTypeHere == TILE_COIN){
+				var itemFrames = 8;
+				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
+				canvasContext.drawImage(trackPics[TILE_COIN],
+				animOffset * ISO_TILE_DRAW_W, 
+				40, 
+				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
+				isoDrawX - ISO_GRID_W, 
+				isoDrawY - ISO_TILE_GROUND_Y, 
+				ISO_TILE_DRAW_W, 
+				ISO_TILE_DRAW_H);
+				
 			} else if (trackTypeHere == TILE_WALL_TRAP ||
 					   trackTypeHere == TILE_WALL_TRAP2){
 				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
@@ -261,7 +274,8 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_FIRE_PLACE ||
 			checkTileType == TILE_HEALING_POTION ||
 			checkTileType == TILE_SPEED_POTION ||
-			checkTileType == TILE_FIRE_PLACE_2
+			checkTileType == TILE_FIRE_PLACE_2 ||
+			checkTileType == TILE_COIN
 			);
 }
 

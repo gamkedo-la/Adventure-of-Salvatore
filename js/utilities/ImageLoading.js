@@ -112,7 +112,8 @@ function loadImages() {
 			{trackType: TILE_FIRE_PLACE, theFile: "fireplace.png"},
 			{trackType: TILE_FIRE_PLACE_2, theFile: "fireplace2.png"},
 			{trackType: TILE_HEALING_POTION, theFile: "healingPotion.png"},
-			{trackType: TILE_SPEED_POTION, theFile: "speedPotion.png"}
+			{trackType: TILE_SPEED_POTION, theFile: "speedPotion.png"},
+			{trackType: TILE_COIN, theFile: "Coin.png"}
 		];
 			
 	picsToLoad = imageList.length;
