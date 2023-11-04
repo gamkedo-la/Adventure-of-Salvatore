@@ -23,9 +23,13 @@ function warriorClass() {
 	this.maxHealth = 4;
 	this.trapCoolDownTimer = 0;
 	this.trapCoolDownCounter = 0;
+	this.frames = 8;
+	this.drawTimer = 0;
+	this.animatePlayerStandingStill = false;
 	//items
 	this.healthPotion = 0;
 	this.speedPotion = 0;
+	this.coins = 0;
 
 	this.warriorPic = document.createElement("img");
 	
@@ -179,6 +183,9 @@ function warriorClass() {
 			case TILE_SPEED_POTION:
 				this.speedPotion++;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+			case TILE_COIN:
+				this.coins++;
+				roomGrid[walkIntoTileIndex] = TILE_ROAD;
 			case TILE_WALL:
 			case TILE_WALL_WITH_TORCH:
 			case TILE_TABLE:
@@ -224,14 +231,37 @@ function warriorClass() {
 	}
 		
 	this.draw = function(){
-		gameCoordToIsoCoord(this.x,this.y);
+		if(this.offSetHeight == 0){ //player is standing still
+			let toAnimatePlayerNumber = getRndInteger(0, 1000);
+			if(toAnimatePlayerNumber > 995){
+				this.animatePlayerStandingStill = true;
+			}
+			if(this.animatePlayerStandingStill){
+				this.animateWarrior()
+			}
+		} else { //player is moving
+			this.animateWarrior();
+		}
+			gameCoordToIsoCoord(this.x,this.y);
 		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y);
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
 								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
-		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
-		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
-		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
+		//colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
+		//colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
+		//canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 4, 4, "green");	
+	}
+
+	this.animateWarrior = function(){
+		this.drawTimer++;
+		if(this.drawTimer == 8){
+			this.offSetWidth = this.offSetWidth + this.width;
+			this.drawTimer = 0;
+		}
+		if(this.offSetWidth > (this.frames * this.width)){
+			this.offSetWidth = 0;
+			this.animatePlayerStandingStill = false;
+		}
 	}
 		
 	//this delivers damage to the player when setting off a trap
