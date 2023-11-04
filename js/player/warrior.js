@@ -28,8 +28,12 @@ function warriorClass() {
 	this.animatePlayerStandingStill = false;
 	//items
 	this.healthPotion = 0;
-	this.speedPotion = 0;
+	this.speedPotion = 1;
 	this.coins = 0;
+	//affects
+	this.speedIncrease = false;
+	this.speedIncreaseTimer = 0;
+	this.displaySpeedIncreaseTimer = false;
 
 	this.warriorPic = document.createElement("img");
 	
@@ -72,7 +76,17 @@ function warriorClass() {
 	}	
 	 
 	this.movement = function() {
-		
+		if(this.speedIncrease){
+			this.playerMovementSpeed = 6;
+			this.speedIncreaseTimer--;
+			this.displaySpeedIncreaseTimer = true;
+			if(this.speedIncreaseTimer == 0){
+				this.speedIncrease = false;
+				this.displaySpeedIncreaseTimer = false;
+			}
+		} else {
+			this.playerMovementSpeed = 3;
+		}
 		var nextX = this.x; 
 		var nextY = this.y; 
 		var collisionX = nextX;
@@ -242,15 +256,36 @@ function warriorClass() {
 		} else { //player is moving
 			this.animateWarrior();
 		}
-			gameCoordToIsoCoord(this.x,this.y);
+		gameCoordToIsoCoord(this.x,this.y);
 		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y);
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
 								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
+		if(this.displaySpeedIncreaseTimer){
+			let displaySeconds = Math.ceil(this.speedIncreaseTimer/60)
+			colorText("Speed: " + displaySeconds, isoDrawX-40, isoDrawY-60, "green");		
+		}
+	
 		//colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
 		//colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
 		//canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 4, 4, "green");	
 	}
+
+	this.useSpeedPotion = function(){
+		if(this.speedPotion <= 0){
+			console.log("No Speed Potions to use");
+			return;
+		}
+		if(this.speedIncrease){
+			console.log("Speed already increased");
+			return;
+		}
+		this.speedPotion--;
+		this.speedIncrease = true;
+		this.speedIncreaseTimer = 1000;
+	}
+
+
 
 	this.animateWarrior = function(){
 		this.drawTimer++;

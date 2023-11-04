@@ -3,6 +3,7 @@ const KEY_S = 83; // "S"
 const KEY_A = 65; // "A"
 const KEY_D = 68; // "D"
 const KEY_SPACEBAR = 32; 
+const KEY_1 = 49;
 
 const KEY_LEFT_ARROW = 37;
 const KEY_UP_ARROW = 38;
@@ -34,13 +35,17 @@ function keyPressed(evt) {
 	
 	var paused = KEY_P;
 	var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
+	var speedPotion = KEY_1;
+
 	if(paused == evt.keyCode){
 		changePauseState();
 	}
 	if(addRockBulletKey == evt.keyCode){ // just for toubleshooting wall trap (can be removed)
 		addRockBullet();
 	}
-	
+	if (speedPotion == evt.keyCode){
+		playerOne.useSpeedPotion();
+	}
 }
 
 function keyReleased(evt) {
