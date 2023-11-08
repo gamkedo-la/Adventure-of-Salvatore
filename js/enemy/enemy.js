@@ -89,7 +89,7 @@ function enemyClass() {
 			this.offSetHeight = this.height * 4;
 		} else if(this.moveEast && this.canMoveEast){
 			nextX += this.speed;
-			this.offSetHeight = this.height * 1;
+			this.offSetHeight = this.height * 3;
 		//	this.miniMapX += PLAYER_MOVE_SPEED/5;
 		} else if(this.moveSouth && this.canMoveSouth){
 			nextY += this.speed;
@@ -97,7 +97,7 @@ function enemyClass() {
 		//	this.miniMapY += PLAYER_MOVE_SPEED/5;
 		} else if(this.moveWest && this.canMoveWest){
 			nextX -= this.speed;
-			this.offSetHeight = this.height * 3;
+			this.offSetHeight = this.height * 6;
 		//	this.miniMapX -= PLAYER_MOVE_SPEED/5;
 		} else {
 			this.offSetHeight = 0;
