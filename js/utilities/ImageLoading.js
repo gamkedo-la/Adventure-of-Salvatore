@@ -1,5 +1,5 @@
 var warriorPic = document.createElement("img");
-var goblinPic = document.createElement("img");
+var miniCyclopPic = document.createElement("img");
 var orcPic = document.createElement("img");
 var ogrePic = document.createElement("img");
 var ratPic = document.createElement("img");
@@ -44,7 +44,7 @@ function loadImages() {
 			//characters
 			{varName: warriorPic, theFile: "warrior.png"},
 			{varName: orcPic, theFile: "orc.png"},
-			{varName: goblinPic, theFile: "goblin.png"},
+			{varName: miniCyclopPic, theFile: "miniCyclop.png"},
 			{varName: ogrePic, theFile: "ogre.png"},
 			{varName: ratPic, theFile: "rat.png"},
 			{varName: spiderPic, theFile: "spider.png"},

@@ -1,7 +1,4 @@
-goblinNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz", 
-				"Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm", 
-				"Kiok", "Wrokx", "Fiog", "Goziord"];
-				
+
 orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
 
 ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];     
@@ -10,8 +7,8 @@ ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];
 function enemyClass() {
 	this.x = 600;
 	this.y = 800;
-	this.width = 30; //30
-	this.height = 30; //30
+	this.width = 40; //30
+	this.height = 40; //30
 	this.isoEnemyFootY = 8;
 	this.offSetWidth = 0;
 	this.offSetHeight = 0;

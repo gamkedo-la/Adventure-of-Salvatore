@@ -3,13 +3,13 @@ var canvasContext;
 
 //characters (Player, NPC's, Enemies)
 var playerOne = new warriorClass();
-var goblinList = [];
+var miniCyclopList = [];
 var orcList = [];
 var ogreList = [];
 var ratList = [];
 
 function resetEnemyLists(){
-	goblinList = [];
+	miniCyclopList = [];
 	orcList = [];
 	ogreList = [];
 	ratList = [];
@@ -66,8 +66,8 @@ function imageLoadingDoneSoStartGame(){
 	loadLevel(levelOne)
 	playerOne.init(warriorPic, "The Warrior");
 	for(var i = 0; i < roomGrid.length; i++){
-		if(roomGrid[i] == TILE_GOBLIN){
-			addGoblin();
+		if(roomGrid[i] == TILE_MINICYCLOP){
+			addMiniCyclop();
 		} 
 		if(roomGrid[i] == TILE_ORC){
 			addOrc();
@@ -76,8 +76,8 @@ function imageLoadingDoneSoStartGame(){
 			addOgre();
 		}
 	}
-	for(var i = 0; i < goblinList.length; i++){
-		goblinList[i].init(goblinPic, goblinNames[i], TILE_GOBLIN);
+	for(var i = 0; i < miniCyclopList.length; i++){
+		miniCyclopList[i].init(miniCyclopPic, miniCyclopNames[i], TILE_MINICYCLOP);
 	}
 	for(var i = 0; i < orcList.length; i++){
 		orcList[i].init(orcPic, orcNames[i], TILE_ORC);
@@ -91,9 +91,9 @@ function imageLoadingDoneSoStartGame(){
 }
 
 //Adds an enemy 
-function addGoblin(){
+function addMiniCyclop(){
 	var tempEnemy = new enemyClass();
-	goblinList.push(tempEnemy);
+	miniCyclopList.push(tempEnemy);
 }
 
 function addOrc(){
@@ -125,8 +125,8 @@ function loadLevel(whichLevel) {
 	playerOne.warriorReset();
 	
 	for(var i = 0; i < roomGrid.length; i++){
-		if(roomGrid[i] == TILE_GOBLIN){
-			addGoblin();
+		if(roomGrid[i] == TILE_MINICYCLOP){
+			addMiniCyclop();
 		} 
 		if(roomGrid[i] == TILE_ORC){
 			addOrc();
@@ -138,8 +138,8 @@ function loadLevel(whichLevel) {
 			addRat();
 		}
 	}
-	for(var i = 0; i < goblinList.length; i++){
-		goblinList[i].init(goblinPic, goblinNames[i], TILE_GOBLIN);
+	for(var i = 0; i < miniCyclopList.length; i++){
+		miniCyclopList[i].init(miniCyclopPic, miniCyclopNames[i], TILE_MINICYCLOP);
 	}
 	for(var i = 0; i < orcList.length; i++){
 		orcList[i].init(orcPic, orcNames[i], TILE_ORC);
@@ -158,8 +158,8 @@ function loadLevel(whichLevel) {
 function moveEverything() {
 	if(liveGame){
 		playerOne.movement();
-		for(var i = 0; i < goblinList.length; i++){
-			goblinList[i].movement();
+		for(var i = 0; i < miniCyclopList.length; i++){
+			miniCyclopList[i].movement();
 		}
 		for(var i = 0; i < orcList.length; i++){
 			orcList[i].movement();
@@ -187,12 +187,12 @@ function moveEverything() {
 //This checks player and enemy collisions.  This is called every frame.
 //This requires refactoring.  Too many individual lines checking monsters to players
 function checkAllPlayerAndEnemyCollisions(){
-	//check goblins
-	for(var i = 0; i < goblinList.length; i++){
-		playerOne.checkCollisionsAgainst(goblinList[i]);
-		for(var ii = i+1; ii < goblinList.length; ii++){
-			goblinList[i].checkCollisionsAgainst(goblinList[ii]);
-			goblinList[i].checkCollisionsAgainst(playerOne);
+	//check Mini Cyclops
+	for(var i = 0; i < miniCyclopList.length; i++){
+		playerOne.checkCollisionsAgainst(miniCyclopList[i]);
+		for(var ii = i+1; ii < miniCyclopList.length; ii++){
+			miniCyclopList[i].checkCollisionsAgainst(miniCyclopList[ii]);
+			miniCyclopList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
 	//check orcs
@@ -237,8 +237,8 @@ function drawEverything() {
 		shiftForCameraPan();
 		drawTracks();
 		playerOne.draw();
-		for(var i = 0; i < goblinList.length; i++){
-			goblinList[i].draw();
+		for(var i = 0; i < miniCyclopList.length; i++){
+			miniCyclopList[i].draw();
 		}
 		for(var i = 0; i < orcList.length; i++){
 			orcList[i].draw();

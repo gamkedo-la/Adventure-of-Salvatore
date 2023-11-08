@@ -63,7 +63,7 @@ function updateMinimap() {
     }
     
     // and all monsters
-    for (mob of goblinList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkgreen"); }
+    for (mob of miniCyclopList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkgreen"); }
     for (mob of orcList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkbrown"); }
     for (mob of ogreList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkred"); }
     for (mob of ratList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkgrey"); }
