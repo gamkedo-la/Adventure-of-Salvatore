@@ -31,3 +31,4 @@ function miniCyclop() {
 	this.draw = function(){
 		this.superClassDraw();
 	}
+}

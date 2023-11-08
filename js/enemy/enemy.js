@@ -28,6 +28,10 @@ function enemyClass() {
 	this.canMoveEast = true;
 	this.canMoveSouth = true;
 	this.canMoveWest = true;
+
+	this.animateEnemyStandingStill = false;
+	this.drawTimer = 0;
+	this.frames = 8;
 	
 	this.enemyReset = function() {
 		this.speed = 3;
@@ -218,6 +222,17 @@ function enemyClass() {
 	}
 		
 	this.draw = function(){
+		if(this.offSetHeight == 0){ //enemy is standing still
+			let toAnimateEnemyNumber = getRndInteger(0, 1000);
+			if(toAnimateEnemyNumber > 995){
+				this.animateEnemyStandingStill = true;
+			}
+			if(this.animateEnemyStandingStill){
+				this.animateEnemy()
+			}
+		} else { //player is moving
+			this.animateEnemy();
+		}
 		gameCoordToIsoCoord(this.x,this.y);
 		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y);
 		colorText(this.myName, isoDrawX + 20, isoDrawY - 30, "black", "8px Arial Black");
@@ -228,5 +243,17 @@ function enemyClass() {
 		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
 		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
+	}
+
+	this.animateEnemy = function(){
+		this.drawTimer++;
+		if(this.drawTimer == 8){
+			this.offSetWidth = this.offSetWidth + this.width;
+			this.drawTimer = 0;
+		}
+		if(this.offSetWidth > (this.frames * this.width)){
+			this.offSetWidth = 0;
+			this.animateEnemyStandingStill = false;
+		}
 	}
 }
