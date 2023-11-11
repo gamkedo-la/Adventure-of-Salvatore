@@ -33,7 +33,7 @@ var levelOne = [
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  9,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
-	1, 57, 61, 60,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 13, 49, 47, 46, 45, 47, 48, 46, 47, 47,  1, 56, 50,  8, 50, 53, 54, 55,  0,  0,  1,
+	1, 57, 61, 60, 65, 66,  0,  0,  1,  0,  0,  0,  0,  1, 13, 49, 47, 46, 45, 47, 48, 46, 47, 47,  1, 56, 50,  8, 50, 53, 54, 55,  0,  0,  1,
 	1, 59,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 13,  0,  0,  0, 44,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1, 59,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 44,  0,  0,  0, 44,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 45,  0,  0,  0, 44,  0,  0, 63,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
@@ -144,6 +144,8 @@ var levelTwo = [
 	const TILE_HEALING_POTION = 62;
 	const TILE_SPEED_POTION = 63;
 	const TILE_COIN = 64;
+	const TILE_WALL_LEVER_1 = 65;
+	const TILE_WALL_LEVER_2 = 66;
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -223,7 +225,9 @@ function drawTracks(){
 				ISO_TILE_DRAW_H);
 				
 			} else if (trackTypeHere == TILE_WALL_TRAP ||
-					   trackTypeHere == TILE_WALL_TRAP2){
+					   trackTypeHere == TILE_WALL_TRAP2 ||
+					   trackTypeHere == TILE_WALL_LEVER_1 ||
+					   trackTypeHere == TILE_WALL_LEVER_2){
 				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 				canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 			} else {

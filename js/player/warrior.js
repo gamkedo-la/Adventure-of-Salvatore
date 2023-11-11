@@ -34,6 +34,8 @@ function warriorClass() {
 	this.speedIncrease = false;
 	this.speedIncreaseTimer = 0;
 	this.displaySpeedIncreaseTimer = false;
+	this.leverCoolDown = 0;
+	this.leverCoolDownActive = false;
 
 	this.warriorPic = document.createElement("img");
 	
@@ -102,41 +104,34 @@ function warriorClass() {
 			this.offSetHeight = this.height * 3 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY -= this.playerMovementSpeed/10;
-			console.log("Move NE")
 		} else if(this.keyHeld_South && this.keyHeld_West){
 			nextX -= this.playerMovementSpeed * Math.cos(45);
 			nextY += this.playerMovementSpeed * Math.sin(45);
 			this.offSetHeight = this.height * 7 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
-			console.log("Move SW");
 		} else if(this.keyHeld_South && this.keyHeld_East){
 			nextX += this.playerMovementSpeed * Math.cos(45); 
 			nextY += this.playerMovementSpeed * Math.sin(45);
 			this.offSetHeight = this.height * 1;
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
-			console.log("Move SE"); 
 		} else if(this.keyHeld_North && this.canMoveNorth){
 			nextY -= this.playerMovementSpeed;
 			this.offSetHeight = this.height * 4;
 			this.miniMapY -= this.playerMovementSpeed/15;
-			console.log("Move N");
 		} else if(this.keyHeld_East && this.canMoveEast){
 			nextX += this.playerMovementSpeed;
 			this.offSetHeight = this.height * 2;
 			this.miniMapX += this.playerMovementSpeed/15;
-			console.log("Move E");
 		} else if(this.keyHeld_South && this.canMoveSouth){
 			nextY += this.playerMovementSpeed;
 			this.offSetHeight = this.height * 8;
 			this.miniMapY += this.playerMovementSpeed/15;
-			console.log("Move S");
 		} else if(this.keyHeld_West && this.canMoveWest){
 			nextX -= this.playerMovementSpeed;
 			this.offSetHeight = this.height * 6;
 			this.miniMapX -= this.playerMovementSpeed/15;
-			console.log("Move West")
 		} else {
 			this.offSetHeight = 0;
 		}
@@ -200,6 +195,18 @@ function warriorClass() {
 			case TILE_COIN:
 				this.coins++;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+			case TILE_WALL_LEVER_1:
+				if(!this.leverCoolDownActive){
+					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_2;
+					console.log("Walked in Lever 1");
+					this.leverCoolDownActive = true;
+				}
+			case TILE_WALL_LEVER_2:
+				if(!this.leverCoolDownActive){
+					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_1;
+					console.log("Walked in Lever 2");
+					this.leverCoolDownActive = true;
+				}
 			case TILE_WALL:
 			case TILE_WALL_WITH_TORCH:
 			case TILE_TABLE:
@@ -208,6 +215,13 @@ function warriorClass() {
 				break;
 		} // END OF SWITCH CASE		
 		this.trapCoolDown();
+		if(this.leverCoolDownActive){
+			this.leverCoolDown++;
+			if(this.leverCoolDown == 100){
+				this.leverCoolDown = 0;
+				this.leverCoolDownActive = false
+			}
+		}
 		
 	}	// END OF THIS.MOVEMENT
 
