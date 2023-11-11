@@ -148,6 +148,7 @@ function warriorClass() {
 		switch(walkIntoTileType) {
 			case TILE_ROAD:
 			case TILE_SPIKES_UNARMED:
+			case TILE_WALL_3:	
 			case TILE_PITTRAP_UNARMED:
 				this.x = nextX;
 				this.y = nextY;
@@ -189,24 +190,29 @@ function warriorClass() {
 			case TILE_HEALING_POTION:
 				this.healthPotion++;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				break;
 			case TILE_SPEED_POTION:
 				this.speedPotion++;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				break;
 			case TILE_COIN:
 				this.coins++;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				break;
 			case TILE_WALL_LEVER_1:
 				if(!this.leverCoolDownActive){
 					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_2;
 					console.log("Walked in Lever 1");
 					this.leverCoolDownActive = true;
 				}
+				break;
 			case TILE_WALL_LEVER_2:
 				if(!this.leverCoolDownActive){
 					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_1;
 					console.log("Walked in Lever 2");
 					this.leverCoolDownActive = true;
 				}
+				break;
 			case TILE_WALL:
 			case TILE_WALL_WITH_TORCH:
 			case TILE_TABLE:
@@ -222,7 +228,6 @@ function warriorClass() {
 				this.leverCoolDownActive = false
 			}
 		}
-		
 	}	// END OF THIS.MOVEMENT
 
 		

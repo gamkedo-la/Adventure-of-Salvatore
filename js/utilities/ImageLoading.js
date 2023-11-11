@@ -115,7 +115,8 @@ function loadImages() {
 			{trackType: TILE_SPEED_POTION, theFile: "speedPotion.png"},
 			{trackType: TILE_COIN, theFile: "Coin.png"},
 			{trackType: TILE_WALL_LEVER_1, theFile: "wallLever.png"},
-			{trackType: TILE_WALL_LEVER_2, theFile: "wallLever2.png"}
+			{trackType: TILE_WALL_LEVER_2, theFile: "wallLever2.png"},
+			{trackType: TILE_WALL_3, theFile: "wall3.png"},
 		];
 			
 	picsToLoad = imageList.length;
