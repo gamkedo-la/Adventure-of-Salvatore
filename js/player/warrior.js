@@ -204,6 +204,7 @@ function warriorClass() {
 					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_2;
 					console.log("Walked in Lever 1");
 					this.leverCoolDownActive = true;
+					roomGrid[426] = TILE_WALL;
 				}
 				break;
 			case TILE_WALL_LEVER_2:
@@ -211,6 +212,7 @@ function warriorClass() {
 					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_1;
 					console.log("Walked in Lever 2");
 					this.leverCoolDownActive = true;
+					roomGrid[426] = TILE_WALL_3;
 				}
 				break;
 			case TILE_WALL:
