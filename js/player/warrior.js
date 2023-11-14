@@ -30,6 +30,10 @@ function warriorClass() {
 	this.healthPotion = 0;
 	this.speedPotion = 1;
 	this.coins = 0;
+	this.greenKeysHeld = 0;
+	this.blueKeysHeld = 0;
+	this.redKeysHeld = 0;
+	this.yellowKeysHeld = 0;
 	//affects
 	this.speedIncrease = false;
 	this.speedIncreaseTimer = 0;
@@ -165,10 +169,22 @@ function warriorClass() {
 				this.keysHeld--;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
 				break;
-			case TILE_YELLOW_KEY:	
-				this.keysHeld++;			
+			case TILE_KEY_YELLOW:	
+				this.yellowKeysHeld++;			
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;			
+				break;
+			case TILE_KEY_BLUE:	
+				this.blueKeysHeld++;			
+				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				break;	
+			case TILE_KEY_GREEN:	
+				this.greenKeysHeld++;			
+				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				break;
+			case TILE_KEY_RED:
+				this.redKeysHeld++;			
+				roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				break;				
 			case TILE_FINISH:
 			case TILE_STAIRS_DOWN:
 				console.log("Stair 2");

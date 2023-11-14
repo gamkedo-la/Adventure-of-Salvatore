@@ -114,7 +114,11 @@ function enemyClass() {
 	
 		switch(walkIntoTileType) {
 			case TILE_ROAD:
-			case TILE_YELLOW_KEY:	
+			case TILE_SPEED_POTION:
+			case TILE_KEY_BLUE:
+			case TILE_KEY_GREEN:
+			case TILE_KEY_RED:
+			case TILE_KEY_YELLOW:
 				this.x = nextX;
 				this.y = nextY;
 				break;					

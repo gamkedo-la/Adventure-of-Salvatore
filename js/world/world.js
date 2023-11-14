@@ -18,18 +18,18 @@ var levelList = [levelOne, levelTwo];
 var levelNow = 0;
 var roomGrid = [];
 
-var levelOne = [
+var levelOne = [ 
 	
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 11,  1,  1, 11,  1, 11, 42, 43, 11,  1, 11, 42, 43, 11,  1, 43,  1,  1,  1,  1,  1,  1,  1,  1,  
     1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 59, 57, 61, 61,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  2,  0,  1, 14,  0,  0,  0, 62,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  1,
-	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 36, 39,  0,  0,  1,  0,  0,  0, 51, 51, 51, 52,  0,  0,  1,
+	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0, 69,  0, 30, 33, 36, 39,  0,  0,  1,  0,  0,  0, 51, 51, 51, 52,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 33, 39,  0,  0,  1,  0,  0,  0, 51, 61,  0, 52,  0,  0,  1,
-	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 33, 34, 39,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
-	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0, 30, 33, 33, 39,  0,  0,  1,  0,  0,  0, 51,  0,  0,  0,  0,  0,  1,
+	1,  0, 24, 24, 24, 24, 24,  0,  1,  0, 68,  0,  0,  1,  0,  0,  0,  0, 30, 33, 34, 39,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,
+	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0, 70,  0, 30, 33, 33, 39,  0,  0,  1,  0,  0,  0, 51,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0, 30, 37, 35, 39,  0,  0,  1, 57,  0,  0, 52,  0,  0, 52,  0,  0,  1,
-	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0, 64,  0,  0,  0,  0,  0,  0,  1, 59,  0,  0, 51, 52, 52, 51,  0,  0,  1,
+	1,  0,  0,  0,  0,  0,  0,  0,  1,  0, 71,  0,  0,  1,  0,  0,  0, 64,  0,  0,  0,  0,  0,  0,  1, 59,  0,  0, 51, 52, 52, 51,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  9,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  0,  0,  0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,
@@ -84,7 +84,6 @@ var levelTwo = [
 	const TILE_PLAYER = 2;
 	const TILE_YELLOW_DOOR = 3;
 	const TILE_FINISH = 4;
-	const TILE_YELLOW_KEY = 5;
 	const TILE_RED_DOOR = 6;
 	const TILE_BLUE_DOOR = 7;
 	const TILE_TREASURE = 8;
@@ -147,6 +146,10 @@ var levelTwo = [
 	const TILE_WALL_LEVER_1 = 65;
 	const TILE_WALL_LEVER_2 = 66;
 	const TILE_WALL_3 = 67;
+	const TILE_KEY_YELLOW = 68;
+	const TILE_KEY_RED = 69;
+	const TILE_KEY_BLUE = 70;
+	const TILE_KEY_GREEN = 71;
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -195,6 +198,20 @@ function drawTracks(){
 				var itemFrames = 4;
 				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
 				canvasContext.drawImage(trackPics[TILE_HEALING_POTION],
+				animOffset * ISO_TILE_DRAW_W, 
+				40, 
+				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
+				isoDrawX - ISO_GRID_W/2, 
+				isoDrawY - ISO_TILE_GROUND_Y, 
+				ISO_TILE_DRAW_W, 
+				ISO_TILE_DRAW_H);
+			} else if (	trackTypeHere == TILE_KEY_BLUE ||
+						trackTypeHere == TILE_KEY_YELLOW ||
+						trackTypeHere == TILE_KEY_GREEN ||
+						trackTypeHere == TILE_KEY_RED){
+				var itemFrames = 4;
+				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
+				canvasContext.drawImage(trackPics[trackTypeHere],
 				animOffset * ISO_TILE_DRAW_W, 
 				40, 
 				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
@@ -280,7 +297,11 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_HEALING_POTION ||
 			checkTileType == TILE_SPEED_POTION ||
 			checkTileType == TILE_FIRE_PLACE_2 ||
-			checkTileType == TILE_COIN
+			checkTileType == TILE_COIN ||
+			checkTileType == TILE_KEY_BLUE ||
+			checkTileType == TILE_KEY_GREEN ||
+			checkTileType == TILE_KEY_RED ||
+			checkTileType == TILE_KEY_YELLOW
 			);
 }
 

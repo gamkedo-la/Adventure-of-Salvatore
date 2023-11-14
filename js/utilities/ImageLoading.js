@@ -59,8 +59,7 @@ function loadImages() {
 			{trackType: TILE_WALL_WITH_TORCH, theFile:  "track_wall_with_torch.png"},
 			{trackType: TILE_YELLOW_DOOR, theFile:  "track_yellowdoor.png"},
 			{trackType: TILE_RED_DOOR, theFile:  "track_reddoor.png"},		
-			{trackType: TILE_BLUE_DOOR, theFile:  "track_bluedoor.png"},				
-			{trackType: TILE_YELLOW_KEY, theFile:  "track_yellowkey.png"},			
+			{trackType: TILE_BLUE_DOOR, theFile:  "track_bluedoor.png"},						
 			{trackType: TILE_TREASURE, theFile:  "track_treasure.png"},
 			{trackType: TILE_TABLE, theFile:  "track_table.png"},
 			{trackType: TILE_FINISH, theFile: "track_finish.png"},
@@ -117,6 +116,10 @@ function loadImages() {
 			{trackType: TILE_WALL_LEVER_1, theFile: "wallLever.png"},
 			{trackType: TILE_WALL_LEVER_2, theFile: "wallLever2.png"},
 			{trackType: TILE_WALL_3, theFile: "wall3.png"},
+			{trackType: TILE_KEY_BLUE, theFile: "keyBlue.png"},
+			{trackType: TILE_KEY_GREEN, theFile: "keyGreen.png"},
+			{trackType: TILE_KEY_RED, theFile: "keyRed.png"},
+			{trackType: TILE_KEY_YELLOW, theFile: "keyYellow.png"}
 		];
 			
 	picsToLoad = imageList.length;
