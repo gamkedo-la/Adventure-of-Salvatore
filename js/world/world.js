@@ -21,7 +21,7 @@ var roomGrid = [];
 var levelOne = [ 
 	
 	1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1, 11,  1,  1, 11,  1, 11, 42, 43, 11,  1, 11, 42, 43, 11,  1, 43,  1,  1,  1,  1,  1,  1,  1,  1,  
-    1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 59, 57, 61, 61,  0,  0,  0,  0,  0,  1,
+    1, 72,  0,  0,  0,  0,  0,  0,  1, 72,  0,  0, 72,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 59, 57, 61, 61,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  2,  0,  1, 14,  0,  0,  0, 62,  0,  0,  0,  0,  0,  1, 60,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  1, 15,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1, 58,  0,  0,  0,  0,  0,  0,  0,  0,  1,
 	1,  0, 24, 24, 24, 24, 24,  0,  1,  0,  0,  0,  0,  1,  0,  0, 69,  0, 30, 33, 36, 39,  0,  0,  1,  0,  0,  0, 51, 51, 51, 52,  0,  0,  1,
@@ -150,6 +150,7 @@ var levelTwo = [
 	const TILE_KEY_RED = 69;
 	const TILE_KEY_BLUE = 70;
 	const TILE_KEY_GREEN = 71;
+	const TILE_POT_GREEN = 72;
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -301,7 +302,8 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_KEY_BLUE ||
 			checkTileType == TILE_KEY_GREEN ||
 			checkTileType == TILE_KEY_RED ||
-			checkTileType == TILE_KEY_YELLOW
+			checkTileType == TILE_KEY_YELLOW ||
+			checkTileType == TILE_POT_GREEN 
 			);
 }
 
