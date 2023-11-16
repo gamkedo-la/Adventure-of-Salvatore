@@ -174,8 +174,9 @@ function drawWorldBackground(){
     let bgw=256;
     let bgh=256;
     // heinous hack kludge: the camera moves in floating point and causes seams unless we slightly overlap
-    bgw-=0.5;
-    bgh-=0.5;
+    // fixed by locking camera coords to integers
+    // bgw-=0.5;
+    // bgh-=0.5;
     for (let x=0; x<cols; x++) {
         for (let y=0; y<rows; y++) {
             canvasContext.drawImage(worldBackgroundPic,x*bgw,y*bgh);

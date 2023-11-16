@@ -26,7 +26,9 @@ function updatedCameraPosition(){
 
 function shiftForCameraPan(){
 	canvasContext.save();
-	canvasContext.translate(-camPanX, -camPanY);
+    // we lock these to integers to prevent
+    // flickers, blurry pixels, and seams between tiles
+    canvasContext.translate(Math.round(-camPanX), Math.round(-camPanY));
 }
 
 function finishedCameraPan(){
