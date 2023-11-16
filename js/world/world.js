@@ -169,10 +169,10 @@ function tileCoordToIsoCoord(tileC, tileR ){
 // fill in the blank areas behind the map
 function drawWorldBackground(){
     // fixme: calculate cols+rows based on world size
-    let cols=4;
-    let rows=4;
-    let bgw=512;
-    let bgh=512;
+    let cols=8;
+    let rows=8;
+    let bgw=256;
+    let bgh=256;
     // heinous hack kludge: the camera moves in floating point and causes seams unless we slightly overlap
     bgw-=0.5;
     bgh-=0.5;
