@@ -235,7 +235,8 @@ function drawEverything() {
 	colorRect(0,0,canvas.width,canvas.height, 'black');
 	if(liveGame){
 		shiftForCameraPan();
-		drawTracks();
+		drawWorldBackground();
+        drawTracks();
 		playerOne.draw();
 		for(var i = 0; i < miniCyclopList.length; i++){
 			miniCyclopList[i].draw();

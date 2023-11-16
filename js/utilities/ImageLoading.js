@@ -8,6 +8,7 @@ var shadowPic = document.createElement("img");
 var feedbackGUIPic = document.createElement("img");
 var healthbarPic = document.createElement("img");
 var rockBulletPic = document.createElement("img");
+var worldBackgroundPic = document.createElement("img");
 
 var vignetteBorderPic = document.createElement("img");
 const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is
@@ -53,6 +54,7 @@ function loadImages() {
 			{varName: healthbarPic, theFile: "healthbar.png"},
 			{varName: rockBulletPic, theFile: "rockBullet.png"},
             {varName: vignetteBorderPic, theFile: "vignetteBorder.png"},
+            {varName: worldBackgroundPic, theFile: "world_background.png"},
 	
 			{trackType: TILE_ROAD, theFile: "track_road.png"},
 			{trackType: TILE_WALL, theFile:  "track_wall2.png"},	

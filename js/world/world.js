@@ -166,6 +166,23 @@ function tileCoordToIsoCoord(tileC, tileR ){
 	gameCoordToIsoCoord(tileC * ROOM_W, tileR * ROOM_H);
 }
 					
+// fill in the blank areas behind the map
+function drawWorldBackground(){
+    // fixme: calculate cols+rows based on world size
+    let cols=4;
+    let rows=4;
+    let bgw=512;
+    let bgh=512;
+    // heinous hack kludge: the camera moves in floating point and causes seams unless we slightly overlap
+    bgw-=0.5;
+    bgh-=0.5;
+    for (let x=0; x<cols; x++) {
+        for (let y=0; y<rows; y++) {
+            canvasContext.drawImage(worldBackgroundPic,x*bgw,y*bgh);
+        }
+    }
+}
+
 function drawTracks(){
 	var tileIndex = 0;
 	var tileLeftEdgeX = 700
