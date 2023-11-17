@@ -137,10 +137,10 @@ function enemyClass() {
 				this.movementTimer = 0;
 				break;
 		} 
-	}	
+	};
 	
 	this.randomMovements = function(){
-		var whichDirection =  Math.round(Math.random() * 10);
+		var whichDirection =  10; //Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 	
 		if(this.movementTimer <= 0){

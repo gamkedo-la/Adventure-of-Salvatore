@@ -15,6 +15,7 @@ function warriorClass() {
 	this.keyHeld_East = false;
 	this.keyHeld_South = false;
 	this.keyHeld_West = false;
+	this.controlKeyForSwordSwing = false;
 	this.canMoveNorth = true;
 	this.canMoveEast = true;
 	this.canMoveSouth = true;
@@ -40,14 +41,18 @@ function warriorClass() {
 	this.displaySpeedIncreaseTimer = false;
 	this.leverCoolDown = 0;
 	this.leverCoolDownActive = false;
+	this.swordReady = true;
+	this.swordCharge = false;
+	this.swordChargeTimer = 0;
 
 	this.warriorPic = document.createElement("img");
 	
-	this.setupControls = function(northKey,eastKey,southKey,westKey) {
+	this.setupControls = function(northKey,eastKey,southKey,westKey,swordKey) {
 		this.controlKeyForNorth = northKey;
 		this.controlKeyForEast = eastKey;			
 		this.controlKeyForSouth = southKey;
-		this.controlKeyForWest = westKey;
+		this.controlKeyForWest = westKey;;
+		this.controlKeyForSwordSwing = swordKey;
 	}
 
 	this.warriorReset = function() {
@@ -82,6 +87,15 @@ function warriorClass() {
 	}	
 	 
 	this.movement = function() {
+		if(this.swordCharge){
+			this.swordChargeTimer++;
+			if(this.swordChargeTimer >= 50){
+				this.swordReady = true;
+				this.swordCharge = false;
+				this.swordChargeTimer = 0;
+			}
+		}
+		
 		if(this.speedIncrease){
 			this.playerMovementSpeed = 6;
 			this.speedIncreaseTimer--;
@@ -246,8 +260,7 @@ function warriorClass() {
 				this.leverCoolDownActive = false
 			}
 		}
-	}	// END OF THIS.MOVEMENT
-
+	};	// END OF THIS.MOVEMENT
 		
 	this.checkCollisionsAgainst = function(otherHumanoid){
 		if(this.collisionTest(otherHumanoid)){
@@ -271,7 +284,7 @@ function warriorClass() {
 			this.canMoveSouth = true;
 			this.canMoveWest = true;
 		}
-	}
+	};
 	
 	this.collisionTest = function(otherHumanoid){
 		if(	this.x > otherHumanoid.x - 20 && this.x < otherHumanoid.x + 20 &&
@@ -354,6 +367,13 @@ function warriorClass() {
 			this.trapCoolDownTimer = false;
 		}
 	}
-	
-	
+
+	this.swordSwing = function (){
+		console.log("Sword Swing");
+		for(var i = 0; i < miniCyclopList.length; i++){
+			this.checkCollisionsAgainst(miniCyclopList[i]);
+		}
+		this.swordReady = false;
+		this.swordCharge = true;
+	};	
 }

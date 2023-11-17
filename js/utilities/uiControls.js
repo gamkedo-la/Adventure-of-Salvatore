@@ -26,7 +26,7 @@ function initInput(){
 	document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
 	
-	playerOne.setupControls(KEY_W, KEY_D, KEY_S, KEY_A);
+	playerOne.setupControls(KEY_W, KEY_D, KEY_S, KEY_A, KEY_SPACEBAR);
 }
 
 function keyPressed(evt) {
@@ -34,15 +34,15 @@ function keyPressed(evt) {
 	evt.preventDefault();
 	
 	var paused = KEY_P;
-	var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
+	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
 
 	if(paused == evt.keyCode){
 		changePauseState();
 	}
-	if(addRockBulletKey == evt.keyCode){ // just for toubleshooting wall trap (can be removed)
+	/*if(addRockBulletKey == evt.keyCode){ // just for toubleshooting wall trap (can be removed)
 		addRockBullet();
-	}
+	}*/
 	if (speedPotion == evt.keyCode){
 		playerOne.useSpeedPotion();
 	}
@@ -68,6 +68,12 @@ function setKeyHoldState(thisKey, thisWarrior, setTo) {
 	
 	if(thisKey == thisWarrior.controlKeyForWest){
 		thisWarrior.keyHeld_West = setTo;
+	}
+
+	if(thisKey == thisWarrior.controlKeyForSwordSwing){
+		if(playerOne.swordReady){
+			playerOne.swordSwing();
+		}
 	}
 }
 
