@@ -264,10 +264,12 @@ function drawEverything() {
         canvasContext.drawImage(vignetteBorderPic,0,0);
         canvasContext.globalAlpha = 1;
 
-		// gui is drawn above the vignette
-        drawMinimap();
-        canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
-		colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
+		//gui is drawn above the vignette
+		canvasContext.drawImage(guiBorderPic,0,0);
+        
+		drawMinimap();
+        //canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
+		//colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
 
 	}
 }
