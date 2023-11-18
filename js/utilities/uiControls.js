@@ -11,6 +11,7 @@ const KEY_RIGHT_ARROW = 39;
 const KEY_DOWN_ARROW = 40;
 
 const KEY_P = 80;
+const KEY_M = 77;
 
 
 function initInput(){
@@ -34,11 +35,15 @@ function keyPressed(evt) {
 	evt.preventDefault();
 	
 	var paused = KEY_P;
+	var muteKey = KEY_M;
 	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
 
 	if(paused == evt.keyCode){
 		changePauseState();
+	}
+	if (muteKey == evt.keyCode){
+		isMuted = !isMuted;
 	}
 	/*if(addRockBulletKey == evt.keyCode){ // just for toubleshooting wall trap (can be removed)
 		addRockBullet();
