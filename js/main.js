@@ -7,12 +7,14 @@ var miniCyclopList = [];
 var orcList = [];
 var ogreList = [];
 var ratList = [];
+var entities = [playerOne];
 
 function resetEnemyLists(){
 	miniCyclopList = [];
 	orcList = [];
 	ogreList = [];
 	ratList = [];
+	entities = [playerOne];
 }
 
 //game states
@@ -58,11 +60,6 @@ function calculateMousePos(evt) {
 
 function imageLoadingDoneSoStartGame(){
 	var framesPerSecond = 30;
-	setInterval(function() {
-		moveEverything();
-		checkAllPlayerAndEnemyCollisions();
-		drawEverything();
-	}, 1000/framesPerSecond);
 	loadLevel(levelOne)
 	playerOne.init(warriorPic, "The Warrior");
 	for(var i = 0; i < roomGrid.length; i++){
@@ -88,27 +85,37 @@ function imageLoadingDoneSoStartGame(){
 	for(var i = 0; i < ratList.length; i++){
 		ratList[i].init(ratPic, ratNames[i], TILE_RAT);
 	}
+
+	setInterval(function() {
+		moveEverything();
+		checkAllPlayerAndEnemyCollisions();
+		drawEverything();
+	}, 1000/framesPerSecond);
 }
 
 //Adds an enemy 
 function addMiniCyclop(){
 	var tempEnemy = new enemyClass();
 	miniCyclopList.push(tempEnemy);
+	entities.push(tempEnemy);
 }
 
 function addOrc(){
 	var tempEnemy = new enemyClass();
 	orcList.push(tempEnemy);
+	entities.push(tempEnemy);
 }
 
 function addOgre(){
 	var tempEnemy = new enemyClass();
 	ogreList.push(tempEnemy);
+	entities.push(tempEnemy);
 }
 
 function addRat(){
 	var tempEnemy = new ratClass();
 	ratList.push(tempEnemy);
+	entities.push(tempEnemy);
 }
 
 function nextLevel() {
@@ -157,21 +164,8 @@ function loadLevel(whichLevel) {
 //All movement occurs here.  This is called every frame.
 function moveEverything() {
 	if(liveGame){
-		playerOne.movement();
-		for(var i = 0; i < miniCyclopList.length; i++){
-			miniCyclopList[i].movement();
-		}
-		for(var i = 0; i < orcList.length; i++){
-			orcList[i].movement();
-		}
-		for(var i = 0; i < ogreList.length; i++){
-			ogreList[i].movement();
-		}
-		for(var i = 0; i < ratList.length; i++){
-			ratList[i].movement();
-		}
-		for(var i = 0; i < rockBulletList.length; i++){
-			rockBulletList[i].movement();
+		for(var i = 0; i < entities.length; i++){
+			entities[i].movement();
 		}
 		for(var i = 0; i < smokeList.length; i++){
 			smokeList[i].move();
@@ -236,20 +230,25 @@ function drawEverything() {
 	if(liveGame){
 		shiftForCameraPan();
 		drawWorldBackground();
-        drawTracks();
-		playerOne.draw();
-		for(var i = 0; i < miniCyclopList.length; i++){
-			miniCyclopList[i].draw();
-		}
-		for(var i = 0; i < orcList.length; i++){
-			orcList[i].draw();
-		}
-		for(var i = 0; i < ogreList.length; i++){
-			ogreList[i].draw();
-		}
-		for(var i = 0; i < ratList.length; i++){
-			ratList[i].draw();
-		}
+
+		drawFloor();
+		entities.sort(function(a, b) {
+			return a.x - b.x;
+		});
+		entities.sort(function(a, b) {
+			return a.y - b.y;
+		});
+		var entityIndex = 0;
+		sharedAnimCycle++;
+        for (var row = 0; row < ROOM_ROWS; row++) {
+        	for (var col = 0; col < ROOM_COLS; col++) {
+        		drawAt(row, col);
+	        	while (entityIndex < entities.length && entities[entityIndex].x/ISO_TILE_DRAW_W < col+1 && entities[entityIndex].y/ISO_TILE_DRAW_H < row+1) {
+	        		entities[entityIndex].draw();
+	        		entityIndex++;
+	        	}
+        	}
+        }
 		for(var i = 0; i < rockBulletList.length; i++){
 			rockBulletList[i].draw();
 			removeBulletFromList();
