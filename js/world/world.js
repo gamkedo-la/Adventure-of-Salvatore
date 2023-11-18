@@ -453,9 +453,29 @@ function tileTypeHasRoadTransparency(checkTileType) {
 			checkTileType == TILE_KEY_GREEN ||
 			checkTileType == TILE_KEY_RED ||
 			checkTileType == TILE_KEY_YELLOW ||
-			checkTileType == TILE_POT_GREEN 
+			checkTileType == TILE_POT_GREEN ||
+			checkTileType == TILE_CHAIR ||
+			checkTileType == TILE_CHAIR2 ||
+			checkTileType == TILE_CHAIR3 ||
+			checkTileType == TILE_CHAIR4 ||
+			checkTileType == TILE_CHAIR5 ||
+			checkTileType == TILE_CHAIR6 ||
+			checkTileType == TILE_CHAIR7 ||
+			checkTileType == TILE_CHAIR8 ||
+			checkTileType == TILE_CHAIR9 ||
+			checkTileType == TILE_CHAIR10 ||
+			checkTileType == TILE_CHAIR11 ||
+			checkTileType == TILE_TABLE ||
+			checkTileType == TILE_TABLE1 ||
+			checkTileType == TILE_TABLE2 ||
+			checkTileType == TILE_TABLE3 ||
+			checkTileType == TILE_TABLE4 ||
+			checkTileType == TILE_TABLE5 ||
+			checkTileType == TILE_TREASURE ||
+			checkTileType == TILE_POT_GREEN
 			);
 }
+
 
 function isWallAtTileCoord(trackTileCol, trackTileRow){
 				var tileIndex = roomTileToIndex(tileCol, tileRow);
