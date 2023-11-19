@@ -90,3 +90,14 @@ function changePauseState(){
 	}	
 }
 
+function drawUserInterface(){
+	canvasContext.drawImage(guiBorderPic,0,0);
+	canvasContext.drawImage(guiButtonPic,20,525);
+	colorText("MENU", 40, 547, 'white', '18px serif');
+	canvasContext.drawImage(guiButtonPic,20,561);
+	colorText("ITEMS", 40, 583, 'white', '18px serif');
+	canvasContext.drawImage(guiButtonPic,canvas.width - 120,525);
+	colorText("MAP", canvas.width - 90, 547, 'white', '18px serif');
+	canvasContext.drawImage(feedbackGUIPic,canvas.width - 335,538);
+	colorText("Feedback to player", canvas.width - 315, 555, 'BLACK', '12px serif');
+}

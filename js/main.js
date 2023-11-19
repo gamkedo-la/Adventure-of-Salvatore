@@ -48,7 +48,6 @@ window.onload = function(){
 }
 
 function calculateMousePos(evt) {
-	
 	var rect = canvas.getBoundingClientRect(), root = document.documentElement;
 	var mouseX = evt.clientX - rect.left - root.scrollLeft;
 	var mouseY = evt.clientY - rect.top - root.scrollTop;
@@ -265,8 +264,7 @@ function drawEverything() {
         canvasContext.globalAlpha = 1;
 
 		//gui is drawn above the vignette
-		canvasContext.drawImage(guiBorderPic,0,0);
-        
+		drawUserInterface();
 		drawMinimap();
         //canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
 		//colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
