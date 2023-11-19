@@ -100,4 +100,15 @@ function drawUserInterface(){
 	colorText("MAP", canvas.width - 90, 547, 'white', '18px serif');
 	canvasContext.drawImage(feedbackGUIPic,canvas.width - 335,538);
 	colorText("Feedback to player", canvas.width - 315, 555, 'BLACK', '12px serif');
+	
+	let startX = 150
+	let startY = 561
+	let amountOfHolders = 6;
+	let holderSpot = 0
+	let holderSpacing = 50;
+	colorText("WIP:  Healthbar TO GO HERE", startX, 555, 'RED', '18px serif');
+	for(holderSpot; holderSpot < amountOfHolders; holderSpot++){
+		canvasContext.drawImage(guiPotionHolderPic, startX + (holderSpot * holderSpacing), startY);
+		colorText(holderSpot + 1, startX + (holderSpot * holderSpacing) + 22, startY + 28, 'white', '12px serif');
+	}
 }
