@@ -375,5 +375,6 @@ function warriorClass() {
 		}
 		this.swordReady = false;
 		this.swordCharge = true;
+		swordSwingSound.play();
 	};	
 }

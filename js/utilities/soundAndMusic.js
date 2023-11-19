@@ -4,6 +4,7 @@ var soundSetforMeetings = false; //make false to hear at normal level
 
 //sounds
 var crashIntoConeSound = new SoundOverlapsClass("crashCone");
+var swordSwingSound = new SoundOverlapsClass("sword_3");
 
 function setFormat() {
     var audio = new Audio();
