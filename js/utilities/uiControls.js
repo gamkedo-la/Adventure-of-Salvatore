@@ -106,9 +106,15 @@ function drawUserInterface(){
 	let amountOfHolders = 6;
 	let holderSpot = 0
 	let holderSpacing = 50;
-	colorText("WIP:  Healthbar TO GO HERE", startX, 555, 'RED', '18px serif');
 	for(holderSpot; holderSpot < amountOfHolders; holderSpot++){
 		canvasContext.drawImage(guiPotionHolderPic, startX + (holderSpot * holderSpacing), startY);
 		colorText(holderSpot + 1, startX + (holderSpot * holderSpacing) + 22, startY + 28, 'white', '12px serif');
+	}
+	let healthBarHolderX = startX
+	let healthBarHolderY = 540;
+	let healthX = startX + 20;
+	canvasContext.drawImage(healthbarPic, healthBarHolderX,healthBarHolderY);
+	for(var i = 0; i < playerOne.health; i++){
+		canvasContext.drawImage(healthPic, healthBarHolderX +25 + (i*9),healthBarHolderY);
 	}
 }

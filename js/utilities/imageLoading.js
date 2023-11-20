@@ -7,6 +7,7 @@ var spiderPic = document.createElement("img");
 var shadowPic = document.createElement("img");
 var feedbackGUIPic = document.createElement("img");
 var healthbarPic = document.createElement("img");
+var healthPic = document.createElement("img");
 var rockBulletPic = document.createElement("img");
 var worldBackgroundPic = document.createElement("img");
 var guiBorderPic = document.createElement("img");
@@ -55,6 +56,7 @@ function loadImages() {
 			{varName: shadowPic, theFile: "shadow.png"},
 			{varName: feedbackGUIPic, theFile: "feedbackGUI.png"},
 			{varName: healthbarPic, theFile: "healthbar.png"},
+			{varName: healthPic, theFile: "health.png"},
 			{varName: rockBulletPic, theFile: "rockBullet.png"},
             {varName: vignetteBorderPic, theFile: "vignetteBorder.png"},
             {varName: worldBackgroundPic, theFile: "world_background.png"},
