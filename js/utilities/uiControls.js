@@ -117,4 +117,5 @@ function drawUserInterface(){
 	for(var i = 0; i < playerOne.health; i++){
 		canvasContext.drawImage(healthPic, healthBarHolderX +25 + (i*9),healthBarHolderY);
 	}
+	colorText("Coins: " + playerOne.coins, canvas.width - 100, 585, 'BLACK', '16px serif');
 }
