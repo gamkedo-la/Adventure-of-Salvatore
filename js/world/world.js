@@ -1,3 +1,4 @@
+const FADE_WALLS_THAT_OBSCURE_PLAYER = true; // set to true for transparent walls
 const ISO_GRID_W = 50;
 const ISO_GRID_H = ISO_GRID_W / 2;
 const ISO_TILE_GROUND_Y = 85;
@@ -286,7 +287,9 @@ function drawTracks(){
 				canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 			} else {
 				if(trackTypeHere == TILE_WALL && isBlockingSightOfPlayer(tileLeftEdgeX, tileTopEdgeY)){
-					canvasContext.globalAlpha = 0.3;
+					if (FADE_WALLS_THAT_OBSCURE_PLAYER) {
+                        canvasContext.globalAlpha = 0.3;
+                    }
 					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 					canvasContext.globalAlpha = 1.0;
 					canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
@@ -321,7 +324,9 @@ function drawFloor(){
 				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 			}
 			if (trackTypeHere == TILE_WALL && isBlockingSightOfPlayer(tileLeftEdgeX, tileTopEdgeY)){
-				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
+				if (FADE_WALLS_THAT_OBSCURE_PLAYER) {
+                    canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
+                }
 			}
 			if (trackTypeHere == TILE_ROAD) {
 				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
@@ -412,7 +417,9 @@ function drawAt(currentRow, currentCol){
 		canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 		canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 	} else if(trackTypeHere == TILE_WALL && isBlockingSightOfPlayer(tileLeftEdgeX, tileTopEdgeY)){
-		canvasContext.globalAlpha = 0.3;
+		if (FADE_WALLS_THAT_OBSCURE_PLAYER) {
+            canvasContext.globalAlpha = 0.3;
+        }
 		canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 		canvasContext.globalAlpha = 1.0;
 	} else if (trackTypeHere > TILE_ROAD){
