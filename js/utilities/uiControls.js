@@ -1,7 +1,12 @@
-const KEY_W = 87; // "W"
-const KEY_S = 83; // "S"
-const KEY_A = 65; // "A"
-const KEY_D = 68; // "D"
+const KEY_W = 87; 
+const KEY_S = 83; 
+const KEY_A = 65; 
+const KEY_D = 68; 
+const KEY_B = 66; //Mute
+const KEY_M = 77; //Menu
+const KEY_N = 78; //Map
+const KEY_P = 80; //Pause
+const KEY_I = 73; //Items
 const KEY_SPACEBAR = 32; 
 const KEY_1 = 49;
 
@@ -10,8 +15,6 @@ const KEY_UP_ARROW = 38;
 const KEY_RIGHT_ARROW = 39;
 const KEY_DOWN_ARROW = 40;
 
-const KEY_P = 80;
-const KEY_M = 77;
 
 var MousePosX = 0;
 var MousePosY = 0;
@@ -37,21 +40,25 @@ function keyPressed(evt) {
 	evt.preventDefault();
 	
 	var paused = KEY_P;
-	var muteKey = KEY_M;
+	var menuKey = KEY_M;
+	var mapKey = KEY_N;
+	var itemKey = KEY_I;
+	var muteKey = KEY_B;
 	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
 
 	if(paused == evt.keyCode){
 		changePauseState();
-	}
-	if (muteKey == evt.keyCode){
+	} else if (muteKey == evt.keyCode){
 		isMuted = !isMuted;
-	}
-	/*if(addRockBulletKey == evt.keyCode){ // just for toubleshooting wall trap (can be removed)
-		addRockBullet();
-	}*/
-	if (speedPotion == evt.keyCode){
+	} else if (speedPotion == evt.keyCode){
 		playerOne.useSpeedPotion();
+	} else if (menuKey == evt.keyCode){
+		console.log("Go to Menu Screen");
+	} else if (mapKey == evt.keyCode){
+		console.log("Toggle Map on/off");
+	} else if (itemKey == evt.keyCode){
+		console.log("Go to Item Screen")
 	}
 }
 
