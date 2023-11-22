@@ -13,6 +13,8 @@ const KEY_DOWN_ARROW = 40;
 const KEY_P = 80;
 const KEY_M = 77;
 
+var MousePosX = 0;
+var MousePosY = 0;
 
 function initInput(){
 	
@@ -88,6 +90,44 @@ function changePauseState(){
 	} else {
 		pauseScreen = true;
 	}	
+}
+
+function checkGUIMousePos(){
+	let box1X = 20;
+	let box1Y = 525;
+	let box1Width = 100;
+	let box1Height = 50;
+	if (MousePosX > box1X && MousePosX < box1X + box1Width &&
+		MousePosY > box1Y && MousePosY < box1Y + box1Height){
+			/*if(MouseEvent.onClick){
+				console.log("mouse clicked");
+			}*/
+			console.log("Menu");
+		
+	};
+	let box2X = 20;
+	let box2Y = 575;
+	let box2Width = 100;
+	let box2Height = 50;
+	if (MousePosX > box2X && MousePosX < box2X + box2Width &&
+		MousePosY > box2Y && MousePosY < box2Y + box2Height){
+			/*if(MouseEvent.onClick){
+				console.log("mouse clicked");
+			}*/
+			console.log("Items");
+		
+	};
+	let box3X = canvas.width - 120;
+	let box3Y = 525;
+	let box3Width = 100;
+	let box3Height = 50;
+	if (MousePosX > box3X && MousePosX < box3X + box3Width &&
+		MousePosY > box3Y && MousePosY < box3Y + box3Height){
+			/*if(MouseEvent.onClick){
+				console.log("mouse clicked");
+			}*/
+			console.log("Map");
+	};
 }
 
 function drawUserInterface(){

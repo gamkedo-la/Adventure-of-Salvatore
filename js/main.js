@@ -172,7 +172,9 @@ function moveEverything() {
 
 		removeBulletFromList();
 		removeSmokeFromList();
-
+		if(MousePosY > 500){
+			checkGUIMousePos();
+		}
 		updatedCameraPosition();
 	}
 }
