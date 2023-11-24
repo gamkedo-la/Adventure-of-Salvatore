@@ -233,23 +233,50 @@ function drawEverything() {
 		drawWorldBackground();
 
 		drawFloor();
+		//Calculate zsorts
+		for (var i = 0; i < entities.length; i++) {
+			entities[i].zsort = entities[i].x/ISO_TILE_DRAW_W + entities[i].y/ISO_TILE_DRAW_H;
+		}
+		//Sort by zsort
 		entities.sort(function(a, b) {
-			return a.x - b.x;
+			return a.zsort - b.zsort;
 		});
-		entities.sort(function(a, b) {
-			return a.y - b.y;
-		});
+		// Draw isometric back to front, with creatures
+		var maxLength = Math.max(ROOM_ROWS, ROOM_COLS)
 		var entityIndex = 0;
 		sharedAnimCycle++;
-        for (var row = 0; row < ROOM_ROWS; row++) {
-        	for (var col = 0; col < ROOM_COLS; col++) {
-        		drawAt(row, col);
-	        	while (entityIndex < entities.length && entities[entityIndex].x/ISO_TILE_DRAW_W < col+1 && entities[entityIndex].y/ISO_TILE_DRAW_H < row+1) {
-	        		entities[entityIndex].draw();
-	        		entityIndex++;
-	        	}
+		for (var z = 0; z < maxLength; z++) {
+			var row = 0;
+			var col = z;
+			while (col >= 0) {
+				drawAt(row, col);
+				row++;
+				col--;
+			}
+        	while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
+        		entities[entityIndex].draw();
+        		entityIndex++;
         	}
-        }
+
+		}
+		for (var z = 0; z < maxLength; z++) {
+			var row = z;
+			var col = maxLength;
+			while (col >= z) {
+				drawAt(row, col);
+				row++;
+				col--;
+			}
+        	while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
+        		entities[entityIndex].draw();
+        		entityIndex++;
+        	}
+		}
+		// Draw any remaining creaturs
+    	while (entityIndex < entities.length) {
+    		entities[entityIndex].draw();
+    		entityIndex++;
+    	}
 		for(var i = 0; i < rockBulletList.length; i++){
 			rockBulletList[i].draw();
 			removeBulletFromList();

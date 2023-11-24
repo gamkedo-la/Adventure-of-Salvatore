@@ -1,4 +1,4 @@
-const FADE_WALLS_THAT_OBSCURE_PLAYER = true; // set to true for transparent walls
+const FADE_WALLS_THAT_OBSCURE_PLAYER = false; // set to true for transparent walls
 const ISO_GRID_W = 50;
 const ISO_GRID_H = ISO_GRID_W / 2;
 const ISO_TILE_GROUND_Y = 85;
@@ -304,40 +304,18 @@ function drawTracks(){
 	} // end of each row
 }
 
-function drawFloor(){
-	var tileIndex = 0;
-	var tileLeftEdgeX = 700
-	var tileTopEdgeY = 0;
-	sharedAnimCycle++;
-	
+function drawFloor(){	
 	for (var eachRow = 0; eachRow < ROOM_ROWS; eachRow++){
-		tileLeftEdgeX = 7;
-		
 		for (var eachCol = 0; eachCol < ROOM_COLS; eachCol++) {
-			var trackTypeHere = roomGrid[tileIndex];
-			tileLeftEdgeX += ROOM_W;
-			isoTileLeftEdgeX = (tileLeftEdgeX - tileTopEdgeY)/2;
-			isoTileTopEdgeY = (tileLeftEdgeX + tileTopEdgeY)/4;
 			tileCoordToIsoCoord(eachCol, eachRow);
-			
-			if ( tileTypeHasRoadTransparency(trackTypeHere) ) {
-				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-			}
-			if (trackTypeHere == TILE_WALL && isBlockingSightOfPlayer(tileLeftEdgeX, tileTopEdgeY)){
-				if (FADE_WALLS_THAT_OBSCURE_PLAYER) {
-                    canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-                }
-			}
-			if (trackTypeHere == TILE_ROAD) {
-				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-			}
-            tileIndex++;
+			canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 		} // end of each col
-		tileTopEdgeY += ROOM_H;
 	} // end of each row
 }
 
 function drawAt(currentRow, currentCol){
+	if (currentRow >= ROOM_ROWS || currentCol >= ROOM_COLS) return;
+
 	var tileIndex = currentRow * ROOM_COLS + currentCol;
 	var tileLeftEdgeX = 7 + ROOM_W * currentCol;
 	var tileTopEdgeY = ROOM_H * currentRow;
