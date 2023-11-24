@@ -58,7 +58,8 @@ function keyPressed(evt) {
 	} else if (mapKey == evt.keyCode){
 		console.log("Toggle Map on/off");
 	} else if (itemKey == evt.keyCode){
-		console.log("Go to Item Screen")
+		itemScreen = !itemScreen;
+		liveGame = !liveGame;
 	}
 }
 

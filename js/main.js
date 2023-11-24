@@ -268,8 +268,8 @@ function drawEverything() {
 		//gui is drawn above the vignette
 		drawUserInterface();
 		drawMinimap();
-        //canvasContext.drawImage(feedbackGUIPic,0, canvas.height-50);
-		//colorText("Keys: " + playerOne.keysHeld, 20, 582, "black", "14px Arial Black");
-
+	}
+	if(itemScreen){
+		itemScreenDisplay();
 	}
 }
