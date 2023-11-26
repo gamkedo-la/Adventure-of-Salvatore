@@ -165,6 +165,16 @@ var levelTwo = [
 	const TILE_KEY_BLUE = 70;
 	const TILE_KEY_GREEN = 71;
 	const TILE_POT_GREEN = 72;
+
+const tile_items = [
+    TILE_COIN,
+    TILE_HEALING_POTION,
+    TILE_SPEED_POTION,
+    TILE_KEY_GREEN,
+    TILE_KEY_BLUE,
+    TILE_KEY_RED,
+    TILE_KEY_YELLOW,
+];
 	
 function gameCoordToIsoCoord (pixelX, pixelY){
 	var camPanX = -350;
@@ -327,6 +337,22 @@ function drawAt(currentRow, currentCol){
 	isoTileTopEdgeY = (tileLeftEdgeX + tileTopEdgeY)/4;
 	tileCoordToIsoCoord(eachCol, eachRow);
 	
+    if (tile_items.includes(trackTypeHere)) {
+        canvasContext.save();
+        canvasContext.translate(isoDrawX + ISO_GRID_W/8, isoDrawY - ISO_GRID_H/2);
+        canvasContext.scale(1, 0.5);
+        canvasContext.rotate((45 * Math.PI) / 180);
+        canvasContext.translate(-isoDrawX + ISO_GRID_W/4, -isoDrawY + ISO_GRID_H/2);
+        colorRect(
+            isoDrawX - ISO_GRID_W/4, 
+            isoDrawY - ISO_GRID_H/4, 
+            ISO_GRID_W/2, 
+            ISO_GRID_H, 
+            'black', 
+            0.2
+        );
+        canvasContext.restore();
+    }
 	if(trackTypeHere == TILE_WALL_WITH_TORCH){
 		canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 		
