@@ -19,6 +19,9 @@ const KEY_DOWN_ARROW = 40;
 var MousePosX = 0;
 var MousePosY = 0;
 
+var displayQuickKeysOn = true;
+var displayQuickKeysTimer = 300;
+
 function initInput(){
 	
 	canvas.addEventListener('mousemove', function(evt) {
@@ -166,4 +169,32 @@ function drawUserInterface(){
 		canvasContext.drawImage(healthPic, healthBarHolderX +25 + (i*9),healthBarHolderY);
 	}
 	colorText("Coins: " + playerOne.coins, canvas.width - 100, 585, 'BLACK', '16px serif');
+	if(displayQuickKeysOn){
+		displayQuickKeys()
+	};
+}
+
+function displayQuickKeys(){
+	displayQuickKeysTimer--;
+	console.log("display")
+	if(displayQuickKeysTimer <= 0){
+		displayQuickKeysOn = false;
+		displayQuickKeysTimer = 50;
+	}
+	colorRect(15, 532, 20, 20, 'white');
+	colorText("M",17,547,"black", '16px serif');
+	colorRect(15, 570, 20, 20, 'white');
+	colorText("I",23,585,"black", '16px serif');
+	colorRect(687, 532, 20, 20, 'white');
+	colorText("N",691,547,"black", '16px serif');
+
+	canvasContext.drawImage(guiCompassPic, 400,450);
+	colorText("W",415,450,"black", '20px serif');
+	colorText("S",419,515,"black", '20px serif');
+	colorText("A",385,483,"black", '20px serif');
+	colorText("D",450,483,"black", '20px serif');
+	colorText("WA",390,460,"black", '15px serif');
+	colorText("WD",435,460,"black", '15px serif');
+	colorText("SA",395,500,"black", '15px serif');
+	colorText("SD",435,500,"black", '15px serif');
 }

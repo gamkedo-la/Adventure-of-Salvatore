@@ -85,6 +85,8 @@ function imageLoadingDoneSoStartGame(){
 		ratList[i].init(ratPic, ratNames[i], TILE_RAT);
 	}
 
+	mainBackgroundMusic.loopSong("salvatore");
+
 	setInterval(function() {
 		moveEverything();
 		checkAllPlayerAndEnemyCollisions();

@@ -5,6 +5,7 @@ var soundSetforMeetings = false; //make false to hear at normal level
 //sounds
 var crashIntoConeSound = new SoundOverlapsClass("crashCone");
 var swordSwingSound = new SoundOverlapsClass("sword_3");
+var mainBackgroundMusic = new BackgroundMusicClass();
 
 function setFormat() {
     var audio = new Audio();
@@ -52,7 +53,7 @@ function BackgroundMusicClass() {
 			musicSound.pause();
 			musicSound = null;
 		}
-		musicSound = new Audio("sound/music/" + filenameWithPath + audioFormat);
+		musicSound = new Audio("sound/" + filenameWithPath + audioFormat);
 		if(soundSetforMeetings){
 			musicSound.volume = 0.04; //quieter for screen sharing during meetings
 		}
