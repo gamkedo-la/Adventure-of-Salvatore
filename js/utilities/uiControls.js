@@ -189,12 +189,45 @@ function displayQuickKeys(){
 	colorText("N",691,547,"black", '16px serif');
 
 	canvasContext.drawImage(guiCompassPic, 400,450);
-	colorText("W",415,450,"black", '20px serif');
-	colorText("S",419,515,"black", '20px serif');
-	colorText("A",385,483,"black", '20px serif');
-	colorText("D",450,483,"black", '20px serif');
-	colorText("WA",390,460,"black", '15px serif');
-	colorText("WD",435,460,"black", '15px serif');
-	colorText("SA",395,500,"black", '15px serif');
-	colorText("SD",435,500,"black", '15px serif');
+	
+	if(displayQuickKeysTimer > 275 && displayQuickKeysTimer < 300){
+		colorText("W",415,450,"white", '20px serif');
+	} else {
+		colorText("W",415,450,"black", '20px serif');
+	};
+	if(displayQuickKeysTimer > 250 && displayQuickKeysTimer < 275){
+		colorText("WD",435,460,"white", '15px serif');
+	} else {
+		colorText("WD",435,460,"black", '15px serif');
+	};
+	if(displayQuickKeysTimer > 225 && displayQuickKeysTimer < 250){
+		colorText("D",450,483,"white", '20px serif');
+	} else {
+		colorText("D",450,483,"black", '20px serif');
+	};
+	if(displayQuickKeysTimer > 200 && displayQuickKeysTimer < 225){
+		colorText("SD",435,500,"white", '15px serif');
+	} else {
+		colorText("SD",435,500,"black", '15px serif');
+	};
+	if(displayQuickKeysTimer > 175 && displayQuickKeysTimer < 200){
+		colorText("S",419,515,"white", '20px serif');
+	} else {
+		colorText("S",419,515,"black", '20px serif');
+	};
+	if(displayQuickKeysTimer > 150 && displayQuickKeysTimer < 175){
+		colorText("SA",395,500,"white", '15px serif');
+	} else {
+		colorText("SA",395,500,"black", '15px serif');
+	};
+	if(displayQuickKeysTimer > 125 && displayQuickKeysTimer < 150){
+		colorText("A",385,483,"white", '20px serif');
+	} else {
+		colorText("A",385,483,"black", '20px serif');
+	};
+	if(displayQuickKeysTimer > 100 && displayQuickKeysTimer < 125){
+		colorText("WA",390,460,"white", '15px serif');
+	} else {
+		colorText("WA",390,460,"black", '15px serif');
+	};
 }

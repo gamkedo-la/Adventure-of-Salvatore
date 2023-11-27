@@ -300,5 +300,6 @@ function drawEverything() {
 	}
 	if(itemScreen){
 		itemScreenDisplay();
+		drawUserInterface();
 	}
 }
