@@ -284,6 +284,16 @@ function drawIsometricWorld() {
         smokeList[i].draw();
         removeSmokeFromList();
     }
+    
+    // finally, draw the player again on TOP of any walls (x-ray)
+    
+    // TODO: use this blendmode to only draw pixels where walls are:
+    // canvasContext. globalCompositeOperation = "source-in";
+    // this requires two canvases, one for floor, one for walls
+    // for a better blue outline x-ray effect
+
+    canvasContext.globalAlpha = 0.1;
+    playerOne.draw();
 
 }
 
