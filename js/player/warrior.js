@@ -112,44 +112,44 @@ function warriorClass() {
 		var collisionX = nextX;
 		var collisionY = nextY;
 		if(this.keyHeld_North && this.keyHeld_West){
+			nextX -= this.playerMovementSpeed;
+			this.offSetHeight = this.height * 6;
+			this.miniMapX -= this.playerMovementSpeed/15;
+		} else if(this.keyHeld_North && this.keyHeld_East){
+			nextY -= this.playerMovementSpeed;
+			this.offSetHeight = this.height * 4;
+			this.miniMapY -= this.playerMovementSpeed/15;
+		} else if(this.keyHeld_South && this.keyHeld_West){
+			nextY += this.playerMovementSpeed;
+			this.offSetHeight = this.height * 8;
+			this.miniMapY += this.playerMovementSpeed/15;
+		} else if(this.keyHeld_South && this.keyHeld_East){
+			nextX += this.playerMovementSpeed;
+			this.offSetHeight = this.height * 2;
+			this.miniMapX += this.playerMovementSpeed/15;
+		} else if(this.keyHeld_North && this.canMoveNorth){
 			nextX -= this.playerMovementSpeed * Math.cos(45); 
 			nextY -= this.playerMovementSpeed * Math.sin(45);
 			this.offSetHeight = this.height * 5;
 			collisionY = nextY;
-		} else if(this.keyHeld_North && this.keyHeld_East){
+		} else if(this.keyHeld_East && this.canMoveEast){
 			nextX += this.playerMovementSpeed * Math.cos(45); 
 			nextY -= this.playerMovementSpeed * Math.sin(45);
 			this.offSetHeight = this.height * 3 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY -= this.playerMovementSpeed/10;
-		} else if(this.keyHeld_South && this.keyHeld_West){
+		} else if(this.keyHeld_South && this.canMoveSouth){
+			nextX += this.playerMovementSpeed * Math.cos(45); 
+			nextY += this.playerMovementSpeed * Math.sin(45);
+			this.offSetHeight = this.height * 1;
+			this.miniMapX += this.playerMovementSpeed/10;
+			this.miniMapY += this.playerMovementSpeed/10; 
+		} else if(this.keyHeld_West && this.canMoveWest){
 			nextX -= this.playerMovementSpeed * Math.cos(45);
 			nextY += this.playerMovementSpeed * Math.sin(45);
 			this.offSetHeight = this.height * 7 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
-		} else if(this.keyHeld_South && this.keyHeld_East){
-			nextX += this.playerMovementSpeed * Math.cos(45); 
-			nextY += this.playerMovementSpeed * Math.sin(45);
-			this.offSetHeight = this.height * 1;
-			this.miniMapX += this.playerMovementSpeed/10;
-			this.miniMapY += this.playerMovementSpeed/10;
-		} else if(this.keyHeld_North && this.canMoveNorth){
-			nextY -= this.playerMovementSpeed;
-			this.offSetHeight = this.height * 4;
-			this.miniMapY -= this.playerMovementSpeed/15;
-		} else if(this.keyHeld_East && this.canMoveEast){
-			nextX += this.playerMovementSpeed;
-			this.offSetHeight = this.height * 2;
-			this.miniMapX += this.playerMovementSpeed/15;
-		} else if(this.keyHeld_South && this.canMoveSouth){
-			nextY += this.playerMovementSpeed;
-			this.offSetHeight = this.height * 8;
-			this.miniMapY += this.playerMovementSpeed/15;
-		} else if(this.keyHeld_West && this.canMoveWest){
-			nextX -= this.playerMovementSpeed;
-			this.offSetHeight = this.height * 6;
-			this.miniMapX -= this.playerMovementSpeed/15;
 		} else {
 			this.offSetHeight = 0;
 		}
