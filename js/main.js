@@ -227,79 +227,94 @@ function checkAllPlayerAndEnemyCollisions(){
 }
 
 
+function zSort(anArrayOfEntities) {
+
+    for (var i = 0; i < anArrayOfEntities.length; i++) {
+        anArrayOfEntities[i].zsort = anArrayOfEntities[i].x/ISO_TILE_DRAW_W + anArrayOfEntities[i].y/ISO_TILE_DRAW_H;
+    }
+
+    anArrayOfEntities.sort(function(a, b) {
+        return a.zsort - b.zsort;
+    });
+
+}
+
+function drawIsometricWorld() {
+    // Draw isometric back to front, with creatures
+    var maxLength = Math.max(ROOM_ROWS, ROOM_COLS)
+    var entityIndex = 0;
+    sharedAnimCycle++;
+    for (var z = 0; z < maxLength; z++) {
+        var row = 0;
+        var col = z;
+        while (col >= 0) {
+            drawAt(row, col);
+            row++;
+            col--;
+        }
+        while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
+            entities[entityIndex].draw();
+            entityIndex++;
+        }
+
+    }
+    for (var z = 0; z < maxLength; z++) {
+        var row = z;
+        var col = maxLength;
+        while (col >= z) {
+            drawAt(row, col);
+            row++;
+            col--;
+        }
+        while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
+            entities[entityIndex].draw();
+            entityIndex++;
+        }
+    }
+    // Draw any remaining creaturs
+    while (entityIndex < entities.length) {
+        entities[entityIndex].draw();
+        entityIndex++;
+    }
+    for(var i = 0; i < rockBulletList.length; i++){
+        rockBulletList[i].draw();
+        removeBulletFromList();
+    }
+    for(var i = 0; i < smokeList.length; i++){
+        smokeList[i].draw();
+        removeSmokeFromList();
+    }
+
+}
+
+function drawScreenBorder() {
+    // darken the edges of the screen
+    canvasContext.globalAlpha = VIGNETTE_BORDER_OPACITY;
+    canvasContext.drawImage(vignetteBorderPic,0,0);
+    canvasContext.globalAlpha = 1;
+}
+
+
 //All movement occurs here.  This is called every frame.
 function drawEverything() {
-	colorRect(0,0,canvas.width,canvas.height, 'black');
-	if(liveGame){
+
+    colorRect(0,0,canvas.width,canvas.height, 'black');
+
+    if(liveGame){
 		shiftForCameraPan();
 		drawWorldBackground();
-
 		drawFloor();
-		//Calculate zsorts
-		for (var i = 0; i < entities.length; i++) {
-			entities[i].zsort = entities[i].x/ISO_TILE_DRAW_W + entities[i].y/ISO_TILE_DRAW_H;
-		}
-		//Sort by zsort
-		entities.sort(function(a, b) {
-			return a.zsort - b.zsort;
-		});
-		// Draw isometric back to front, with creatures
-		var maxLength = Math.max(ROOM_ROWS, ROOM_COLS)
-		var entityIndex = 0;
-		sharedAnimCycle++;
-		for (var z = 0; z < maxLength; z++) {
-			var row = 0;
-			var col = z;
-			while (col >= 0) {
-				drawAt(row, col);
-				row++;
-				col--;
-			}
-        	while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
-        		entities[entityIndex].draw();
-        		entityIndex++;
-        	}
-
-		}
-		for (var z = 0; z < maxLength; z++) {
-			var row = z;
-			var col = maxLength;
-			while (col >= z) {
-				drawAt(row, col);
-				row++;
-				col--;
-			}
-        	while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
-        		entities[entityIndex].draw();
-        		entityIndex++;
-        	}
-		}
-		// Draw any remaining creaturs
-    	while (entityIndex < entities.length) {
-    		entities[entityIndex].draw();
-    		entityIndex++;
-    	}
-		for(var i = 0; i < rockBulletList.length; i++){
-			rockBulletList[i].draw();
-			removeBulletFromList();
-		}
-		for(var i = 0; i < smokeList.length; i++){
-			smokeList[i].draw();
-			removeSmokeFromList();
-		}
+        zSort(entities);
+        drawIsometricWorld();
 		finishedCameraPan();
+        drawScreenBorder();
+        drawUserInterface();
+        drawMinimap();
+    }
 
-        // darken the edges of the screen
-        canvasContext.globalAlpha = VIGNETTE_BORDER_OPACITY;
-        canvasContext.drawImage(vignetteBorderPic,0,0);
-        canvasContext.globalAlpha = 1;
-
-		//gui is drawn above the vignette
-		drawUserInterface();
-		drawMinimap();
-	}
-	if(itemScreen){
+    if(itemScreen){
 		itemScreenDisplay();
 		drawUserInterface();
 	}
+
 }
