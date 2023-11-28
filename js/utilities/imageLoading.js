@@ -137,7 +137,8 @@ function loadImages() {
 			{trackType: TILE_POT_GREEN, theFile: "potGreen.png"},
 			{trackType: TILE_COLUMN, theFile: "column.png"},
 			{trackType: TILE_BED_1, theFile:  "bed.png"},
-			{trackType: TILE_BED_2, theFile: "bed2.png"}
+			{trackType: TILE_BED_2, theFile: "bed2.png"},
+			{trackType: TILE_WARDROB, theFile: "wardrob.png"}
 		];
 			
 	picsToLoad = imageList.length;
