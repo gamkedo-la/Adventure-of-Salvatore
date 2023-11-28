@@ -134,7 +134,8 @@ function loadImages() {
 			{trackType: TILE_KEY_GREEN, theFile: "keyGreen.png"},
 			{trackType: TILE_KEY_RED, theFile: "keyRed.png"},
 			{trackType: TILE_KEY_YELLOW, theFile: "keyYellow.png"},
-			{trackType: TILE_POT_GREEN, theFile: "potGreen.png"}
+			{trackType: TILE_POT_GREEN, theFile: "potGreen.png"},
+			{trackType: TILE_COLUMN, theFile: "column.png"},
 		];
 			
 	picsToLoad = imageList.length;
