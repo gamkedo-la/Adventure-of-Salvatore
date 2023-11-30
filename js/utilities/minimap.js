@@ -24,7 +24,10 @@ function drawMinimap() {
 
     canvasContext.globalAlpha = MINIMAP_OPACITY;
     canvasContext.drawImage(minimapCanvas,MINIMAP_GUI_X,MINIMAP_GUI_Y);
-    // TODO - iterate through enemies and draw them too
+
+    // blinking dot for player one on minimap
+    minimapDotIso(playerOne.x,playerOne.y,"green");
+
     canvasContext.globalAlpha = 1;
 }
 
@@ -46,6 +49,10 @@ function minimapDot(miniMapX,miniMapY,trackTypeHere="magenta") {
     minimapContext.fillRect(miniMapX,miniMapY,MINIMAP_DOT_W,MINIMAP_DOT_H);
 }
 
+function minimapDotIso(minimapXIso, minimapYIso, trackTypeHere="magenta") {
+    return minimapDot(minimapXIso/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,minimapYIso/ISO_TILE_DRAW_H*MINIMAP_DOT_H,trackTypeHere);
+}
+
 // draw all map tiles onto the minimap
 function updateMinimap() {
     var tileIndex = 0;
@@ -63,10 +70,10 @@ function updateMinimap() {
     }
     
     // and all monsters
-    for (mob of miniCyclopList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkgreen"); }
-    for (mob of orcList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkbrown"); }
-    for (mob of ogreList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkred"); }
-    for (mob of ratList) { minimapDot(mob.x/ISO_TILE_DRAW_W*MINIMAP_DOT_W+2,mob.y/ISO_TILE_DRAW_H*MINIMAP_DOT_H,"darkgrey"); }
+    for (mob of miniCyclopList) { minimapDotIso(mob.x,mob.y,"darkgreen"); }
+    for (mob of orcList) { minimapDotIso(mob.x,mob.y,"darkbrown"); }
+    for (mob of ogreList) { minimapDotIso(mob.x,mob.y,"darkred"); }
+    for (mob of ratList) { minimapDotIso(mob.x,mob.y,"darkgrey"); }
 
     // add more cool things to the minimap here!
 }
