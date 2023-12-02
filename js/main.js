@@ -226,7 +226,6 @@ function checkAllPlayerAndEnemyCollisions(){
 	} 
 }
 
-
 function zSort(anArrayOfEntities) {
 
     for (var i = 0; i < anArrayOfEntities.length; i++) {
@@ -256,8 +255,8 @@ function drawIsometricWorld() {
             entities[entityIndex].draw();
             entityIndex++;
         }
-
     }
+	
     for (var z = 0; z < maxLength; z++) {
         var row = z;
         var col = maxLength;

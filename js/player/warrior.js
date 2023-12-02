@@ -29,10 +29,10 @@ function warriorClass() {
 	this.animatePlayerStandingStill = false;
 	//items
 	this.healthPotion = 0;
-	this.speedPotion = 1;
+	this.speedPotion = 3;
 	this.coins = 0;
 	this.greenKeysHeld = 0;
-	this.blueKeysHeld = 0;
+	this.blueKeysHeld = 1;
 	this.redKeysHeld = 0;
 	this.yellowKeysHeld = 0;
 	//affects
@@ -172,15 +172,25 @@ function warriorClass() {
 				this.y = nextY;
 				break;
 			case TILE_YELLOW_DOOR:
+				if(this.yellowKeysHeld > 0){
+					this.yellowKeysHeld--;
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				}
+				break;
 			case TILE_RED_DOOR:
+				if(this.redKeysHeld > 0){
+					this.redKeysHeld--;
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+				}
+				break;
 			case TILE_BLUE_DOOR:
-				if(this.keysHeld > 0){
-					this.keysHeld--;
+				if(this.blueKeysHeld > 0){
+					this.blueKeysHeld--;
 					roomGrid[walkIntoTileIndex] = TILE_ROAD;
 				}
 				break;	
 			case TILE_TREASURE:	
-				this.keysHeld--;
+				this.yellowKeysHeld--;
 				roomGrid[walkIntoTileIndex] = TILE_ROAD;
 				break;
 			case TILE_KEY_YELLOW:	
