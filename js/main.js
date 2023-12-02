@@ -88,8 +88,10 @@ function imageLoadingDoneSoStartGame(){
 	mainBackgroundMusic.loopSong("salvatore");
 
 	setInterval(function() {
-		moveEverything();
-		checkAllPlayerAndEnemyCollisions();
+		if (!pauseScreen) {
+			moveEverything();
+			checkAllPlayerAndEnemyCollisions();
+		}
 		drawEverything();
 	}, 1000/framesPerSecond);
 }

@@ -70,27 +70,29 @@ function keyReleased(evt) {
 	setKeyHoldState(evt.keyCode, playerOne, false);
 }
 
-
 function setKeyHoldState(thisKey, thisWarrior, setTo) {
 	
 	document.getElementById("debugText").innerHTML = "Key: " +thisKey;
-	if(thisKey == thisWarrior.controlKeyForNorth){
-		thisWarrior.keyHeld_North = setTo;
-	}
-    if(thisKey == thisWarrior.controlKeyForEast){
-		thisWarrior.keyHeld_East = setTo;
-	}
-	if(thisKey == thisWarrior.controlKeyForSouth){
-		thisWarrior.keyHeld_South = setTo;
-	}
-	
-	if(thisKey == thisWarrior.controlKeyForWest){
-		thisWarrior.keyHeld_West = setTo;
-	}
 
-	if(thisKey == thisWarrior.controlKeyForSwordSwing){
-		if(playerOne.swordReady){
-			playerOne.swordSwing();
+	if (!pauseScreen) {
+		if(thisKey == thisWarrior.controlKeyForNorth){
+			thisWarrior.keyHeld_North = setTo;
+		}
+		if(thisKey == thisWarrior.controlKeyForEast){
+			thisWarrior.keyHeld_East = setTo;
+		}
+		if(thisKey == thisWarrior.controlKeyForSouth){
+			thisWarrior.keyHeld_South = setTo;
+		}
+		
+		if(thisKey == thisWarrior.controlKeyForWest){
+			thisWarrior.keyHeld_West = setTo;
+		}
+	
+		if(thisKey == thisWarrior.controlKeyForSwordSwing){
+			if(playerOne.swordReady){
+				playerOne.swordSwing();
+			}
 		}
 	}
 }
@@ -98,8 +100,10 @@ function setKeyHoldState(thisKey, thisWarrior, setTo) {
 function changePauseState(){
 	if(pauseScreen){
 		pauseScreen = false;
+		console.log("Pause");
 	} else {
 		pauseScreen = true;
+		console.log("Unpause");
 	}	
 }
 
