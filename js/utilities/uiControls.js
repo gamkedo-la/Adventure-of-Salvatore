@@ -18,6 +18,8 @@ const KEY_DOWN_ARROW = 40;
 
 var MousePosX = 0;
 var MousePosY = 0;
+var MouseIsHeldDown = false;
+var MouseJustClicked = false;
 
 var displayQuickKeysOn = true;
 var displayQuickKeysTimer = 300;
@@ -25,14 +27,23 @@ var displayQuickKeysTimer = 300;
 function initInput(){
 	
 	canvas.addEventListener('mousemove', function(evt) {
-	
 		var mousePos = calculateMousePos(evt);
-	
 		MousePosX = mousePos.x;
 		MousePosY = mousePos.y;
 	});
 	
-	document.addEventListener("keydown", keyPressed);
+	document.addEventListener('mousedown', function(evt) {
+        // silly hack - if map is visible, ANY click anywhere closes it
+        //if (worldMapCurrentlyVisible) worldMapCurrentlyVisible = false;
+        MouseJustClicked = !MouseIsHeldDown;
+        MouseIsHeldDown = true;
+	});
+
+	document.addEventListener('mouseup', function(evt) {
+        MouseIsHeldDown = false;
+	});
+
+    document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
 	
 	playerOne.setupControls(KEY_W, KEY_D, KEY_S, KEY_A, KEY_SPACEBAR);
@@ -59,7 +70,8 @@ function keyPressed(evt) {
 	} else if (menuKey == evt.keyCode){
 		console.log("Go to Menu Screen");
 	} else if (mapKey == evt.keyCode){
-		console.log("Toggle Map on/off");
+		console.log("MAP keypress - Toggle Map on/off");
+        worldMapCurrentlyVisible = !worldMapCurrentlyVisible;
 	} else if (itemKey == evt.keyCode){
 		itemScreen = !itemScreen;
 		liveGame = !liveGame;
@@ -107,17 +119,20 @@ function changePauseState(){
 	}	
 }
 
+// NOTE: this gets called EVERY FRAME - not just after a click
+// FIXME: these X,Y values are incorrect and do not match the artwork
 function checkGUIMousePos(){
-	let box1X = 20;
+	
+    //console.log("MousePos X:"+MousePosX+" Y:"+MousePosY);
+    
+    let box1X = 20;
 	let box1Y = 525;
 	let box1Width = 100;
 	let box1Height = 35;
 	if (MousePosX > box1X && MousePosX < box1X + box1Width &&
 		MousePosY > box1Y && MousePosY < box1Y + box1Height){
-			/*if(MouseEvent.onClick){
-				console.log("mouse clicked");
-			}*/
-			console.log("Menu");
+            // if (MouseJustClicked) { click action }
+            console.log("Hovering the Menu Button");
 		
 	};
 	let box2X = 20;
@@ -126,22 +141,22 @@ function checkGUIMousePos(){
 	let box2Height = 35;
 	if (MousePosX > box2X && MousePosX < box2X + box2Width &&
 		MousePosY > box2Y && MousePosY < box2Y + box2Height){
-			/*if(MouseEvent.onClick){
-				console.log("mouse clicked");
-			}*/
-			console.log("Items");
+			// if (MouseJustClicked) { click action }
+			console.log("Hovering Items Button");
 		
 	};
-	let box3X = canvas.width - 120;
-	let box3Y = 525;
+	let box3X = 680;
+	let box3Y = 500;
 	let box3Width = 100;
 	let box3Height = 35;
 	if (MousePosX > box3X && MousePosX < box3X + box3Width &&
 		MousePosY > box3Y && MousePosY < box3Y + box3Height){
-			/*if(MouseEvent.onClick){
-				console.log("mouse clicked");
-			}*/
-			console.log("Map");
+            if (MouseJustClicked) {
+                console.log("MAP button clicked.");
+                worldMapCurrentlyVisible = !worldMapCurrentlyVisible;
+            } else {
+			    console.log("Hovering the Map Button");
+            }
 	};
 }
 
@@ -180,7 +195,7 @@ function drawUserInterface(){
 
 function displayQuickKeys(){
 	displayQuickKeysTimer--;
-	console.log("display")
+	//console.log("display")
 	if(displayQuickKeysTimer <= 0){
 		displayQuickKeysOn = false;
 		displayQuickKeysTimer = 50;

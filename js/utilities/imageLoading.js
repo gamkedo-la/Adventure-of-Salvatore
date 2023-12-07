@@ -15,6 +15,7 @@ var guiButtonPic = document.createElement("img");
 var guiPotionHolderPic = document.createElement("img");
 var guiCompassPic = document.createElement("img");
 var itemBackgroundPic = document.createElement("img");
+var worldMapPic = document.createElement("img");
 
 var vignetteBorderPic = document.createElement("img");
 const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is
@@ -67,6 +68,7 @@ function loadImages() {
 			{varName: guiPotionHolderPic, theFile: "GUI potionHolder.png"},
 			{varName: guiCompassPic, theFile: "compass.png"},
 			{varName: itemBackgroundPic, theFile: "itemBackground.png"},
+            {varName: worldMapPic, theFile: "world_map.png"},
 	
 			{trackType: TILE_ROAD, theFile: "track_road.png"},
 			{trackType: TILE_WALL, theFile:  "track_wall2.png"},	

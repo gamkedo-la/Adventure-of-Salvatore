@@ -182,6 +182,7 @@ function moveEverything() {
 		if(MousePosY > 500){
 			checkGUIMousePos();
 		}
+        MouseJustClicked = false; // we handled it above IF required - reset for next frame
 		updatedCameraPosition();
 	}
 }
@@ -301,6 +302,7 @@ function drawIsometricWorld() {
         playerOne.draw();
         canvasContext.globalAlpha = 1; // reset so we don't trash the next draw call
     }
+
 }
 
 function drawScreenBorder() {
@@ -326,6 +328,7 @@ function drawEverything() {
         drawScreenBorder();
         drawUserInterface();
         drawMinimap();
+        if (worldMapCurrentlyVisible) drawWorldMap();
     }
 
     if(itemScreen){
