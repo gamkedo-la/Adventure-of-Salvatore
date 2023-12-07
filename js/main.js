@@ -9,6 +9,9 @@ var ogreList = [];
 var ratList = [];
 var entities = [playerOne];
 
+const XRAY_VISION_ENABLED = false; // can we see player through walls?
+const XRAY_VISION_OPACITY = 0.1;
+
 function resetEnemyLists(){
 	miniCyclopList = [];
 	orcList = [];
@@ -293,9 +296,11 @@ function drawIsometricWorld() {
     // this requires two canvases, one for floor, one for walls
     // for a better blue outline x-ray effect
 
-    canvasContext.globalAlpha = 0.1;
-    playerOne.draw();
-
+    if (XRAY_VISION_ENABLED) {
+        canvasContext.globalAlpha = XRAY_VISION_OPACITY;
+        playerOne.draw();
+        canvasContext.globalAlpha = 1; // reset so we don't trash the next draw call
+    }
 }
 
 function drawScreenBorder() {
