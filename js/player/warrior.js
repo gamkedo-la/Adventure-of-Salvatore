@@ -158,12 +158,10 @@ function warriorClass() {
 		this.miniMapY = nextY;
 		
 		var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
-		var walkIntoTileType = TILE_WALL;
-		
-		if(walkIntoTileType != undefined){	
-			walkIntoTileType = roomGrid[walkIntoTileIndex];
-		}
 
+        var walkIntoTileType = roomGrid[walkIntoTileIndex];
+        if (walkIntoTileType==undefined) walkIntoTileType = TILE_WALL;
+		
 		switch(walkIntoTileType) {
 			case TILE_ROAD:
 			case TILE_RED_CARPET:
@@ -283,6 +281,7 @@ function warriorClass() {
 	};	// END OF THIS.MOVEMENT
 		
 	this.checkCollisionsAgainst = function(otherHumanoid){
+        const COLLISION_PADDING = 10; // give the player a radius
 		if(this.collisionTest(otherHumanoid)){
 			console.log("collision");
 			if(this.keyHeld_North){
