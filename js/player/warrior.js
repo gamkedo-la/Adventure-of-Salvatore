@@ -166,6 +166,7 @@ function warriorClass() {
 
 		switch(walkIntoTileType) {
 			case TILE_ROAD:
+			case TILE_RED_CARPET:
 			case TILE_SPIKES_UNARMED:
 			case TILE_WALL_3:	
 			case TILE_PITTRAP_UNARMED:
