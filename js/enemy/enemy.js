@@ -70,35 +70,35 @@ function enemyClass() {
 		this.randomMovements();
 		this.speed = 1.0;
 		
-		/*if(this.moveNorth && this.keyHeld_West){
-			nextY -= PLAYER_MOVE_SPEED;
-		} else if(this.moveNorth && this.keyHeld_East){
-			nextX += PLAYER_MOVE_SPEED;
-			this.miniMapX += PLAYER_MOVE_SPEED/10;
-			this.miniMapY -= PLAYER_MOVE_SPEED/10;
-		} else if(this.keyHeld_South && this.keyHeld_West){
-			nextX -= PLAYER_MOVE_SPEED;
-			this.miniMapX -= PLAYER_MOVE_SPEED/10;
-			this.miniMapY += PLAYER_MOVE_SPEED/10;
-		} else if(this.keyHeld_South && this.keyHeld_East){
-			nextY += PLAYER_MOVE_SPEED;
-			this.miniMapX += PLAYER_MOVE_SPEED/10;
-			this.miniMapY += PLAYER_MOVE_SPEED/10; 
-		} else */ if(this.moveNorth && this.canMoveNorth){
-			nextY -= this.speed;
-			this.offSetHeight = this.height * 4;
-		} else if(this.moveEast && this.canMoveEast){
-			nextX += this.speed;
-			this.offSetHeight = this.height * 3;
-		//	this.miniMapX += PLAYER_MOVE_SPEED/5;
-		} else if(this.moveSouth && this.canMoveSouth){
-			nextY += this.speed;
-			this.offSetHeight = this.height * 2;
-		//	this.miniMapY += PLAYER_MOVE_SPEED/5;
-		} else if(this.moveWest && this.canMoveWest){
+		if(this.moveNorth && this.moveWest){
 			nextX -= this.speed;
 			this.offSetHeight = this.height * 6;
-		//	this.miniMapX -= PLAYER_MOVE_SPEED/5;
+		} else if(this.moveNorth && this.moveEast){
+			nextY -= this.speed;
+			this.offSetHeight = this.height * 4;
+		} else if(this.moveSouth && this.moveWest){
+			nextY += this.speed;
+			this.offSetHeight = this.height * 8;
+		} else if(this.moveSouth && this.moveEast){
+			nextX += this.speed;
+			this.offSetHeight = this.height * 2;
+		} else if(this.moveNorth){
+			nextX -= this.speed * Math.cos(45); 
+			nextY -= this.speed * Math.sin(45);
+			this.offSetHeight = this.height * 5;
+			collisionY = nextY;
+		} else if(this.moveEast){
+			nextX += this.speed * Math.cos(45); 
+			nextY -= this.speed * Math.sin(45);
+			this.offSetHeight = this.height * 3 
+		} else if(this.moveSouth){
+			nextX += this.speed * Math.cos(45); 
+			nextY += this.speed * Math.sin(45);
+			this.offSetHeight = this.height * 1;
+		} else if(this.moveWest){
+			nextX -= this.speed * Math.cos(45);
+			nextY += this.speed * Math.sin(45);
+			this.offSetHeight = this.height * 7 
 		} else {
 			this.offSetHeight = 0;
 		}
@@ -140,7 +140,7 @@ function enemyClass() {
 	};
 	
 	this.randomMovements = function(){
-		var whichDirection =  10; //Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
+		var whichDirection =  Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 	
 		if(this.movementTimer <= 0){
@@ -152,18 +152,33 @@ function enemyClass() {
 					this.movementTimer = 300;
 					break;
 				case 2:
+					this.resetDirections();
+					this.moveNorth = true;
+					this.moveWest = true;					
+					this.movementTimer = 300;
+					break;
 				case 3:
 					this.resetDirections();
 					this.moveWest = true;
 					this.movementTimer = 300;
 					break;
 				case 4:
+					this.resetDirections();
+					this.moveWest = true;
+					this.moveSouth = true;
+					this.movementTimer = 300;
+					break;
 				case 5:
 					this.resetDirections();
 					this.moveSouth = true;
 					this.movementTimer = 300;
 					break;
 				case 6:
+					this.resetDirections();
+					this.moveSouth = true;
+					this.moveEast = true;
+					this.movementTimer = 300;
+					break;
 				case 7:
 					this.resetDirections();
 					this.moveEast = true;
