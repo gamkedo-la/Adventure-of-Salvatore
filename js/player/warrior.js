@@ -1,6 +1,10 @@
 const ISO_CHAR_FOOT_Y = 8;
 const COLLIDE_BUMP_MULT = 2; // this needs to be improved.  This could potentially cause enemy or player in an illegal position (wall)
 
+// this is at 0 because it makes it very hard to get through doors, 
+// but at around 15 or 20 there's no more wall pop-in...
+const PLAYER_COLLISION_RADIUS = 20; // don't stand too close to things (avoid wall popping in front of player)
+
 function warriorClass() {
 	this.x = 600;
 	this.y = 800;
@@ -108,59 +112,83 @@ function warriorClass() {
 		} else {
 			this.playerMovementSpeed = 3;
 		}
+
 		var nextX = this.x; 
 		var nextY = this.y; 
-		var collisionX = nextX;
-		var collisionY = nextY;
+        
+        // NOTE: this.canMove* is false when blocked by entities but not walls!
+        // so we look ahead a little
+		var aheadX = this.x; 
+		var aheadY = this.y; 
+
 		if(this.keyHeld_North && this.keyHeld_West){
 			nextX -= this.playerMovementSpeed;
+            aheadX -= PLAYER_COLLISION_RADIUS;
 			this.offSetHeight = this.height * 6;
 			this.miniMapX -= this.playerMovementSpeed/15;
 		} else if(this.keyHeld_North && this.keyHeld_East){
 			nextY -= this.playerMovementSpeed;
+            aheadY -= PLAYER_COLLISION_RADIUS;
 			this.offSetHeight = this.height * 4;
 			this.miniMapY -= this.playerMovementSpeed/15;
 		} else if(this.keyHeld_South && this.keyHeld_West){
 			nextY += this.playerMovementSpeed;
+			aheadY += PLAYER_COLLISION_RADIUS;
 			this.offSetHeight = this.height * 8;
 			this.miniMapY += this.playerMovementSpeed/15;
 		} else if(this.keyHeld_South && this.keyHeld_East){
 			nextX += this.playerMovementSpeed;
+            aheadX += PLAYER_COLLISION_RADIUS;
 			this.offSetHeight = this.height * 2;
 			this.miniMapX += this.playerMovementSpeed/15;
 		} else if(this.keyHeld_North && this.canMoveNorth){
 			nextX -= this.playerMovementSpeed * Math.cos(45); 
 			nextY -= this.playerMovementSpeed * Math.sin(45);
+			aheadX -= PLAYER_COLLISION_RADIUS * Math.cos(45); 
+			aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
 			this.offSetHeight = this.height * 5;
 			collisionY = nextY;
 		} else if(this.keyHeld_East && this.canMoveEast){
 			nextX += this.playerMovementSpeed * Math.cos(45); 
 			nextY -= this.playerMovementSpeed * Math.sin(45);
+			aheadX += PLAYER_COLLISION_RADIUS * Math.cos(45); 
+			aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
 			this.offSetHeight = this.height * 3 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY -= this.playerMovementSpeed/10;
 		} else if(this.keyHeld_South && this.canMoveSouth){
 			nextX += this.playerMovementSpeed * Math.cos(45); 
 			nextY += this.playerMovementSpeed * Math.sin(45);
+			aheadX += PLAYER_COLLISION_RADIUS * Math.cos(45); 
+			aheadY += PLAYER_COLLISION_RADIUS * Math.sin(45);
 			this.offSetHeight = this.height * 1;
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10; 
 		} else if(this.keyHeld_West && this.canMoveWest){
 			nextX -= this.playerMovementSpeed * Math.cos(45);
 			nextY += this.playerMovementSpeed * Math.sin(45);
+			aheadX -= PLAYER_COLLISION_RADIUS * Math.cos(45);
+			aheadY += PLAYER_COLLISION_RADIUS * Math.sin(45);
 			this.offSetHeight = this.height * 7 
 			this.miniMapX += this.playerMovementSpeed/10;
 			this.miniMapY += this.playerMovementSpeed/10;
 		} else {
 			this.offSetHeight = 0;
 		}
-		this.miniMapX = nextX;
+		
+        // fixme: the player might not actually move to nextX/Y
+        this.miniMapX = nextX;
 		this.miniMapY = nextY;
 		
 		var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
-
         var walkIntoTileType = roomGrid[walkIntoTileIndex];
         if (walkIntoTileType==undefined) walkIntoTileType = TILE_WALL;
+        
+        var lookAheadTileIndex = getTileIndexAtPixelCoord(aheadX,aheadY);
+        var lookAheadTileType = roomGrid[lookAheadTileIndex];
+        
+        //console.log("walkInto "+nextX+","+nextY+"="+walkIntoTileType+" lookahead "+aheadX+","+aheadY+"="+lookAheadTileType);
+        var blockedUpAhead = UNWALKABLE_TILES.includes(lookAheadTileType);
 		
 		switch(walkIntoTileType) {
 			case TILE_ROAD:
@@ -168,8 +196,11 @@ function warriorClass() {
 			case TILE_SPIKES_UNARMED:
 			case TILE_WALL_3:	
 			case TILE_PITTRAP_UNARMED:
-				this.x = nextX;
-				this.y = nextY;
+                if (!blockedUpAhead) {
+                    // the path in not blocked: update player position
+				    this.x = nextX;
+				    this.y = nextY;
+                }
 				break;
 			case TILE_WOOD_DOOR:
 					roomGrid[walkIntoTileIndex] = TILE_ROAD;
@@ -268,6 +299,7 @@ function warriorClass() {
 			case TILE_TABLE:
 			case TILE_BOOKSHELF:
 			default:
+                // do not update player position: we are blocked
 				break;
 		} // END OF SWITCH CASE		
 		this.trapCoolDown();
