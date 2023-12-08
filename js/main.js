@@ -271,7 +271,7 @@ function drawIsometricWorld() {
             row++;
             col--;
         }
-        while (entityIndex < entities.length && entities[entityIndex].zsort < z+1.5) {
+        while (entityIndex < entities.length && entities[entityIndex].zsort < z+maxLength+1.5) {
             entities[entityIndex].draw();
             entityIndex++;
         }

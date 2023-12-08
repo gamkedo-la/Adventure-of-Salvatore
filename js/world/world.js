@@ -216,117 +216,19 @@ function drawWorldBackground(){
     }
 }
 
-function drawTracks(){
-	var tileIndex = 0;
-	var tileLeftEdgeX = 700
-	var tileTopEdgeY = 0;
-	sharedAnimCycle++;
-	
-	for(var eachRow = 0; eachRow < ROOM_ROWS; eachRow++){
-		tileLeftEdgeX = 7;
-		
-		for(var eachCol = 0; eachCol < ROOM_COLS; eachCol++) {
-			var trackTypeHere = roomGrid[tileIndex];
-			tileLeftEdgeX += ROOM_W;
-			isoTileLeftEdgeX = (tileLeftEdgeX - tileTopEdgeY)/2;
-			isoTileTopEdgeY = (tileLeftEdgeX + tileTopEdgeY)/4;
-			tileCoordToIsoCoord(eachCol, eachRow);
-			
-			if( tileTypeHasRoadTransparency(trackTypeHere) ) {
-				canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-			}
-			//need two helper functions here to eliminate the else if.  One for walls, one for floors
-			if(trackTypeHere == TILE_WALL_WITH_TORCH){
-				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-				
-				var torchFrames = 4;
-				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % torchFrames;
-				
-				canvasContext.drawImage(trackPics[TILE_WALL_WITH_TORCH],
-				animOffset * ISO_TILE_DRAW_W, 0, isoDrawX, isoDrawY, 
-				isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y, ISO_TILE_DRAW_W, ISO_TILE_DRAW_H);
-			} else if (trackTypeHere == TILE_HEALING_POTION){
-				var itemFrames = 4;
-				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
-				
-				canvasContext.drawImage(trackPics[TILE_HEALING_POTION],
-				animOffset * ISO_TILE_DRAW_W, 
-				40, 
-				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
-				isoDrawX - ISO_GRID_W/2, 
-				isoDrawY - ISO_TILE_GROUND_Y, 
-				ISO_TILE_DRAW_W, 
-				ISO_TILE_DRAW_H);
-			} else if (	trackTypeHere == TILE_KEY_BLUE ||
-						trackTypeHere == TILE_KEY_YELLOW ||
-						trackTypeHere == TILE_KEY_GREEN ||
-						trackTypeHere == TILE_KEY_RED){
-				var itemFrames = 4;
-				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
-				
-				canvasContext.drawImage(trackPics[trackTypeHere],
-				animOffset * ISO_TILE_DRAW_W, 
-				40, 
-				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
-				isoDrawX - ISO_GRID_W/2, 
-				isoDrawY - ISO_TILE_GROUND_Y, 
-				ISO_TILE_DRAW_W, 
-				ISO_TILE_DRAW_H);
-			} else if (trackTypeHere == TILE_SPEED_POTION){
-				var itemFrames = 4;
-				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
-				
-				canvasContext.drawImage(trackPics[TILE_SPEED_POTION],
-				animOffset * ISO_TILE_DRAW_W, 
-				40, 
-				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
-				isoDrawX - ISO_GRID_W/2, 
-				isoDrawY - ISO_TILE_GROUND_Y, 
-				ISO_TILE_DRAW_W, 
-				ISO_TILE_DRAW_H);
-			} else if (trackTypeHere == TILE_COIN){
-				var itemFrames = 8;
-				var animOffset = (eachCol + eachRow + Math.floor(sharedAnimCycle * 0.1) ) % itemFrames;
-				
-				canvasContext.drawImage(trackPics[TILE_COIN],
-				animOffset * ISO_TILE_DRAW_W, 
-				40, 
-				ISO_TILE_DRAW_W, ISO_TILE_DRAW_H, 
-				isoDrawX - ISO_GRID_W, 
-				isoDrawY - ISO_TILE_GROUND_Y, 
-				ISO_TILE_DRAW_W, 
-				ISO_TILE_DRAW_H);
-				
-			} else if (trackTypeHere == TILE_WALL_TRAP ||
-					   trackTypeHere == TILE_WALL_TRAP2 ||
-					   trackTypeHere == TILE_WALL_LEVER_1 ||
-					   trackTypeHere == TILE_WALL_LEVER_2){
-				canvasContext.drawImage(trackPics[TILE_WALL], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-				canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-			} else {
-				if(trackTypeHere == TILE_WALL && isBlockingSightOfPlayer(tileLeftEdgeX, tileTopEdgeY)){
-					if (FADE_WALLS_THAT_OBSCURE_PLAYER) {
-                        canvasContext.globalAlpha = 0.3;
-                    }
-					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-					canvasContext.globalAlpha = 1.0;
-					canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-				} else {
-					canvasContext.globalAlpha = 1.0;
-					canvasContext.drawImage(trackPics[trackTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
-				}
-			}
-            tileIndex++;
-		} // end of each col
-		tileTopEdgeY += ROOM_H;
-	} // end of each row
-}
-
 function drawFloor(){	
 	for (var eachRow = 0; eachRow < ROOM_ROWS; eachRow++){
 		for (var eachCol = 0; eachCol < ROOM_COLS; eachCol++) {
+
+			var tileTypeHere = TILE_ROAD;
+			var tileIndex = eachRow * ROOM_COLS + eachCol;
+			var trackTypeHere = roomGrid[tileIndex];
+			if (trackTypeHere == TILE_RED_CARPET) {
+				tileTypeHere = trackTypeHere;
+			}
+
 			tileCoordToIsoCoord(eachCol, eachRow);
-			canvasContext.drawImage(trackPics[TILE_ROAD], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
+			canvasContext.drawImage(trackPics[tileTypeHere], isoDrawX - ISO_GRID_W/2, isoDrawY - ISO_TILE_GROUND_Y);
 		} // end of each col
 	} // end of each row
 }
@@ -341,6 +243,7 @@ function drawAt(currentRow, currentCol){
 	var eachCol = currentCol;
 	
 	var trackTypeHere = roomGrid[tileIndex];
+	if (trackTypeHere == TILE_ROAD || trackTypeHere == TILE_RED_CARPET) return;
 	isoTileLeftEdgeX = (tileLeftEdgeX - tileTopEdgeY)/2;
 	isoTileTopEdgeY = (tileLeftEdgeX + tileTopEdgeY)/4;
 	tileCoordToIsoCoord(eachCol, eachRow);
