@@ -6,11 +6,11 @@ function updatedCameraPosition(){
 	camPanX = isoDrawX - canvas.width/2;
 	camPanY = isoDrawY - canvas.height/2;
 	
-	if(camPanX < 0){
-		camPanX = 0;
+	if(camPanX < -550){
+		camPanX = -550;
 	}
-	if(camPanY < 0){
-		camPanY = 0;
+	if(camPanY < -550){
+		camPanY = -550;
 	}
 	
 	var rightEdgeX = ROOM_W * ROOM_COLS;
