@@ -9,6 +9,7 @@ const KEY_P = 80; //Pause
 const KEY_I = 73; //Items
 const KEY_SPACEBAR = 32; 
 const KEY_1 = 49;
+const KEY_2 = 50;
 
 const KEY_LEFT_ARROW = 37;
 const KEY_UP_ARROW = 38;
@@ -60,6 +61,7 @@ function keyPressed(evt) {
 	var muteKey = KEY_B;
 	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
+	var enemyShot = KEY_2;
 
 	if(paused == evt.keyCode){
 		changePauseState();
@@ -75,6 +77,9 @@ function keyPressed(evt) {
 	} else if (itemKey == evt.keyCode){
 		itemScreen = !itemScreen;
 		liveGame = !liveGame;
+	} else if (evt.keyCode == KEY_2){
+		miniCyclopList[0].attack();
+		console.log("Mini Cyclops attack")
 	}
 }
 
