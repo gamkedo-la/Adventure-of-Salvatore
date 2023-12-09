@@ -78,8 +78,9 @@ function keyPressed(evt) {
 		itemScreen = !itemScreen;
 		liveGame = !liveGame;
 	} else if (evt.keyCode == KEY_2){
-		miniCyclopList[0].attack();
-		console.log("Mini Cyclops attack")
+		for (let i=0; i<miniCyclopList.length; i++) {
+			miniCyclopList[i].rangedAttack();
+		}
 	}
 }
 

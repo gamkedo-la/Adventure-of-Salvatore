@@ -32,6 +32,9 @@ function enemyClass() {
 	this.animateEnemyStandingStill = false;
 	this.drawTimer = 0;
 	this.frames = 8;
+
+	this.myShotList = [];
+	this.totalShots = 5;
 	
 	this.enemyReset = function() {
 		this.speed = 3;
@@ -238,6 +241,17 @@ function enemyClass() {
 				return true;
 		}
 		return false;
+	}
+
+	this.rangedAttack = function(){
+		console.log("Mini Cyclops attack")
+		crashIntoConeSound.play();
+
+//		if(this.myShotList.length < this.totalShots){
+			let tempShot = new shotClass();
+			tempShot.shootFrom(this);
+			this.myShotList.push(tempShot);
+//		} 
 	}
 		
 	this.draw = function(){
