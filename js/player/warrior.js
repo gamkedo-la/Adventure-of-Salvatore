@@ -1,4 +1,5 @@
 const ISO_CHAR_FOOT_Y = 8;
+const ISO_SHADOW_OFFSET_Y = 5;
 const COLLIDE_BUMP_MULT = 2; // this needs to be improved.  This could potentially cause enemy or player in an illegal position (wall)
 
 // this is at 0 because it makes it very hard to get through doors, 
@@ -358,7 +359,7 @@ function warriorClass() {
 			this.animateWarrior();
 		}
 		gameCoordToIsoCoord(this.x,this.y);
-		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y);
+		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height + ISO_SHADOW_OFFSET_Y);
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
 								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
 		if(this.displaySpeedIncreaseTimer){

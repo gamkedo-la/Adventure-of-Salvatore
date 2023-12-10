@@ -267,7 +267,7 @@ function enemyClass() {
 			this.animateEnemy();
 		}
 		gameCoordToIsoCoord(this.x,this.y);
-		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y);
+		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height + ISO_SHADOW_OFFSET_Y);
 		colorText(this.myName, isoDrawX + 20, isoDrawY - 30, "black", "8px Arial Black");
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
 								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
