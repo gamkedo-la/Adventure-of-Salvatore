@@ -92,7 +92,8 @@ function setKeyHoldState(thisKey, thisWarrior, setTo) {
 	
 	document.getElementById("debugText").innerHTML = "Key: " +thisKey;
 
-	if (!pauseScreen) {
+	if (!pauseScreen || !setTo) {
+		// !setTo allowed through to do a key release during pause state
 		if(thisKey == thisWarrior.controlKeyForNorth){
 			thisWarrior.keyHeld_North = setTo;
 		}
