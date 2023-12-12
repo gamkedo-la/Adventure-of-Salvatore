@@ -23,10 +23,8 @@ function miniCyclop() {
 	}	
 		
 	this.superClassMove = this.movement;
-	this.movement = function() {	
+	this.movement = function() {
 	}
-
-
 	
 	this.superClassDraw = this.draw;
 	this.draw = function(){

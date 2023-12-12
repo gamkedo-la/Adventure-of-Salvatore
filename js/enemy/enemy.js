@@ -140,6 +140,10 @@ function enemyClass() {
 				this.movementTimer = 0;
 				break;
 		} 
+
+		for (i=0; i < this.myShotList.length ; i++){
+			this.myShotList[i].movement();
+		}
 	};
 	
 	this.randomMovements = function(){
@@ -255,6 +259,10 @@ function enemyClass() {
 	}
 		
 	this.draw = function(){
+		for (i=0; i < this.myShotList.length ; i++){
+			this.myShotList[i].draw();
+		}
+
 		if(this.offSetHeight == 0){ //enemy is standing still
 			let toAnimateEnemyNumber = getRndInteger(0, 1000);
 			if(toAnimateEnemyNumber > 995){
