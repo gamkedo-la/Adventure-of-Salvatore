@@ -176,7 +176,6 @@ function moveEverything() {
 		for(var i = 0; i < smokeList.length; i++){
 			smokeList[i].move();
 		}
-
 		removeBulletFromList();
 		removeSmokeFromList();
 		if(MousePosY > 500){

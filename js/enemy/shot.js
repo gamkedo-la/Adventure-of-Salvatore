@@ -25,37 +25,52 @@ function shotClass(){
 		return (this.shotLife <= 0);
 	}
 	
-	this.shootFrom = function(enemy){
-		this.x = enemy.x;
-		this.y = enemy.y;
-		
+	this.shootFrom = function(enemy){		
 		if(enemy.moveNorth && enemy.moveEast){
 			this.xv = 0;
 			this.yv = SHOT_SPEED;
+			this.x = enemy.x;
+			this.y = enemy.y;
 		} else if (enemy.moveNorth && enemy.moveWest){
 			this.xv = -SHOT_SPEED;
 			this.yv = 0;
+			this.x = enemy.x-30;
+			this.y = enemy.y-60;
 		} else if (enemy.moveSouth && enemy.moveEast){
 			this.xv = SHOT_SPEED;
 			this.yv = 0;
+			this.x = enemy.x-30;
+			this.y = enemy.y-30;
 		} else if (enemy.moveSouth && enemy.moveWest){
 			this.xv = 0;
 			this.yv = SHOT_SPEED;
+			this.x = enemy.x-70;
+			this.y = enemy.y-30;
 		} else if(enemy.moveNorth){
-			this.xv = -SHOT_SPEED * Math.cos(45);
-			this.yv = -SHOT_SPEED * Math.sin(45);
+			this.xv = -SHOT_SPEED 
+			this.yv = -SHOT_SPEED 
+			this.x = enemy.x-45;
+			this.y = enemy.y-60;
 		} else if (enemy.moveEast){
-			this.xv = SHOT_SPEED * Math.cos(45);
-			this.yv = -SHOT_SPEED * Math.cos(45);
+			this.xv = SHOT_SPEED 
+			this.yv = -SHOT_SPEED 
+			this.x = enemy.x-30;
+			this.y = enemy.y-20;
 		} else if (enemy.moveSouth){
-			this.xv = SHOT_SPEED * Math.cos(45);
-			this.yv = SHOT_SPEED * Math.sin(45);
+			this.xv = SHOT_SPEED 
+			this.yv = SHOT_SPEED 
+			this.x = enemy.x-45;
+			this.y = enemy.y-20;
 		} else if (enemy.moveWest){
-			this.xv = -SHOT_SPEED * Math.cos(45);
-			this.yv = SHOT_SPEED * Math.sin(45);
+			this.xv = -SHOT_SPEED 
+			this.yv = SHOT_SPEED 
+			this.x = enemy.x-70;
+			this.y = enemy.y-80;
 		} else {
-			this.xv = SHOT_SPEED * Math.cos(45);
-			this.yv = SHOT_SPEED * Math.sin(45);
+			this.xv = SHOT_SPEED 
+			this.yv = SHOT_SPEED 
+			this.x = enemy.x-45;
+			this.y = enemy.y-45;
 		}
 		this.shotLife = SHOT_LIFE;
 	}
@@ -68,7 +83,17 @@ function shotClass(){
 	
 	this.hitTest = function(thisEnemy) {
 		this.readyToRemove = true;
-		return thisEnemy.isOverlappingPoint(this.x,this.y);
+		console.log()
+		return thisEnemy.collisionTest(this.x,this.y);
+	}
+
+	this.collisionTest = function(otherHumanoid){
+		if(	this.x > otherHumanoid.x - 20 && this.x < otherHumanoid.x + 20 &&
+			this.y > otherHumanoid.y - 20 && this.y < otherHumanoid.y + 20){
+				this.readyToRemove = true;
+				return true;
+		}
+		return false;
 	}
 	
 	this.draw = function(){
