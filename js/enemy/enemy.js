@@ -7,6 +7,8 @@ ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];
 function enemyClass() {
 	this.x = 600;
 	this.y = 800;
+	this.xv;
+	this.yv;
 	this.width = 40; //30
 	this.height = 40; //30
 	this.isoEnemyFootY = 8;
@@ -107,6 +109,8 @@ function enemyClass() {
 		}
 		this.miniMapX = nextX;
 		this.miniMapY = nextY;
+		this.xv = nextX;
+		this.yv = nextY;
 		
 		var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
 		var walkIntoTileType = TILE_WALL;
@@ -140,6 +144,11 @@ function enemyClass() {
 				this.movementTimer = 0;
 				break;
 		} 
+
+		let toAttack = Math.round(Math.random() * 1000);
+		if(toAttack > 990){
+			this.rangedAttack();
+		}
 
 		for (i=0; i < this.myShotList.length ; i++){
 			this.myShotList[i].movement();

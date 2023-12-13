@@ -1,7 +1,6 @@
 const SHOT_SPEED = 6.0;
 const SHOT_LIFE = 30;
 const SHOT_DISPLAY_RADIUS = 2.0;
-var missShot = -10;
 
 function shotClass(){
 	this.x;
@@ -30,35 +29,50 @@ function shotClass(){
 		this.x = enemy.x;
 		this.y = enemy.y;
 		
-		//this.xv = Math.cos(enemy.ang) * SHOT_SPEED + enemy.xv;
-		//this.yv = Math.sin(enemy.ang) * SHOT_SPEED + enemy.yv;
-		
+		if(enemy.moveNorth && enemy.moveEast){
+			this.xv = 0;
+			this.yv = SHOT_SPEED;
+		} else if (enemy.moveNorth && enemy.moveWest){
+			this.xv = -SHOT_SPEED;
+			this.yv = 0;
+		} else if (enemy.moveSouth && enemy.moveEast){
+			this.xv = SHOT_SPEED;
+			this.yv = 0;
+		} else if (enemy.moveSouth && enemy.moveWest){
+			this.xv = 0;
+			this.yv = SHOT_SPEED;
+		} else if(enemy.moveNorth){
+			this.xv = -SHOT_SPEED * Math.cos(45);
+			this.yv = -SHOT_SPEED * Math.sin(45);
+		} else if (enemy.moveEast){
+			this.xv = SHOT_SPEED * Math.cos(45);
+			this.yv = -SHOT_SPEED * Math.cos(45);
+		} else if (enemy.moveSouth){
+			this.xv = SHOT_SPEED * Math.cos(45);
+			this.yv = SHOT_SPEED * Math.sin(45);
+		} else if (enemy.moveWest){
+			this.xv = -SHOT_SPEED * Math.cos(45);
+			this.yv = SHOT_SPEED * Math.sin(45);
+		} else {
+			this.xv = SHOT_SPEED * Math.cos(45);
+			this.yv = SHOT_SPEED * Math.sin(45);
+		}
 		this.shotLife = SHOT_LIFE;
 	}
 	
 	this.movement = function() {
-	//	if(this.shotLife > 0){
 			this.shotLife--;
-			//this.x += this.xv;
-			//this.y += this.yv;
-			this.x += 1;
-			this.y += 1;
-
-	//	}	
+			this.x += this.xv;
+			this.y += this.yv;
 	}	
 	
 	this.hitTest = function(thisEnemy) {
-		if(this.shotLife <= 0) {
-			this.readyToRemove = true;
-			return false;
-		}
+		this.readyToRemove = true;
 		return thisEnemy.isOverlappingPoint(this.x,this.y);
 	}
 	
 	this.draw = function(){
-	//	if(this.shotLife > 0){
-		//	console.log("X: " + this.x + " Y: " + this.y)
-		canvasContext.drawImage(rockBulletPic,isoDrawX-(this.width/2), isoDrawY-this.height);
-	//	}
+		gameCoordToIsoCoord (this.x, this.y)
+		canvasContext.drawImage(rockBulletPic,isoDrawX, isoDrawY);
 	}
 }
