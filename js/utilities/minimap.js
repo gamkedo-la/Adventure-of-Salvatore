@@ -37,12 +37,20 @@ function minimapDot(miniMapX,miniMapY,trackTypeHere="magenta") {
         minimapContext.fillStyle = "white";
     } else if (trackTypeHere == 1 || trackTypeHere == 11 || trackTypeHere == 12 ){
         minimapContext.fillStyle = "gray";
-	} else if (trackTypeHere == 3 || trackTypeHere == 6 || trackTypeHere == 7){
-        minimapContext.fillStyle = "blue";
 	} else if (trackTypeHere == 4 || trackTypeHere == 8){
         minimapContext.fillStyle = "purple";
 	} else if (trackTypeHere == 5){
         minimapContext.fillStyle = "orange";
+	} else if (trackTypeHere == TILE_RED_DOOR) {
+        minimapContext.fillStyle = "red";
+	} else if (trackTypeHere == TILE_BLUE_DOOR) {
+        minimapContext.fillStyle = "blue";
+	} else if (trackTypeHere == TILE_WOOD_DOOR) {
+        minimapContext.fillStyle = "brown";
+	} else if (trackTypeHere == TILE_GREEN_DOOR) {
+        minimapContext.fillStyle = "green";
+	} else if (trackTypeHere == TILE_YELLOW_DOOR) {
+        minimapContext.fillStyle = "yellow";
 	} else { // special case: assume it's a string!!!! used for enemies etc
         minimapContext.fillStyle = trackTypeHere;
     }
