@@ -279,11 +279,12 @@ function warriorClass() {
 				break;				
 			case TILE_FINISH:
 			case TILE_STAIRS_DOWN:
-				console.log("Stair 2");
-				loadLevel(levelTwo);
+				console.log("Stair 1");
+				loadLevel(levelOne);
 				break;
 			case TILE_STAIRS:
-				this.warriorReset();
+				console.log("Stair 2");
+				loadLevel(levelTwo);
 				break;			
 			case TILE_PITTRAP_ARMED:
 				this.takeDamageFromTrap(1);
