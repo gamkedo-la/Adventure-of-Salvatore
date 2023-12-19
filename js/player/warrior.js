@@ -36,11 +36,11 @@ function warriorClass() {
 	this.healthPotion = 0;
 	this.speedPotion = 3;
 	this.coins = 0;
-	this.greenKeysHeld = 0;
-	this.blueKeysHeld = 2;
-	this.redKeysHeld = 0;
-	this.yellowKeysHeld = 0;
-	this.greenKeysHeld = 0;
+	this.greenKeysHeld = 1;
+	this.blueKeysHeld = 1;
+	this.redKeysHeld = 1;
+	this.yellowKeysHeld = 1;
+	this.greenKeysHeld = 1;
 	//affects
 	this.speedIncrease = false;
 	this.speedIncreaseTimer = 0;
@@ -197,6 +197,12 @@ function warriorClass() {
 			case TILE_SPIKES_UNARMED:
 			case TILE_WALL_3:	
 			case TILE_PITTRAP_UNARMED:
+			case TILE_GREEN_DOOR_OPEN:
+			case TILE_GREEN_DOOR_2_OPEN:
+			case TILE_BLUE_DOOR_OPEN:
+			case TILE_BLUE_DOOR_2_OPEN:
+			case TILE_WOOD_DOOR_OPEN:	
+			case TILE_WOOD_DOOR_2_OPEN:
                 if (!blockedUpAhead) {
                     // the path in not blocked: update player position
 				    this.x = nextX;
@@ -204,12 +210,21 @@ function warriorClass() {
                 }
 				break;
 			case TILE_WOOD_DOOR:
-					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_OPEN;
 				break;
+			case TILE_WOOD_DOOR_2:
+				roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_2_OPEN;
+			break;
 			case TILE_YELLOW_DOOR:
 				if(this.yellowKeysHeld > 0){
 					this.yellowKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_OPEN;
+				}
+				break;
+			case TILE_YELLOW_DOOR_2:
+				if(this.yellowKeysHeld > 0){
+					this.yellowKeysHeld--;
+					roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_2_OPEN;
 				}
 				break;
 			case TILE_RED_DOOR:
@@ -221,12 +236,25 @@ function warriorClass() {
 			case TILE_BLUE_DOOR:
 				if(this.blueKeysHeld > 0){
 					this.blueKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_OPEN;
 				}
+				break;
+			case TILE_BLUE_DOOR_2:
+				if(this.blueKeysHeld > 0){
+					this.blueKeysHeld--;
+					roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_2_OPEN;
+				}
+				break;
 			case TILE_GREEN_DOOR:
 				if(this.greenKeysHeld > 0){
 					this.greenKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_OPEN;
+				}
+				break;
+			case TILE_GREEN_DOOR_2:
+				if(this.greenKeysHeld > 0){
+					this.greenKeysHeld--;
+					roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_2_OPEN;
 				}
 				break;	
 			case TILE_TREASURE:	
