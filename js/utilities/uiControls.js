@@ -7,6 +7,11 @@ const KEY_M = 77; //Menu
 const KEY_N = 78; //Map
 const KEY_P = 80; //Pause
 const KEY_I = 73; //Items
+
+const KEY_Z = 90;
+const KEY_X = 88;
+const KEY_C = 67;
+
 const KEY_SPACEBAR = 32; 
 const KEY_1 = 49;
 const KEY_2 = 50;
@@ -47,7 +52,8 @@ function initInput(){
     document.addEventListener("keydown", keyPressed);
 	document.addEventListener("keyup", keyReleased);
 	
-	playerOne.setupControls(KEY_W, KEY_D, KEY_S, KEY_A, KEY_SPACEBAR);
+	playerOne.setupControls(KEY_W, KEY_D, KEY_S, KEY_A, KEY_SPACEBAR,
+        KEY_UP_ARROW, KEY_RIGHT_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW, KEY_X);
 }
 
 function keyPressed(evt) {
@@ -92,21 +98,27 @@ function setKeyHoldState(thisKey, thisWarrior, setTo) {
 
 	if (!pauseScreen || !setTo) {
 		// !setTo allowed through to do a key release during pause state
-		if(thisKey == thisWarrior.controlKeyForNorth){
+		if(thisKey == thisWarrior.controlKeyForNorth ||
+            thisKey == thisWarrior.controlKeyForNorth2
+            ){
 			thisWarrior.keyHeld_North = setTo;
 		}
-		if(thisKey == thisWarrior.controlKeyForEast){
+		if(thisKey == thisWarrior.controlKeyForEast ||
+            thisKey == thisWarrior.controlKeyForEast2){
 			thisWarrior.keyHeld_East = setTo;
 		}
-		if(thisKey == thisWarrior.controlKeyForSouth){
+		if(thisKey == thisWarrior.controlKeyForSouth ||
+            thisKey == thisWarrior.controlKeyForSouth2){
 			thisWarrior.keyHeld_South = setTo;
 		}
 		
-		if(thisKey == thisWarrior.controlKeyForWest){
+		if(thisKey == thisWarrior.controlKeyForWest ||
+            thisKey == thisWarrior.controlKeyForWest2){
 			thisWarrior.keyHeld_West = setTo;
 		}
 	
-		if(thisKey == thisWarrior.controlKeyForSwordSwing){
+		if(thisKey == thisWarrior.controlKeyForSwordSwing ||
+            thisKey == thisWarrior.controlKeyForSwordSwing2){
 			if(playerOne.swordReady){
 				playerOne.swordSwing();
 			}

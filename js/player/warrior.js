@@ -53,12 +53,22 @@ function warriorClass() {
 
 	this.warriorPic = document.createElement("img");
 	
-	this.setupControls = function(northKey,eastKey,southKey,westKey,swordKey) {
-		this.controlKeyForNorth = northKey;
+	this.setupControls = function(
+            northKey,eastKey,southKey,westKey,swordKey,
+            northKey2,eastKey2,southKey2,westKey2,swordKey2) {
+		
+        this.controlKeyForNorth = northKey;
 		this.controlKeyForEast = eastKey;			
 		this.controlKeyForSouth = southKey;
-		this.controlKeyForWest = westKey;;
+		this.controlKeyForWest = westKey;
 		this.controlKeyForSwordSwing = swordKey;
+
+        this.controlKeyForNorth2 = northKey2;
+		this.controlKeyForEast2 = eastKey2;			
+		this.controlKeyForSouth2 = southKey2;
+		this.controlKeyForWest2 = westKey2;
+		this.controlKeyForSwordSwing2 = swordKey2;
+
 	}
 
 	this.warriorReset = function() {
