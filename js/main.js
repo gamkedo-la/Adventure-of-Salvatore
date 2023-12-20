@@ -4,6 +4,7 @@ var canvasContext;
 //characters (Player, NPC's, Enemies)
 var playerOne = new warriorClass();
 var miniCyclopList = [];
+var blobList = [];
 var orcList = [];
 var ogreList = [];
 var ratList = [];
@@ -17,6 +18,7 @@ function resetEnemyLists(){
 	orcList = [];
 	ogreList = [];
 	ratList = [];
+	blobList = [];
 	entities = [playerOne];
 }
 
@@ -67,6 +69,9 @@ function imageLoadingDoneSoStartGame(){
 	for(var i = 0; i < roomGrid.length; i++){
 		if(roomGrid[i] == TILE_MINICYCLOP){
 			addMiniCyclop();
+		}
+		if(roomGrid[i] == TILE_BLOB){
+			addBlob();
 		} 
 		if(roomGrid[i] == TILE_ORC){
 			addOrc();
@@ -77,6 +82,9 @@ function imageLoadingDoneSoStartGame(){
 	}
 	for(var i = 0; i < miniCyclopList.length; i++){
 		miniCyclopList[i].init(miniCyclopPic, miniCyclopNames[i], TILE_MINICYCLOP);
+	}
+	for(var i = 0; i < blobList.length; i++){
+		blobList[i].init(blobPic, blobNames[i], TILE_BLOB);
 	}
 	for(var i = 0; i < orcList.length; i++){
 		orcList[i].init(orcPic, orcNames[i], TILE_ORC);
@@ -103,6 +111,12 @@ function imageLoadingDoneSoStartGame(){
 function addMiniCyclop(){
 	var tempEnemy = new enemyClass();
 	miniCyclopList.push(tempEnemy);
+	entities.push(tempEnemy);
+}
+
+function addBlob(){
+	var tempEnemy = new enemyClass();
+	blobList.push(tempEnemy);
 	entities.push(tempEnemy);
 }
 
@@ -154,6 +168,9 @@ function loadLevel(whichLevel) {
 	for(var i = 0; i < miniCyclopList.length; i++){
 		miniCyclopList[i].init(miniCyclopPic, miniCyclopNames[i], TILE_MINICYCLOP);
 	}
+	for(var i = 0; i < blobList.length; i++){
+		blobList[i].init(blobPic, blobNames[i], TILE_BLOB);
+	}
 	for(var i = 0; i < orcList.length; i++){
 		orcList[i].init(orcPic, orcNames[i], TILE_ORC);
 	}		
@@ -195,6 +212,14 @@ function checkAllPlayerAndEnemyCollisions(){
 		for(var ii = i+1; ii < miniCyclopList.length; ii++){
 			miniCyclopList[i].checkCollisionsAgainst(miniCyclopList[ii]);
 			miniCyclopList[i].checkCollisionsAgainst(playerOne);
+		}
+	}
+	//check Blobs
+	for(var i = 0; i < blobList.length; i++){
+		playerOne.checkCollisionsAgainst(blobList[i]);
+		for(var ii = i+1; ii < blobList.length; ii++){
+			blobList[i].checkCollisionsAgainst(blobList[ii]);
+			blobList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
 	//check orcs

@@ -1,5 +1,6 @@
 var warriorPic = document.createElement("img");
 var miniCyclopPic = document.createElement("img");
+var blobPic = document.createElement("img");
 var orcPic = document.createElement("img");
 var ogrePic = document.createElement("img");
 var ratPic = document.createElement("img");
@@ -52,6 +53,7 @@ function loadImages() {
 			//characters
 			{varName: warriorPic, theFile: "warrior.png"},
 			{varName: orcPic, theFile: "orc.png"},
+			{varName: blobPic, theFile: "blob.png"},
 			{varName: miniCyclopPic, theFile: "miniCyclop.png"},
 			{varName: ogrePic, theFile: "ogre.png"},
 			{varName: ratPic, theFile: "rat.png"},
