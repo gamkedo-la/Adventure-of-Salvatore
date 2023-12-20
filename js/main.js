@@ -10,7 +10,7 @@ var ogreList = [];
 var ratList = [];
 var entities = [playerOne];
 
-const XRAY_VISION_ENABLED = false; // can we see player through walls?
+const XRAY_VISION_ENABLED = true; // can we see player through walls?
 const XRAY_VISION_OPACITY = 0.1;
 
 function resetEnemyLists(){
