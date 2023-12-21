@@ -162,7 +162,10 @@ function loadImages() {
 			{trackType: TILE_WARDROB, theFile: "wardrob.png"},
 			{trackType: TILE_TABLE6, theFile: "table6.png"},
 			{trackType: TILE_RED_CARPET, theFile: "carpet.png"},
-			{trackType: TILE_OUTSIDE_DOOR, theFile: "outsideDoor.png"}
+			{trackType: TILE_OUTSIDE_DOOR, theFile: "outsideDoor.png"},
+			{trackType: TILE_OUTSIDE_DOOR_2, theFile: "outsideDoor2.png"},
+			{trackType: TILE_OUTSIDE_WINDOW, theFile: "outsideWindow.png"},
+			
 		];
 			
 	picsToLoad = imageList.length;
