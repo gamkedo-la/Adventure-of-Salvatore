@@ -278,9 +278,11 @@ function enemyClass() {
 				this.animateEnemyStandingStill = true;
 			}
 			if(this.animateEnemyStandingStill){
+				this.frames = 8;
 				this.animateEnemy()
 			}
-		} else { //player is moving
+		} else { //enemy is moving
+			this.frames = 4;
 			this.animateEnemy();
 		}
 		gameCoordToIsoCoord(this.x,this.y);

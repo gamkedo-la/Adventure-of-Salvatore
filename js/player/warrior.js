@@ -392,9 +392,11 @@ function warriorClass() {
 				this.animatePlayerStandingStill = true;
 			}
 			if(this.animatePlayerStandingStill){
+				this.frames = 8;
 				this.animateWarrior()
 			}
 		} else { //player is moving
+			this.frames = 4;
 			this.animateWarrior();
 		}
 		gameCoordToIsoCoord(this.x,this.y);
@@ -425,8 +427,6 @@ function warriorClass() {
 		this.speedIncrease = true;
 		this.speedIncreaseTimer = 1000;
 	}
-
-
 
 	this.animateWarrior = function(){
 		this.drawTimer++;
