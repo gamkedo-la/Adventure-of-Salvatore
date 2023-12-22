@@ -2,8 +2,8 @@ miniCyclopNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz",
 				"Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm", 
 				"Kiok", "Wrokx", "Fiog", "Goziord"];
 
-miniCyclop.prototype = new enemyClass();
-function miniCyclop() {
+MiniCyclop.prototype = new enemyClass();
+function MiniCyclop() {
 	this.width = 40; 
 	this.height = 40; 
 	this.maxHealth = 4;

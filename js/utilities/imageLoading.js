@@ -165,6 +165,7 @@ function loadImages() {
 			{trackType: TILE_OUTSIDE_DOOR, theFile: "outsideDoor.png"},
 			{trackType: TILE_OUTSIDE_DOOR_2, theFile: "outsideDoor2.png"},
 			{trackType: TILE_OUTSIDE_WINDOW, theFile: "outsideWindow.png"},
+			{trackType: TILE_WALL_BANNER, theFile: "banner.png"},
 			
 		];
 			
