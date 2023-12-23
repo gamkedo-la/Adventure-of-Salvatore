@@ -396,7 +396,7 @@ function warriorClass() {
 				this.animateWarrior()
 			}
 		} else { //player is moving
-			this.frames = 4;
+			this.frames = 3;
 			this.animateWarrior();
 		}
 		gameCoordToIsoCoord(this.x,this.y);
