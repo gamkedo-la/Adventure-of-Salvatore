@@ -1,3 +1,4 @@
+const GRID_WEIGHT_INFLUENCE_FACTOR = 500;
 
 orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
 
@@ -155,6 +156,82 @@ function enemyClass() {
 		}
 	};
 	
+function a_star_search(gridArray, base, goal) {
+		// Using the following as a reference
+		// https://www.redblobgames.com/pathfinding/a-star/implementation.html
+		// Differences from Dijkstra's and A* can be found in the "Algorithm Changes" section
+		// https://www.redblobgames.com/pathfinding/a-star/implementation.html#algorithm
+		function heuristic( {x1, y1}, {x2, y2} ) {
+			return Math.abs(x1 - x2) + abs(y1 - y2); // Manhattan distance
+		}
+		class PriorityQueue {
+			#data = [];
+
+			#prioritize(i, j) {
+				i.priority - j.priority;
+			}
+
+			join(element, priority) {
+				this.#data.push({element, priority});
+			}
+
+			pick() {
+				this.#data.sort(this.#prioritize);
+				return this.#data.pop().element;
+			}
+
+			empty() {
+				return this.#data.length == 0;
+			}
+		}
+
+		frontier = new PriorityQueue();
+		frontier.join(base, 0);
+		pathToHere = {};
+		costToHere = {};
+		pathToHere[base] = null;
+		costToHere[base] = 0;
+
+		while (!frontier.empty()) {
+			let current = frontier.pick();
+
+			if (current == goal) { break; }
+
+			let neighbors = [
+				n = { tileRow : current.tileRow - 1, tileCol : current.tileCol },
+				s = { tileRow : current.tileRow + 1, tileCol : current.tileCol },
+				e = { tileRow : current.tileRow, tileCol : current.tileCol + 1 },
+				w = { tileRol : current.tileRow, tileCol : current.tileCol - 1 }
+			];
+
+			for (let next of neighbors) {
+				const nextIndex = next.tileRow * ROOM_COLS + next.tileCol;
+				const newCost = costToHere[current] + gridArray[nextIndex] * GRID_WEIGHT_INFLUENCE_FACTOR;
+
+				// Making this faster by not checking for location and, further,
+				// not checking the new cost is less than the existing for the
+				// location.
+				// if (!costToHere.hasOwnProperty(next) || newCost < costToHere[next]) {}
+				costToHere[next] = newCost;
+				pathToHere[next] = current;
+				const priority = newCost + heuristic(next, goal);
+				frontier.push(next, priority);
+			}
+		}
+
+		return [pathToHere, costToHere];
+	}
+
+	this.pathfinding = function() {
+		base = { x : this.x, y : this.y };
+		goal = { x : playerOne.x, y : playerOne.y };
+
+		let [path, cost] = a_star_search(roomGrid, base, goal);
+		console.log("path, cost:", path, cost);
+		
+		// create movements from path
+	}
+
 	this.randomMovements = function(){
 		var whichDirection =  Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
