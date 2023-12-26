@@ -154,6 +154,7 @@ function loadImages() {
 			{trackType: TILE_WALL_4, theFile: "wall4.png"},
 			{trackType: TILE_WALL_5, theFile: "wall5.png"},
 			{trackType: TILE_WALL_6, theFile: "wall6.png"},
+			{trackType: TILE_WALL_SKELETON, theFile: "wallSkeleton.png"},
 			{trackType: TILE_KEY_BLUE, theFile: "keyBlue.png"},
 			{trackType: TILE_KEY_GREEN, theFile: "keyGreen.png"},
 			{trackType: TILE_KEY_RED, theFile: "keyRed.png"},
