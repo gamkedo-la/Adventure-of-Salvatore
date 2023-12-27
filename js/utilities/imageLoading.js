@@ -173,7 +173,7 @@ function loadImages() {
 			{trackType: TILE_OUTSIDE_DOOR_2, theFile: "outsideDoor2.png"},
 			{trackType: TILE_OUTSIDE_WINDOW, theFile: "outsideWindow.png"},
 			{trackType: TILE_WALL_BANNER, theFile: "banner.png"},
-			
+			{trackType: TILE_SKELETON_CANDLE, theFile: "candle.png"}
 		];
 			
 	picsToLoad = imageList.length;
