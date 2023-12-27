@@ -204,8 +204,7 @@ function warriorClass() {
 		switch(walkIntoTileType) {
 			case TILE_ROAD:
 			case TILE_RED_CARPET:
-			case TILE_SPIKES_UNARMED:
-			case TILE_WALL_3:	
+			case TILE_SPIKES_UNARMED:	
 			case TILE_PITTRAP_UNARMED:
 			case TILE_GREEN_DOOR_OPEN:
 			case TILE_GREEN_DOOR_2_OPEN:
@@ -213,6 +212,7 @@ function warriorClass() {
 			case TILE_BLUE_DOOR_2_OPEN:
 			case TILE_WOOD_DOOR_OPEN:	
 			case TILE_WOOD_DOOR_2_OPEN:
+			case TILE_WALL_3:
                 if (!blockedUpAhead) {
                     // the path in not blocked: update player position
 				    this.x = nextX;
@@ -323,7 +323,7 @@ function warriorClass() {
 					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_2;
 					console.log("Walked in Lever 1");
 					this.leverCoolDownActive = true;
-					roomGrid[880] = TILE_WALL;
+					roomGrid[884] = TILE_WALL;
 				}
 				break;
 			case TILE_WALL_LEVER_2:
