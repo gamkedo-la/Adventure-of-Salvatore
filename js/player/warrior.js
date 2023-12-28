@@ -33,7 +33,7 @@ function warriorClass() {
 	this.drawTimer = 0;
 	this.animatePlayerStandingStill = false;
 	//items
-	this.healthPotion = 0;
+	this.healthPotion = 1;
 	this.speedPotion = 3;
 	this.coins = 0;
 	this.greenKeysHeld = 1;

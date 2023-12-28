@@ -67,7 +67,7 @@ function keyPressed(evt) {
 	var muteKey = KEY_B;
 	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
-	var enemyShot = KEY_2;
+	var healingPotion = KEY_2;
 
 	if(paused == evt.keyCode){
 		changePauseState();
@@ -75,6 +75,8 @@ function keyPressed(evt) {
 		isMuted = !isMuted;
 	} else if (speedPotion == evt.keyCode){
 		playerOne.useSpeedPotion();
+	} else if (healingPotion == evt.keyCode){
+		playerOne.useHealingPotion();
 	} else if (menuKey == evt.keyCode){
 		console.log("Go to Menu Screen");
 	} else if (mapKey == evt.keyCode){
@@ -83,9 +85,7 @@ function keyPressed(evt) {
 	} else if (itemKey == evt.keyCode){
 		itemScreen = !itemScreen;
 		liveGame = !liveGame;
-	} else if (evt.keyCode == KEY_2){
-
-	}
+	} 
 }
 
 function keyReleased(evt) {
@@ -195,8 +195,15 @@ function drawUserInterface(){
 	let holderSpacing = 50;
 	for(holderSpot; holderSpot < amountOfHolders; holderSpot++){
 		canvasContext.drawImage(guiPotionHolderPic, startX + (holderSpot * holderSpacing), startY);
+		if(playerOne.speedPotion > 0){
+			canvasContext.drawImage(trackPics[TILE_SPEED_POTION], 0,50,50,50,140, 555,50,50);
+		}
+		if(playerOne.healthPotion > 0){
+			canvasContext.drawImage(trackPics[TILE_HEALING_POTION], 0,50,50,50,190, 555,50,50);
+		}
 		colorText(holderSpot + 1, startX + (holderSpot * holderSpacing) + 22, startY + 28, 'white', '12px serif');
 	}
+
 	let healthBarHolderX = startX
 	let healthBarHolderY = 540;
 	let healthX = startX + 20;
