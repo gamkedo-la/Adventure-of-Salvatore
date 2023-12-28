@@ -437,8 +437,6 @@ function warriorClass() {
 		this.health = this.health + 2;
 	}
 
-	
-
 	this.animateWarrior = function(){
 		this.drawTimer++;
 		if(this.drawTimer == 8){
