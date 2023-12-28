@@ -428,6 +428,17 @@ function warriorClass() {
 		this.speedIncreaseTimer = 1000;
 	}
 
+	this.useHealingPotion = function(){
+		if(this.healthPotion <= 0){
+			console.log("No Health Potions to use");
+			return;
+		}
+		this.healthPotion--;
+		this.health = this.health + 2;
+	}
+
+	
+
 	this.animateWarrior = function(){
 		this.drawTimer++;
 		if(this.drawTimer == 8){
