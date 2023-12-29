@@ -197,9 +197,15 @@ function drawUserInterface(){
 		canvasContext.drawImage(guiPotionHolderPic, startX + (holderSpot * holderSpacing), startY);
 		if(playerOne.speedPotion > 0){
 			canvasContext.drawImage(trackPics[TILE_SPEED_POTION], 0,50,50,50,140, 555,50,50);
+			if(playerOne.speedPotion > 1){
+			colorText("x" + playerOne.speedPotion, 168, 575, 'green', '10px serif');
+			}
 		}
 		if(playerOne.healthPotion > 0){
 			canvasContext.drawImage(trackPics[TILE_HEALING_POTION], 0,50,50,50,190, 555,50,50);
+			if(playerOne.healingPotion > 1){
+				colorText("x" + playerOne.healthPotion, 217, 575, 'green', '10px serif');
+			}
 		}
 		colorText(holderSpot + 1, startX + (holderSpot * holderSpacing) + 22, startY + 28, 'white', '12px serif');
 	}
