@@ -334,7 +334,6 @@ function a_star_search(gridArray, base, goal) {
 	}
 
 	this.rangedAttack = function(){
-		console.log("Mini Cyclops attack")
 		crashIntoConeSound.play();
 
 //		if(this.myShotList.length < this.totalShots){

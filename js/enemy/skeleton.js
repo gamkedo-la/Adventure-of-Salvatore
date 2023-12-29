@@ -1,17 +1,15 @@
-blobNames = ["Ooze"];
+skeletonNames = ["Ralf"];
 
-blobClass.prototype = new enemyClass();
-function blobClass() {
+skeletonClass.prototype = new enemyClass();
+function skeletonClass() {
 
-	
 	this.superClassReset = this.reset;
 	this.reset  = function() {
-		this.speed = 2;
+		this.speed = 5;
 		this.hitPoints = this.maxHitPoints;
-		this.width = 50; 
-		this.height = 47;
-		this.maxHealth = 10;
-		this.speed = 0;
+		this.width = 20; 
+		this.height = 40;
+		this.maxHealth = 5;
 		this.offSetWidth = 0;
 		this.offSetHeight = 0;
 	}

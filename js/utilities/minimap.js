@@ -79,9 +79,6 @@ function updateMinimap() {
     
     // and all monsters
     for (mob of miniCyclopList) { minimapDotIso(mob.x,mob.y,"darkgreen"); }
-    for (mob of orcList) { minimapDotIso(mob.x,mob.y,"darkbrown"); }
-    for (mob of ogreList) { minimapDotIso(mob.x,mob.y,"darkred"); }
-    for (mob of ratList) { minimapDotIso(mob.x,mob.y,"darkgrey"); }
 
     // add more cool things to the minimap here!
 }

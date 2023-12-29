@@ -1,10 +1,7 @@
 var warriorPic = document.createElement("img");
 var miniCyclopPic = document.createElement("img");
 var blobPic = document.createElement("img");
-var orcPic = document.createElement("img");
-var ogrePic = document.createElement("img");
-var ratPic = document.createElement("img");
-var spiderPic = document.createElement("img");
+var skeletonPic = document.createElement("img");
 var shadowPic = document.createElement("img");
 var feedbackGUIPic = document.createElement("img");
 var healthbarPic = document.createElement("img");
@@ -52,12 +49,9 @@ function loadImages() {
 		var imageList = [
 			//characters
 			{varName: warriorPic, theFile: "warrior.png"},
-			{varName: orcPic, theFile: "orc.png"},
+			{varName: skeletonPic, theFile: "skeleton.png"},
 			{varName: blobPic, theFile: "blob.png"},
 			{varName: miniCyclopPic, theFile: "miniCyclop.png"},
-			{varName: ogrePic, theFile: "ogre.png"},
-			{varName: ratPic, theFile: "rat.png"},
-			{varName: spiderPic, theFile: "spider.png"},
 			{varName: shadowPic, theFile: "shadow.png"},
 			{varName: feedbackGUIPic, theFile: "feedbackGUI.png"},
 			{varName: healthbarPic, theFile: "healthbar.png"},

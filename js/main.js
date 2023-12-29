@@ -5,9 +5,7 @@ var canvasContext;
 var playerOne = new warriorClass();
 var miniCyclopList = [];
 var blobList = [];
-var orcList = [];
-var ogreList = [];
-var ratList = [];
+var skeletonList = [];
 var entities = [playerOne];
 
 const XRAY_VISION_ENABLED = true; // can we see player through walls?
@@ -15,9 +13,7 @@ const XRAY_VISION_OPACITY = 0.1;
 
 function resetEnemyLists(){
 	miniCyclopList = [];
-	orcList = [];
-	ogreList = [];
-	ratList = [];
+	skeletonList = [];
 	blobList = [];
 	entities = [playerOne];
 }
@@ -73,11 +69,8 @@ function imageLoadingDoneSoStartGame(){
 		if(roomGrid[i] == TILE_BLOB){
 			addBlob();
 		} 
-		if(roomGrid[i] == TILE_ORC){
-			addOrc();
-		}
-		if(roomGrid[i] == TILE_OGRE){
-			addOgre();
+		if(roomGrid[i] == TILE_SKELETON){
+			addSkeleton();
 		}
 	}
 	for(var i = 0; i < miniCyclopList.length; i++){
@@ -86,14 +79,8 @@ function imageLoadingDoneSoStartGame(){
 	for(var i = 0; i < blobList.length; i++){
 		blobList[i].init(blobPic, blobNames[i], TILE_BLOB);
 	}
-	for(var i = 0; i < orcList.length; i++){
-		orcList[i].init(orcPic, orcNames[i], TILE_ORC);
-	}		
-	for(var i = 0; i < ogreList.length; i++){
-		ogreList[i].init(ogrePic, ogreNames[i], TILE_OGRE);
-	}
-	for(var i = 0; i < ratList.length; i++){
-		ratList[i].init(ratPic, ratNames[i], TILE_RAT);
+	for(var i = 0; i < skeletonList.length; i++){
+		skeletonList[i].init(skeletonPic, skeletonNames[i], TILE_SKELETON);
 	}
 
 	mainBackgroundMusic.loopSong("salvatore");
@@ -115,26 +102,14 @@ function addMiniCyclop(){
 }
 
 function addBlob(){
-	var tempEnemy = new enemyClass();
+	var tempEnemy = new blobClass();
 	blobList.push(tempEnemy);
 	entities.push(tempEnemy);
 }
 
-function addOrc(){
-	var tempEnemy = new enemyClass();
-	orcList.push(tempEnemy);
-	entities.push(tempEnemy);
-}
-
-function addOgre(){
-	var tempEnemy = new enemyClass();
-	ogreList.push(tempEnemy);
-	entities.push(tempEnemy);
-}
-
-function addRat(){
-	var tempEnemy = new ratClass();
-	ratList.push(tempEnemy);
+function addSkeleton(){
+	var tempEnemy = new skeletonClass();
+	skeletonList.push(tempEnemy);
 	entities.push(tempEnemy);
 }
 
@@ -155,14 +130,11 @@ function loadLevel(whichLevel) {
 		if(roomGrid[i] == TILE_MINICYCLOP){
 			addMiniCyclop();
 		} 
-		if(roomGrid[i] == TILE_ORC){
-			addOrc();
+		if(roomGrid[i] == TILE_BLOB){
+			addBlob();
 		}
-		if(roomGrid[i] == TILE_OGRE){
-			addOgre();
-		}
-		if(roomGrid[i] == TILE_RAT){
-			addRat();
+		if(roomGrid[i] == TILE_SKELETON){
+			addSkeleton();
 		}
 	}
 	for(var i = 0; i < miniCyclopList.length; i++){
@@ -171,18 +143,12 @@ function loadLevel(whichLevel) {
 	for(var i = 0; i < blobList.length; i++){
 		blobList[i].init(blobPic, blobNames[i], TILE_BLOB);
 	}
-	for(var i = 0; i < orcList.length; i++){
-		orcList[i].init(orcPic, orcNames[i], TILE_ORC);
-	}		
-	for(var i = 0; i < ogreList.length; i++){
-		ogreList[i].init(ogrePic, ogreNames[i], TILE_OGRE);
+	for(var i = 0; i < skeletonList.length; i++){
+		skeletonList[i].init(skeletonPic, skeletonNames[i], TILE_SKELETON);
 	}
-	for(var i = 0; i < ratList.length; i++){
-		ratList[i].init(ratPic, ogreNames[i], TILE_OGRE);
-	}
+
 	console.log("Finish Load Level");
 }
-
 			
 //All movement occurs here.  This is called every frame.
 function moveEverything() {
@@ -222,28 +188,12 @@ function checkAllPlayerAndEnemyCollisions(){
 			blobList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
-	//check orcs
-	for(var i = 0; i < orcList.length; i++){
-		playerOne.checkCollisionsAgainst(orcList[i]);
-		for(var ii = i+1; ii < orcList.length; ii++){
-			orcList[i].checkCollisionsAgainst(orcList[ii]);
-			orcList[i].checkCollisionsAgainst(playerOne);
-		}
-	}
-	//check ogres
-	for(var i = 0; i < ogreList.length; i++){
-		playerOne.checkCollisionsAgainst(ogreList[i]);
-		for(var ii = i+1; ii < orcList.length; ii++){
-			ogreList[i].checkCollisionsAgainst(ogreList[ii]);
-			ogreList[i].checkCollisionsAgainst(playerOne);
-		}
-	}
-	//check rats
-	for(var i = 0; i < ratList.length; i++){
-		playerOne.checkCollisionsAgainst(ratList[i]);
-		for(var ii = i+1; ii < ratList.length; ii++){
-			ratList[i].checkCollisionsAgainst(ratList[ii]);
-			ratList[i].checkCollisionsAgainst(playerOne);
+	//check Blobs
+	for(var i = 0; i < skeletonList.length; i++){
+		playerOne.checkCollisionsAgainst(skeletonList[i]);
+		for(var ii = i+1; ii < skeletonList.length; ii++){
+			skeletonList[i].checkCollisionsAgainst(skeletonList[ii]);
+			skeletonList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
 	//check wallTrap
