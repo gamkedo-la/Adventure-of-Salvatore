@@ -38,6 +38,7 @@ function enemyClass() {
 
 	this.myShotList = [];
 	this.totalShots = 5;
+	this.canUseRangeAttack = false;
 	
 	this.enemyReset = function() {
 		this.speed = 3;
@@ -148,7 +149,9 @@ function enemyClass() {
 
 		let toAttack = Math.round(Math.random() * 1000);
 		if(toAttack > 990){
-			this.rangedAttack();
+			if(this.canUseRangeAttack){
+				this.rangedAttack();
+			}
 		}
 
 		for (i=0; i < this.myShotList.length ; i++){

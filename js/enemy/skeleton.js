@@ -2,21 +2,26 @@ skeletonNames = ["Ralf"];
 
 skeletonClass.prototype = new enemyClass();
 function skeletonClass() {
-
-	this.superClassReset = this.reset;
-	this.reset  = function() {
-		this.speed = 5;
+	this.width = 20; 
+	this.height = 40; 
+	this.maxHealth = 4;
+	this.speed = 6;
+	this.totalShots = 0;
+	this.canUseRangeAttack = false;
+	
+	this.superClassReset = this.enemyReset;
+	this.reset = function() {
+		this.superClassReset();
+		this.speed = 6;
+		this.totalShots = 0;
 		this.hitPoints = this.maxHitPoints;
-		this.width = 20; 
-		this.height = 40;
-		this.maxHealth = 5;
-		this.offSetWidth = 0;
-		this.offSetHeight = 0;
+		this.canUseRangeAttack = false;
 	}
 					
 	this.superClassInitialize = this.init;
 	this.init = function(whichGraphic, whichName, whichTile) {
-		this.superClassInitialize(whichGraphic, whichName, whichTile);		
+		this.superClassInitialize(whichGraphic, whichName, whichTile);	
+		this.canUseRangeAttack = true;
 		this.reset();
 	}	
 		
@@ -25,8 +30,8 @@ function skeletonClass() {
 		this.superClassMove();
 	}
 	
+	this.superClassDraw = this.draw;
 	this.draw = function(){
-		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
-			isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
+		this.superClassDraw();
 	}
 }

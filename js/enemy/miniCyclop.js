@@ -8,10 +8,12 @@ function MiniCyclop() {
 	this.height = 40; 
 	this.maxHealth = 4;
 	this.speed = 4;
+	this.canUseRangeAttack = true;
 	
 	this.superClassReset = this.enemyReset;
 	this.miniCyclopReset = function() {
 		this.superClassReset();
+		this.canUseRangeAttack = true;
 		this.speed = 4;
 		this.hitPoints = this.maxHitPoints;
 	}

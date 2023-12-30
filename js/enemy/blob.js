@@ -2,6 +2,7 @@ blobNames = ["Ooze"];
 
 blobClass.prototype = new enemyClass();
 function blobClass() {
+	this.canUseRangeAttack = false;
 
 	
 	this.superClassReset = this.reset;
@@ -14,6 +15,7 @@ function blobClass() {
 		this.speed = 0;
 		this.offSetWidth = 0;
 		this.offSetHeight = 0;
+		this.canUseRangeAttack = false;
 	}
 					
 	this.superClassInitialize = this.init;
