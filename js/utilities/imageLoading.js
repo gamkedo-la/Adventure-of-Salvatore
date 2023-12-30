@@ -151,6 +151,7 @@ function loadImages() {
 			{trackType: TILE_WALL_6, theFile: "wall6.png"},
 			{trackType: TILE_WALL_7, theFile: "wall7.png"},
 			{trackType: TILE_WALL_8, theFile: "wall8.png"},
+			{trackType: TILE_WALL_9, theFile: "wall9.png"},
 			{trackType: TILE_WALL_SKELETON, theFile: "wallSkeleton.png"},
 			{trackType: TILE_KEY_BLUE, theFile: "keyBlue.png"},
 			{trackType: TILE_KEY_GREEN, theFile: "keyGreen.png"},
@@ -167,7 +168,9 @@ function loadImages() {
 			{trackType: TILE_OUTSIDE_DOOR_2, theFile: "outsideDoor2.png"},
 			{trackType: TILE_OUTSIDE_WINDOW, theFile: "outsideWindow.png"},
 			{trackType: TILE_WALL_BANNER, theFile: "banner.png"},
-			{trackType: TILE_SKELETON_CANDLE, theFile: "candle.png"}
+			{trackType: TILE_SKELETON_CANDLE, theFile: "candle.png"},
+			{trackType: TILE_STAIRS_3, theFile: "Stairs.png"},
+
 		];
 			
 	picsToLoad = imageList.length;
