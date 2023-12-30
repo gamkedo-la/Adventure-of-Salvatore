@@ -295,6 +295,10 @@ function warriorClass() {
 			case TILE_STAIRS:
 				console.log("Stair 2");
 				loadLevel(levelTwo);
+				break;
+			case TILE_STAIRS_3:
+				console.log("Stair 3");
+				loadLevel(levelThree);
 				break;			
 			case TILE_PITTRAP_ARMED:
 				this.takeDamageFromTrap(1);
