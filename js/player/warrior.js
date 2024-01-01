@@ -36,11 +36,10 @@ function warriorClass() {
 	this.healthPotion = 1;
 	this.speedPotion = 3;
 	this.coins = 0;
-	this.greenKeysHeld = 1;
-	this.blueKeysHeld = 1;
-	this.redKeysHeld = 1;
-	this.yellowKeysHeld = 1;
-	this.greenKeysHeld = 1;
+	this.greenKeysHeld = 4;
+	this.blueKeysHeld = 4;
+	this.redKeysHeld = 4;
+	this.yellowKeysHeld = 4;
 	//affects
 	this.speedIncrease = false;
 	this.speedIncreaseTimer = 0;

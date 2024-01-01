@@ -236,7 +236,7 @@ function a_star_search(gridArray, base, goal) {
 	}
 
 	this.randomMovements = function(){
-		var whichDirection =  Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
+		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 	
 		if(this.movementTimer <= 0){
