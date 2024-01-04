@@ -28,6 +28,7 @@ function skeletonClass() {
 	this.superClassMove = this.movement;
 	this.movement = function() {
 		this.superClassMove();
+		this.checkForMeleeCombatRange();
 	}
 	
 	this.superClassDraw = this.draw;

@@ -236,7 +236,7 @@ function a_star_search(gridArray, base, goal) {
 	}
 
 	this.randomMovements = function(){
-		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
+		var whichDirection = 8// Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 	
 		if(this.movementTimer <= 0){
@@ -345,6 +345,37 @@ function a_star_search(gridArray, base, goal) {
 			this.myShotList.push(tempShot);
 //		} 
 	}
+
+	this.checkForMeleeCombatRange = function(){
+		let playerTile = getTileIndexAtPixelCoord(playerOne.x,playerOne.y);
+		let enemyTile = getTileIndexAtPixelCoord(this.x,this.y)
+		
+		if (playerTile == enemyTile - ROOM_COLS - 1){
+			console.log("player N, attack")
+			this.offSetHeight = this.height * 5;		
+		} else if(playerTile == enemyTile - 1){
+			console.log("player NW, attack")
+			this.offSetHeight = this.height * 6;
+		} else if(playerTile == enemyTile + ROOM_COLS - 1){
+			console.log("player W, attack");
+			this.offSetHeight = this.height * 7 
+		} else if (playerTile == enemyTile + ROOM_COLS){
+			console.log("player SW, attack ");
+			this.offSetHeight = this.height * 8;
+		} else if (playerTile == enemyTile + ROOM_COLS + 1){
+			console.log("player S, attack ");
+			this.offSetHeight = this.height * 1;
+		} else if (playerTile == enemyTile + 1){
+			console.log("player SE, attack");
+			this.offSetHeight = this.height * 2;
+		} else if (playerTile == enemyTile - ROOM_COLS + 1){
+			console.log("player E, attack ");
+			this.offSetHeight = this.height * 3;
+		} else if (playerTile == enemyTile - ROOM_COLS){
+			console.log("player NE, attack ");
+			this.offSetHeight = this.height * 4;
+		} 
+	}
 		
 	this.draw = function(){
 		for (i=0; i < this.myShotList.length ; i++){
@@ -370,9 +401,9 @@ function a_star_search(gridArray, base, goal) {
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
 								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
 		//displays health
-		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
-		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
-		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
+		//colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
+		//colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
+		//canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
 	}
 
