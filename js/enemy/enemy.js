@@ -17,9 +17,11 @@ function enemyClass() {
 	this.offSetHeight = 0;
 	this.miniMapX = 630;
 	this.miniMapY = 30;
+	this.meleeAttacking = false;
 	
 	this.maxHealth = 2;
-	this.speed = 3;
+	this.speed = 2;
+	this.randomDirectionSpeed = 1;
 	this.health = this.maxHealth;
 	
 	this.movementTimer = 0;
@@ -75,7 +77,7 @@ function enemyClass() {
 		var nextY = this.y; 
 		
 		this.randomMovements();
-		this.speed = 1.0;
+		this.speed = this.randomDirectionSpeed;
 		
 		if(this.moveNorth && this.moveWest){
 			nextX -= this.speed;
@@ -236,8 +238,11 @@ function a_star_search(gridArray, base, goal) {
 	}
 
 	this.randomMovements = function(){
-		var whichDirection = 8// Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
+		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
+		if (this.meleeAttacking){
+			return;
+		}
 	
 		if(this.movementTimer <= 0){
 			switch(whichDirection) {
@@ -351,30 +356,48 @@ function a_star_search(gridArray, base, goal) {
 		let enemyTile = getTileIndexAtPixelCoord(this.x,this.y)
 		
 		if (playerTile == enemyTile - ROOM_COLS - 1){
-			console.log("player N, attack")
+			console.log("player N, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 5;		
 		} else if(playerTile == enemyTile - 1){
-			console.log("player NW, attack")
+			console.log("player NW, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 6;
 		} else if(playerTile == enemyTile + ROOM_COLS - 1){
 			console.log("player W, attack");
-			this.offSetHeight = this.height * 7 
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 7; 
 		} else if (playerTile == enemyTile + ROOM_COLS){
 			console.log("player SW, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 8;
 		} else if (playerTile == enemyTile + ROOM_COLS + 1){
 			console.log("player S, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 1;
 		} else if (playerTile == enemyTile + 1){
 			console.log("player SE, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 2;
 		} else if (playerTile == enemyTile - ROOM_COLS + 1){
 			console.log("player E, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 3;
 		} else if (playerTile == enemyTile - ROOM_COLS){
 			console.log("player NE, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
 			this.offSetHeight = this.height * 4;
-		} 
+		} else {
+			this.meleeAttacking = false;
+		}
 	}
 		
 	this.draw = function(){
