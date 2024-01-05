@@ -20,6 +20,7 @@ function enemyClass() {
 	
 	this.maxHealth = 2;
 	this.speed = 3;
+	this.randomDirectionSpeed = 2
 	this.health = this.maxHealth;
 	
 	this.movementTimer = 0;
@@ -39,6 +40,7 @@ function enemyClass() {
 	this.myShotList = [];
 	this.totalShots = 5;
 	this.canUseRangeAttack = false;
+	this.meleeAttacking = false;
 	
 	this.enemyReset = function() {
 		this.speed = 3;
@@ -75,7 +77,7 @@ function enemyClass() {
 		var nextY = this.y; 
 		
 		this.randomMovements();
-		this.speed = 1.0;
+		this.speed = this.randomDirectionSpeed;
 		
 		if(this.moveNorth && this.moveWest){
 			nextX -= this.speed;
@@ -238,62 +240,66 @@ function enemyClass() {
 	this.randomMovements = function(){
 		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
-	
-		if(this.movementTimer <= 0){
-			switch(whichDirection) {
-				case 0:
-				case 1:
-					this.resetDirections();
-					this.moveNorth = true;					
-					this.movementTimer = 300;
-					break;
-				case 2:
-					this.resetDirections();
-					this.moveNorth = true;
-					this.moveWest = true;					
-					this.movementTimer = 300;
-					break;
-				case 3:
-					this.resetDirections();
-					this.moveWest = true;
-					this.movementTimer = 300;
-					break;
-				case 4:
-					this.resetDirections();
-					this.moveWest = true;
-					this.moveSouth = true;
-					this.movementTimer = 300;
-					break;
-				case 5:
-					this.resetDirections();
-					this.moveSouth = true;
-					this.movementTimer = 300;
-					break;
-				case 6:
-					this.resetDirections();
-					this.moveSouth = true;
-					this.moveEast = true;
-					this.movementTimer = 300;
-					break;
-				case 7:
-					this.resetDirections();
-					this.moveEast = true;
-					this.movementTimer = 300;
-					break;
-				case 8:
-					this.resetDirections();
-					this.moveNorth = true;
-					this.moveEast = true;					
-					this.movementTimer = 300;
-					break;
-				case 9:
-				case 10:
-					this.resetDirections();
-					this.movementTimer = 300;
-					break;
+		if(this.meleeAttacking){
+			this.speed = 0;
+			return;
+		} else {
+				if(this.movementTimer <= 0){
+				switch(whichDirection) {
+					case 0:
+					case 1:
+						this.resetDirections();
+						this.moveNorth = true;					
+						this.movementTimer = 300;
+						break;
+					case 2:
+						this.resetDirections();
+						this.moveNorth = true;
+						this.moveWest = true;					
+						this.movementTimer = 300;
+						break;
+					case 3:
+						this.resetDirections();
+						this.moveWest = true;
+						this.movementTimer = 300;
+						break;
+					case 4:
+						this.resetDirections();
+						this.moveWest = true;
+						this.moveSouth = true;
+						this.movementTimer = 300;
+						break;
+					case 5:
+						this.resetDirections();
+						this.moveSouth = true;
+						this.movementTimer = 300;
+						break;
+					case 6:
+						this.resetDirections();
+						this.moveSouth = true;
+						this.moveEast = true;
+						this.movementTimer = 300;
+						break;
+					case 7:
+						this.resetDirections();
+						this.moveEast = true;
+						this.movementTimer = 300;
+						break;
+					case 8:
+						this.resetDirections();
+						this.moveNorth = true;
+						this.moveEast = true;					
+						this.movementTimer = 300;
+						break;
+					case 9:
+					case 10:
+						this.resetDirections();
+						this.movementTimer = 300;
+						break;
+				}
 			}
 		}
-	}
+	};
 	
 	this.resetDirections = function(){
 		this.moveNorth = false;
@@ -349,6 +355,63 @@ function enemyClass() {
 			tempShot.shootFrom(this);
 			this.myShotList.push(tempShot);
 //		} 
+	}
+
+	this.checkForMeleeCombatRange = function(){
+		let playerTile = getTileIndexAtPixelCoord(playerOne.x,playerOne.y);
+		let enemyTile = getTileIndexAtPixelCoord(this.x,this.y)
+		
+		if (playerTile == enemyTile - ROOM_COLS - 1){
+			console.log("player N, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 5;
+			swordSwing2Sound.play();		
+		} else if(playerTile == enemyTile - 1){
+			console.log("player NW, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 6;
+			swordSwing2Sound.play();
+		} else if(playerTile == enemyTile + ROOM_COLS - 1){
+			console.log("player W, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 7; 
+			swordSwing2Sound.play();
+		} else if (playerTile == enemyTile + ROOM_COLS){
+			console.log("player SW, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 8;
+			swordSwing2Sound.play();
+		} else if (playerTile == enemyTile + ROOM_COLS + 1){
+			console.log("player S, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 1;
+			swordSwing2Sound.play();
+		} else if (playerTile == enemyTile + 1){
+			console.log("player SE, attack");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 2;
+			swordSwing2Sound.play();
+		} else if (playerTile == enemyTile - ROOM_COLS + 1){
+			console.log("player E, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 3;
+			swordSwing2Sound.play();
+		} else if (playerTile == enemyTile - ROOM_COLS){
+			console.log("player NE, attack ");
+			this.meleeAttacking = true;
+			this.speed = 0;
+			this.offSetHeight = this.height * 4;
+			swordSwing2Sound.play();
+		} else {
+			this.meleeAttacking = false;
+		}
 	}
 		
 	this.draw = function(){
