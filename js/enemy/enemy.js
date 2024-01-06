@@ -77,6 +77,8 @@ function enemyClass() {
 		var nextY = this.y; 
 		
 		this.randomMovements();
+		// this.pathfinding();
+
 		this.speed = this.randomDirectionSpeed;
 		
 		if(this.moveNorth && this.moveWest){
@@ -167,7 +169,7 @@ function enemyClass() {
 		// Differences from Dijkstra's and A* can be found in the "Algorithm Changes" section
 		// https://www.redblobgames.com/pathfinding/a-star/implementation.html#algorithm
 		function heuristic( {x1, y1}, {x2, y2} ) {
-			return Math.abs(x1 - x2) + abs(y1 - y2); // Manhattan distance
+			return Math.abs(x1 - x2) + Math.abs(y1 - y2); // Manhattan distance
 		}
 		class PriorityQueue {
 			#data = [];
@@ -220,7 +222,7 @@ function enemyClass() {
 				costToHere[next] = newCost;
 				pathToHere[next] = current;
 				const priority = newCost + heuristic(next, goal);
-				frontier.push(next, priority);
+				frontier.join(next, priority);
 			}
 		}
 
@@ -234,7 +236,72 @@ function enemyClass() {
 		let [path, cost] = a_star_search(roomGrid, base, goal);
 		console.log("path, cost:", path, cost);
 		
-		// create movements from path
+		let { dx, dy } = path[0] - base;
+		// get the unit vector
+		let magnitude = Math.sqrt(dx * dx + dy * dy);
+		let unitVector = { x : dx / magnitude, y : dy / magnitude };
+		// get the direction
+
+		const unitVectorOptions = [
+			// move d to the front of each object in the array
+			{ d: 1, x: 0, y: -1 },
+			{ d: 2, x: -1, y: -1 },
+			{ d: 3, x: -1, y: 0 },
+			{ d: 4, x: -1, y: 1 },
+			{ d: 5, x: 0, y: 1 },
+			{ d: 6, x: 1, y: 1 },
+			{ d: 7, x: 1, y: 0 },
+			{ d: 8, x: 1, y: -1 },
+		];
+
+		const whichDirection = unitVectorOptions.find( ( { x, y } ) => x == unitVector.x && y == unitVector.y ).d;
+
+		this.movementTimer--;
+		if(this.meleeAttacking){
+			//* Keeping enemy still while testing combat */
+			this.speed = 0;
+			return;
+		} else {
+			if(this.movementTimer <= 0){
+				this.resetDirections();
+				this.movementTimer = 300;
+
+				switch(whichDirection){
+				case 0:
+				case 1:
+					this.moveNorth = true;					
+					break;
+				case 2:
+					this.moveNorth = true;
+					this.moveWest = true;					
+					break;
+				case 3:
+					this.moveWest = true;
+					break;
+				case 4:
+					this.moveWest = true;
+					this.moveSouth = true;
+					break;
+				case 5:
+					this.moveSouth = true;
+					break;
+				case 6:
+					this.moveSouth = true;
+					this.moveEast = true;
+					break;
+				case 7:
+					this.moveEast = true;
+					break;
+				case 8:
+					this.moveNorth = true;
+					this.moveEast = true;					
+					break;
+				case 9:
+				case 10:
+					break;
+				}
+			}
+		}
 	}
 
 	this.randomMovements = function(){
