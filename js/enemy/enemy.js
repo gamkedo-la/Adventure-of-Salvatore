@@ -35,7 +35,7 @@ function enemyClass() {
 
 	this.animateEnemyStandingStill = false;
 	this.drawTimer = 0;
-	this.frames = 8;
+	this.frames = 3;
 
 	this.myShotList = [];
 	this.totalShots = 5;
@@ -492,11 +492,11 @@ function enemyClass() {
 				this.animateEnemyStandingStill = true;
 			}
 			if(this.animateEnemyStandingStill){
-				this.frames = 8;
+				this.frames = 7;
 				this.animateEnemy()
 			}
 		} else { //enemy is moving
-			this.frames = 4;
+			this.frames = 3;
 			this.animateEnemy();
 		}
 		gameCoordToIsoCoord(this.x,this.y);
