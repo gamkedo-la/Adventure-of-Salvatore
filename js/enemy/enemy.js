@@ -324,7 +324,7 @@ function enemyClass() {
 						this.moveNorth = true;
 						this.moveWest = true;					
 						this.movementTimer = 300;
-						break;
+					//	break;
 					case 3:
 						this.resetDirections();
 						this.moveWest = true;
@@ -335,7 +335,7 @@ function enemyClass() {
 						this.moveWest = true;
 						this.moveSouth = true;
 						this.movementTimer = 300;
-						break;
+					//	break;
 					case 5:
 						this.resetDirections();
 						this.moveSouth = true;
@@ -346,7 +346,7 @@ function enemyClass() {
 						this.moveSouth = true;
 						this.moveEast = true;
 						this.movementTimer = 300;
-						break;
+					//	break;
 					case 7:
 						this.resetDirections();
 						this.moveEast = true;
@@ -357,7 +357,7 @@ function enemyClass() {
 						this.moveNorth = true;
 						this.moveEast = true;					
 						this.movementTimer = 300;
-						break;
+					//	break;
 					case 9:
 					case 10:
 						this.resetDirections();
