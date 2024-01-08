@@ -173,6 +173,10 @@ function loadImages() {
 			{trackType: TILE_WALL_BANNER, theFile: "banner.png"},
 			{trackType: TILE_SKELETON_CANDLE, theFile: "candle.png"},
 			{trackType: TILE_STAIRS_3, theFile: "Stairs.png"},
+			{trackType: TILE_WALL_PAINTING_1, theFile: "wall_painting1.png"},
+			{trackType: TILE_WALL_PAINTING_2, theFile: "wall_painting2.png"},
+			{trackType: TILE_WALL_PAINTING_3, theFile: "wall_painting3.png"},
+			
 
 		];
 			
