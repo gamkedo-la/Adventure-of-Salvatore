@@ -305,7 +305,7 @@ function enemyClass() {
 	}
 
 	this.randomMovements = function(){
-		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
+		var whichDirection = 5//Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 		if(this.meleeAttacking){
 			this.speed = 0;
