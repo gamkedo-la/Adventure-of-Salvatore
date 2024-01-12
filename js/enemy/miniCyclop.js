@@ -3,9 +3,7 @@ miniCyclopNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz",
 				"Kiok", "Wrokx", "Fiog", "Goziord"];
 
 MiniCyclop.prototype = new enemyClass();
-function MiniCyclop() {
-	this.width = 40; 
-	this.height = 40; 
+function MiniCyclop() { 
 	this.maxHealth = 4;
 	this.speed = 4;
 	this.canUseRangeAttack = true;
@@ -15,6 +13,8 @@ function MiniCyclop() {
 		this.superClassReset();
 		this.canUseRangeAttack = true;
 		this.speed = 4;
+		this.width = 40; 
+		this.height = 41;
 		this.hitPoints = this.maxHitPoints;
 	}
 					

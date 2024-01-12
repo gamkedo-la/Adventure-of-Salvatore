@@ -11,7 +11,7 @@ function enemyClass() {
 	this.xv;
 	this.yv;
 	this.width = 40;
-	this.height = 40;
+	this.height = 41;
 	this.isoEnemyFootY = 8;
 	this.offSetWidth = 0;
 	this.offSetHeight = 0;
@@ -305,7 +305,7 @@ function enemyClass() {
 	}
 
 	this.randomMovements = function(){
-		var whichDirection = 5//Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
+		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 		if(this.meleeAttacking){
 			this.speed = 0;
