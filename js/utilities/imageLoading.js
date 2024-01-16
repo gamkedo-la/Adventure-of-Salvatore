@@ -1,4 +1,5 @@
 var warriorPic = document.createElement("img");
+var warriorAttackingPic = document.createElement('img');
 var miniCyclopPic = document.createElement("img");
 var blobPic = document.createElement("img");
 var skeletonPic = document.createElement("img");
@@ -49,6 +50,7 @@ function loadImages() {
 		var imageList = [
 			//characters
 			{varName: warriorPic, theFile: "warrior.png"},
+			{varName: warriorAttackingPic, theFile: "warriorAttackAnimation.png"},
 			{varName: skeletonPic, theFile: "skeleton.png"},
 			{varName: blobPic, theFile: "blob.png"},
 			{varName: miniCyclopPic, theFile: "miniCyclop.png"},

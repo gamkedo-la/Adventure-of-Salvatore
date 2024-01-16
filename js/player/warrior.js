@@ -49,8 +49,7 @@ function warriorClass() {
 	this.swordReady = true;
 	this.swordCharge = false;
 	this.swordChargeTimer = 0;
-
-	this.warriorPic = document.createElement("img");
+	this.playerAttacking = false;
 	
 	this.setupControls = function(
             northKey,eastKey,southKey,westKey,swordKey,
@@ -398,7 +397,13 @@ function warriorClass() {
 				this.frames = 8;
 				this.animateWarrior()
 			}
-		} else { //player is moving
+		} else if (this.playerAttacking){ //player not standing still and attacking
+			this.myBitmap = warriorAttackingPic;
+			this.width = 80;
+			this.height = 60;
+			this.frames = 2;
+			this.animateWarrior();
+		} else { //player is moving and NOT attacking
 			this.frames = 3;
 			this.animateWarrior();
 		}
@@ -449,6 +454,10 @@ function warriorClass() {
 		if(this.offSetWidth > (this.frames * this.width)){
 			this.offSetWidth = 0;
 			this.animatePlayerStandingStill = false;
+			this.playerAttacking = false;
+			this.width = 40;
+			this.height = 40;
+			this.myBitmap = warriorPic;
 		}
 	}
 		
@@ -478,6 +487,11 @@ function warriorClass() {
 		}
 		this.swordReady = false;
 		this.swordCharge = true;
+		this.playerAttacking = true;
 		swordSwingSound.play();
 	};	
+
+	this.attackAnimation = function(){
+
+	}
 }
