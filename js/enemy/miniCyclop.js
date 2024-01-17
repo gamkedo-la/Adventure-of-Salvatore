@@ -8,9 +8,7 @@ function MiniCyclop() {
 	this.speed = 4;
 	this.canUseRangeAttack = true;
 	
-	this.superClassReset = this.enemyReset;
 	this.miniCyclopReset = function() {
-		this.superClassReset();
 		this.canUseRangeAttack = true;
 		this.speed = 4;
 		this.width = 40; 

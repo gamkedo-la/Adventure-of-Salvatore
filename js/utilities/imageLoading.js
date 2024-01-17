@@ -178,6 +178,7 @@ function loadImages() {
 			{trackType: TILE_WALL_PAINTING_1, theFile: "wall_painting1.png"},
 			{trackType: TILE_WALL_PAINTING_2, theFile: "wall_painting2.png"},
 			{trackType: TILE_WALL_PAINTING_3, theFile: "wall_painting3.png"},
+			{trackType: TILE_TRAP1, theFile: "trap1.png"},
 			
 
 		];
