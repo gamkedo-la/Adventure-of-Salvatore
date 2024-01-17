@@ -388,7 +388,7 @@ function warriorClass() {
 	}
 		
 	this.draw = function(){
-		if(this.offSetHeight == 0){ //player is standing still
+		if(this.offSetHeight == 0 && !this.playerAttacking){ //player is standing still
 			let toAnimatePlayerNumber = getRndInteger(0, 1000);
 			if(toAnimatePlayerNumber > 995){
 				this.animatePlayerStandingStill = true;
@@ -402,6 +402,7 @@ function warriorClass() {
 			this.width = 80;
 			this.height = 60;
 			this.frames = 2;
+			this.offSetHeight = this.offSetHeight - this.height
 			this.animateWarrior();
 		} else { //player is moving and NOT attacking
 			this.frames = 3;
@@ -487,11 +488,8 @@ function warriorClass() {
 		}
 		this.swordReady = false;
 		this.swordCharge = true;
+		this.offSetWidth = 0;
 		this.playerAttacking = true;
 		swordSwingSound.play();
 	};	
-
-	this.attackAnimation = function(){
-
-	}
 }
