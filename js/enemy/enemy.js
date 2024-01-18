@@ -78,8 +78,8 @@ function enemyClass() {
 		var nextX = this.x; 
 		var nextY = this.y; 
 		
-		// this.randomMovements();
-		this.pathfinding();
+		this.randomMovements();
+		// this.pathfinding();
 
 		this.speed = this.randomDirectionSpeed;
 		
