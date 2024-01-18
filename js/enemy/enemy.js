@@ -1,4 +1,6 @@
 const GRID_WEIGHT_INFLUENCE_FACTOR = 500;
+const PATHFINDING_FRAME_LIFETIME = 1000;
+const PATHFINDING_MAX_SEARCH_LOOPS = 1000;
 
 orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
 
@@ -76,8 +78,8 @@ function enemyClass() {
 		var nextX = this.x; 
 		var nextY = this.y; 
 		
-		this.randomMovements();
-		// this.pathfinding();
+		// this.randomMovements();
+		this.pathfinding();
 
 		this.speed = this.randomDirectionSpeed;
 		
@@ -163,19 +165,23 @@ function enemyClass() {
 		}
 	};
 
-	function a_star_search(gridArray, base, goal) {
-		// Using the following as a reference
+	function aStarSearch(gridArray, base, goal) {
+		// A* using the following as a reference
 		// https://www.redblobgames.com/pathfinding/a-star/implementation.html
 		// Differences from Dijkstra's and A* can be found in the "Algorithm Changes" section
 		// https://www.redblobgames.com/pathfinding/a-star/implementation.html#algorithm
-		function heuristic( {x1, y1}, {x2, y2} ) {
-			return Math.abs(x1 - x2) + Math.abs(y1 - y2); // Manhattan distance
+		function heuristic( first, second ) {
+			// Manhattan distance
+			const value = 
+			  Math.abs(first.tileCol - second.tileCol) +
+			  Math.abs(first.tileRow - second.tileRow); 
+			return value;
 		}
 		class PriorityQueue {
 			#data = [];
 
 			#prioritize(i, j) {
-				i.priority - j.priority;
+				return i.priority - j.priority;
 			}
 
 			join(element, priority) {
@@ -184,7 +190,7 @@ function enemyClass() {
 
 			pick() {
 				this.#data.sort(this.#prioritize);
-				return this.#data.pop().element;
+				return this.#data.shift().element;
 			}
 
 			empty() {
@@ -192,81 +198,131 @@ function enemyClass() {
 			}
 		}
 
-		frontier = new PriorityQueue();
+		let frontier = new PriorityQueue();
 		frontier.join(base, 0);
-		pathToHere = {};
-		costToHere = {};
-		pathToHere[base] = null;
-		costToHere[base] = 0;
+		let pathToHere = Array(ROOM_COLS * ROOM_ROWS).fill(null);
+		let costToHere = Array(ROOM_COLS * ROOM_ROWS).fill(0);
 
-		while (!frontier.empty()) {
+		const max_loops = PATHFINDING_MAX_SEARCH_LOOPS;
+		let pathIndex = 0;
+		while (!frontier.empty() && pathIndex < max_loops) {
 			let current = frontier.pick();
+			const currentIndex = rowColToArrayIndex(current.tileCol, current.tileRow);
 
 			if (current == goal) { break; }
 
-			let neighbors = [
-				n = { tileRow : current.tileRow - 1, tileCol : current.tileCol },
-				s = { tileRow : current.tileRow + 1, tileCol : current.tileCol },
-				e = { tileRow : current.tileRow, tileCol : current.tileCol + 1 },
-				w = { tileRol : current.tileRow, tileCol : current.tileCol - 1 }
-			];
+			let neighbors = {
+				n : { tileCol : current.tileCol, tileRow : current.tileRow - 1 },
+				s : { tileCol : current.tileCol, tileRow : current.tileRow + 1 },
+				e : { tileCol : current.tileCol + 1, tileRow : current.tileRow },
+				w : { tileCol : current.tileCol - 1, tileRow : current.tileRow }
+			};
 
-			for (let next of neighbors) {
-				const nextIndex = next.tileRow * ROOM_COLS + next.tileCol;
-				const newCost = costToHere[current] + gridArray[nextIndex] * GRID_WEIGHT_INFLUENCE_FACTOR;
+			Object.entries(neighbors).forEach( ([_, next]) => {
+				if (next.tileCol < 0 || next.tileCol >= ROOM_COLS ||
+					next.tileRow < 0 || next.tileRow >= ROOM_ROWS) {
+					return;
+				}
 
-				// Making this faster by not checking for location and, further,
-				// not checking the new cost is less than the existing for the
-				// location.
-				// if (!costToHere.hasOwnProperty(next) || newCost < costToHere[next]) {}
-				costToHere[next] = newCost;
-				pathToHere[next] = current;
-				const priority = newCost + heuristic(next, goal);
-				frontier.join(next, priority);
-			}
+				const nextIndex = rowColToArrayIndex(next.tileCol, next.tileRow);
+				const newCost = costToHere[currentIndex] + gridArray[nextIndex] * GRID_WEIGHT_INFLUENCE_FACTOR;
+
+				if (!costToHere.hasOwnProperty(next) || newCost < costToHere[next]) {
+					// use new cost to get to the next tile
+					costToHere[nextIndex] = newCost;
+					const priority = newCost + heuristic(next, goal);
+					frontier.join(next, priority);
+					pathToHere[currentIndex] = nextIndex;
+				}
+			});
+
+			pathIndex++;
 		}
 
-		return [pathToHere, costToHere];
+		return { path: pathToHere, cost: costToHere};
 	}
 
 	this.pathfinding = function() {
-		base = { x : this.x, y : this.y };
-		goal = { x : playerOne.x, y : playerOne.y };
+		if (!this.pathfinding.frameCount) {
+			this.pathfinding.frameCount = 0;
+			this.pathfinding.path = [];
+			this.pathfinding.cost = [];
+		}
 
-		let [path, cost] = a_star_search(roomGrid, base, goal);
-		console.log("path, cost:", path, cost);
+		const base = getTileCoordAtPixelCoord(this.x, this.y);
+		const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
+
+		// use the pathfinding on just so many frames
+		if (this.pathfinding.frameCount % PATHFINDING_FRAME_LIFETIME == 0) {
+			this.pathfinding.frameCount = 0;
+			const astarResults = aStarSearch(roomGrid, base, goal);
+			this.pathfinding.path = astarResults.path;
+			this.pathfinding.cost = astarResults.cost;
+		}
+
+		console.log("path, cost:", this.pathfinding.path, this.pathfinding.cost);
 		
-		let { dx, dy } = path[0] - base;
-		// get the unit vector
-		let magnitude = Math.sqrt(dx * dx + dy * dy);
-		let unitVector = { x : dx / magnitude, y : dy / magnitude };
-		// get the direction
+		this.pathfinding.frameCount++;
 
+		// get the unit vector from the base to the next tile
+		const baseIndex = rowColToArrayIndex(base.tileCol, base.tileRow);
+		let nextIndex = this.pathfinding.path[baseIndex];
+		if (!nextIndex) { 
+			nextIndex = baseIndex; 
+		}
+		const nextTileCol = nextIndex % ROOM_COLS;
+		const nextTileRow = Math.floor(nextIndex / ROOM_COLS);
+
+		const pathVector = {
+			tileCol: nextTileCol - base.tileCol,
+			tileRow: nextTileRow - base.tileRow
+		};
+		const tileCol = pathVector.tileCol % ROOM_COLS;
+		const tileRow = Math.floor(pathVector.tileRow / ROOM_COLS);
+		const magnitude = Math.sqrt(tileCol * tileCol + tileRow * tileRow);
+		const unitVector = { 
+			tileCol : Math.floor(tileCol / magnitude),
+			tileRow : Math.floor(tileRow / magnitude)
+		};
+
+		console.log(unitVector);
+
+		// get the direction
 		const unitVectorOptions = [
 			// move d to the front of each object in the array
-			{ d: 1, x: 0, y: -1 },
-			{ d: 2, x: -1, y: -1 },
-			{ d: 3, x: -1, y: 0 },
-			{ d: 4, x: -1, y: 1 },
-			{ d: 5, x: 0, y: 1 },
-			{ d: 6, x: 1, y: 1 },
-			{ d: 7, x: 1, y: 0 },
-			{ d: 8, x: 1, y: -1 },
+			{ dir: 1, tileCol: 0, tileRow: -1 },
+			{ dir: 2, tileCol: -1, tileRow: -1 },
+			{ dir: 3, tileCol: -1, tileRow: 0 },
+			{ dir: 4, tileCol: -1, tileRow: 1 },
+			{ dir: 5, tileCol: 0, tileRow: 1 },
+			{ dir: 6, tileCol: 1, tileRow: 1 },
+			{ dir: 7, tileCol: 1, tileRow: 0 },
+			{ dir: 8, tileCol: 1, tileRow: -1 },
 		];
 
-		const whichDirection = unitVectorOptions.find( ( { x, y } ) => x == unitVector.x && y == unitVector.y ).d;
+		const whichUnitVectorMatch = 
+			unitVectorOptions.find(( { tileCol, tileRow } ) => 
+				tileCol === unitVector.tileCol && tileRow === unitVector.tileRow 
+			);
+
+		if (!whichUnitVectorMatch) {
+			console.log("path not found");
+			return;
+		}
+
+		const whichDirection = whichUnitVectorMatch.dir;
 
 		this.movementTimer--;
-		if(this.meleeAttacking){
+		if(this.meleeAttacking) {
 			//* Keeping enemy still while testing combat */
 			this.speed = 0;
 			return;
 		} else {
-			if(this.movementTimer <= 0){
+			if(this.movementTimer <= 0) {
 				this.resetDirections();
 				this.movementTimer = 300;
 
-				switch(whichDirection){
+				switch(whichDirection) {
 				case 0:
 				case 1:
 					this.moveNorth = true;					
@@ -298,6 +354,7 @@ function enemyClass() {
 					break;
 				case 9:
 				case 10:
+				default:
 					break;
 				}
 			}
@@ -312,7 +369,7 @@ function enemyClass() {
 			return;
 		} else {
 				if(this.movementTimer <= 0){
-				switch(whichDirection) {
+				switch(whichDirection){
 					case 0:
 					case 1:
 						this.resetDirections();

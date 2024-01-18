@@ -556,7 +556,7 @@ function rowColToArrayIndex(col, row) {
 	return col + ROOM_COLS * row;
 }			
 		
-function getTileIndexAtPixelCoord(pixelX,pixelY){
+function getTileCoordAtPixelCoord(pixelX,pixelY){
 	var tileCol = pixelX / ROOM_W;		
 	var tileRow = pixelY / ROOM_H;
 					
@@ -569,11 +569,17 @@ function getTileIndexAtPixelCoord(pixelX,pixelY){
 		document.getElementById("debugText").innerHTML = "out of bounds: " +pixelX+", "+pixelY;
 		return undefined; // checking for out of bounds 
 	}
+
+	return { tileCol: tileCol, tileRow: tileRow };
+}		
+
+function getTileIndexAtPixelCoord(pixelX,pixelY){
+	const { tileCol, tileRow } = getTileCoordAtPixelCoord(pixelX,pixelY);
 				
 	var tileIndex = roomTileToIndex(tileCol, tileRow);
 	return tileIndex;
 }		
-			
+
 function roomTileToIndex(tileCol, tileRow) {
 	return(tileCol + ROOM_COLS*tileRow);
 }
