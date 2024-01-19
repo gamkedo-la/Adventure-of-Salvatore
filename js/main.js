@@ -62,7 +62,10 @@ function imageLoadingDoneSoStartGame(){
 	var framesPerSecond = 30;
 	loadLevel(levelOne)
 	playerOne.init(warriorPic, "The Warrior");
-	for(var i = 0; i < roomGrid.length; i++){
+
+    /* 
+    // this is all already done in loadLevel function
+    for(var i = 0; i < roomGrid.length; i++){
 		if(roomGrid[i] == TILE_MINICYCLOP){
 			addMiniCyclop();
 		}
@@ -73,15 +76,19 @@ function imageLoadingDoneSoStartGame(){
 			addSkeleton();
 		}
 	}
-	for(var i = 0; i < miniCyclopList.length; i++){
+	console.log("initializing "+miniCyclopList.length+" minicyclopses (AGAIN)");
+    for(var i = 0; i < miniCyclopList.length; i++){
 		miniCyclopList[i].init(miniCyclopPic, miniCyclopNames[i], TILE_MINICYCLOP);
 	}
+	console.log("initializing "+blobList.length+" blobs (AGAIN)");
 	for(var i = 0; i < blobList.length; i++){
 		blobList[i].init(blobPic, blobNames[i], TILE_BLOB);
 	}
+	console.log("initializing "+skeletonList.length+" skeletons (AGAIN)");
 	for(var i = 0; i < skeletonList.length; i++){
 		skeletonList[i].init(skeletonPic, skeletonNames[i], TILE_SKELETON);
 	}
+    */
 
 	mainBackgroundMusic.loopSong("salvatore");
 
@@ -96,7 +103,7 @@ function imageLoadingDoneSoStartGame(){
 
 //Adds an enemy 
 function addMiniCyclop(){
-	var tempEnemy = new enemyClass();
+    var tempEnemy = new MiniCyclop();
 	miniCyclopList.push(tempEnemy);
 	entities.push(tempEnemy);
 }
@@ -137,12 +144,20 @@ function loadLevel(whichLevel) {
 			addSkeleton();
 		}
 	}
-	for(var i = 0; i < miniCyclopList.length; i++){
+
+    console.log('testing OOP!');
+    console.log(miniCyclopList);
+    console.log("type of the first enemy: "+(typeof miniCyclopList[0]));
+
+    console.log("initializing "+miniCyclopList.length+" minicyclopses via loadlevel");
+    for(var i = 0; i < miniCyclopList.length; i++){
 		miniCyclopList[i].init(miniCyclopPic, miniCyclopNames[i], TILE_MINICYCLOP);
 	}
-	for(var i = 0; i < blobList.length; i++){
+	console.log("initializing "+blobList.length+" blobs via loadlevel");
+    for(var i = 0; i < blobList.length; i++){
 		blobList[i].init(blobPic, blobNames[i], TILE_BLOB);
 	}
+	console.log("initializing "+skeletonList.length+" skeletons via loadlevel");
 	for(var i = 0; i < skeletonList.length; i++){
 		skeletonList[i].init(skeletonPic, skeletonNames[i], TILE_SKELETON);
 	}

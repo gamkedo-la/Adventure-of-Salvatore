@@ -2,13 +2,18 @@ miniCyclopNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz",
 				"Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm", 
 				"Kiok", "Wrokx", "Fiog", "Goziord"];
 
-MiniCyclop.prototype = new enemyClass();
-function MiniCyclop() { 
-	this.maxHealth = 4;
-	this.speed = 4;
-	this.canUseRangeAttack = true;
+class MiniCyclop extends enemyClass { 
 	
-	this.miniCyclopReset = function() {
+    constructor() {
+        console.log("MiniCyclop constructor!");
+        super(); // run enemyClass constructor first
+        this.maxHealth = 4;
+        this.speed = 4;
+        this.canUseRangeAttack = true;
+    }
+	
+	miniCyclopReset() {
+        console.log("miniCyclopReset");
 		this.canUseRangeAttack = true;
 		this.speed = 4;
 		this.width = 40; 
@@ -16,19 +21,19 @@ function MiniCyclop() {
 		this.hitPoints = this.maxHitPoints;
 	}
 					
-	this.superClassInitialize = this.init;
-	this.init = function(whichGraphic, whichName, whichTile) {
-		this.superClassInitialize(whichGraphic, whichName, whichTile);		
+	init(whichGraphic, whichName, whichTile) {
+        console.log("miniCyclop.init: "+ whichName);
+        super.init(whichGraphic, whichName, whichTile);
 		this.miniCyclopReset();
 	}	
 		
-	this.superClassMove = this.movement;
-	this.movement = function() {
+	movement() {
+        //console.log("miniCyclop.movement");
+        super.movement();
 	}
 	
-	this.superClassDraw = this.
-	draw;
-	this.draw = function(){
-		this.superClassDraw();
+	draw(){
+        //console.log("miniCyclop.draw");
+		super.draw();
 	}
 }

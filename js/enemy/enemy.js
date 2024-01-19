@@ -6,46 +6,123 @@ orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];
 
 ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];     
 
+function aStarSearch(gridArray, base, goal) {
+    // A* using the following as a reference
+    // https://www.redblobgames.com/pathfinding/a-star/implementation.html
+    // Differences from Dijkstra's and A* can be found in the "Algorithm Changes" section
+    // https://www.redblobgames.com/pathfinding/a-star/implementation.html#algorithm
+    function heuristic( first, second ) {
+        // Manhattan distance
+        const value = 
+          Math.abs(first.tileCol - second.tileCol) +
+          Math.abs(first.tileRow - second.tileRow); 
+        return value;
+    }
+    class PriorityQueue {
+        #data = [];
 
-function enemyClass() {
-	this.x = 600;
-	this.y = 800;
-	this.xv;
-	this.yv;
-	this.width = 40;
-	this.height = 41;
-	this.isoEnemyFootY = 8;
-	this.offSetWidth = 0;
-	this.offSetHeight = 0;
-	this.miniMapX = 630;
-	this.miniMapY = 30;
-	
-	this.maxHealth = 2;
-	this.speed = 3;
-	this.randomDirectionSpeed = 2
-	this.health = this.maxHealth;
-	
-	this.movementTimer = 0;
-	this.moveNorth = false;
-	this.keyHeld_East = false;
-	this.keyHeld_South = false;
-	this.keyHeld_West = false;
-	this.canMoveNorth = true;
-	this.canMoveEast = true;
-	this.canMoveSouth = true;
-	this.canMoveWest = true;
+        #prioritize(i, j) {
+            return i.priority - j.priority;
+        }
 
-	this.animateEnemyStandingStill = false;
-	this.drawTimer = 0;
-	this.frames = 3;
+        join(element, priority) {
+            this.#data.push({element, priority});
+        }
 
-	this.myShotList = [];
-	this.totalShots = 5;
-	this.canUseRangeAttack = false;
-	this.meleeAttacking = false;
+        pick() {
+            this.#data.sort(this.#prioritize);
+            return this.#data.shift().element;
+        }
+
+        empty() {
+            return this.#data.length == 0;
+        }
+    }
+
+    let frontier = new PriorityQueue();
+    frontier.join(base, 0);
+    let pathToHere = Array(ROOM_COLS * ROOM_ROWS).fill(null);
+    let costToHere = Array(ROOM_COLS * ROOM_ROWS).fill(0);
+
+    const max_loops = PATHFINDING_MAX_SEARCH_LOOPS;
+    let pathIndex = 0;
+    while (!frontier.empty() && pathIndex < max_loops) {
+        let current = frontier.pick();
+        const currentIndex = rowColToArrayIndex(current.tileCol, current.tileRow);
+
+        if (current == goal) { break; }
+
+        let neighbors = {
+            n : { tileCol : current.tileCol, tileRow : current.tileRow - 1 },
+            s : { tileCol : current.tileCol, tileRow : current.tileRow + 1 },
+            e : { tileCol : current.tileCol + 1, tileRow : current.tileRow },
+            w : { tileCol : current.tileCol - 1, tileRow : current.tileRow }
+        };
+
+        Object.entries(neighbors).forEach( ([_, next]) => {
+            if (next.tileCol < 0 || next.tileCol >= ROOM_COLS ||
+                next.tileRow < 0 || next.tileRow >= ROOM_ROWS) {
+                return;
+            }
+
+            const nextIndex = rowColToArrayIndex(next.tileCol, next.tileRow);
+            const newCost = costToHere[currentIndex] + gridArray[nextIndex] * GRID_WEIGHT_INFLUENCE_FACTOR;
+
+            if (!costToHere.hasOwnProperty(next) || newCost < costToHere[next]) {
+                // use new cost to get to the next tile
+                costToHere[nextIndex] = newCost;
+                const priority = newCost + heuristic(next, goal);
+                frontier.join(next, priority);
+                pathToHere[currentIndex] = nextIndex;
+            }
+        });
+
+        pathIndex++;
+    }
+
+    return { path: pathToHere, cost: costToHere};
+}
+
+class enemyClass {
+	x = 600;
+	y = 800;
+	xv;
+	yv;
+	width = 40;
+	height = 41;
+	isoEnemyFootY = 8;
+	offSetWidth = 0;
+	offSetHeight = 0;
+	miniMapX = 630;
+	miniMapY = 30;
 	
-	this.enemyReset = function() {
-		this.speed = 3;
+	maxHealth = 2;
+	speed = 3;
+	randomDirectionSpeed = 2
+	health = this.maxHealth;
+	
+	movementTimer = 0;
+	moveNorth = false;
+	keyHeld_East = false;
+	keyHeld_South = false;
+	keyHeld_West = false;
+	canMoveNorth = true;
+	canMoveEast = true;
+	canMoveSouth = true;
+	canMoveWest = true;
+
+	animateEnemyStandingStill = false;
+	drawTimer = 0;
+	frames = 3;
+
+	myShotList = [];
+	totalShots = 5;
+	canUseRangeAttack = false;
+	meleeAttacking = false;
+	
+	enemyReset() {
+		console.log("EnemyClass.enemyReset: "+this.myName);
+        this.speed = 3;
 		this.hitPoints = this.maxHitPoints;
 				
 		if(this.homeX == undefined) {
@@ -66,17 +143,19 @@ function enemyClass() {
 		this.y = this.homeY;
 	}
 					
-	this.init = function(whichGraphic, whichName, whichTile) {
-		this.myBitmap = whichGraphic;
+	init(whichGraphic, whichName, whichTile) {
+		console.log("EnemyClass.init: "+whichName);
+        this.myBitmap = whichGraphic;
 		this.myName = whichName;
 		this.myTile = whichTile;
 		this.enemyReset();
 	}	
 	 
-	this.movement = function() {
+	movement() {
 		
 		var nextX = this.x; 
 		var nextY = this.y; 
+        var collisionY = 0;
 		
 		this.randomMovements();
 		// this.pathfinding();
@@ -160,89 +239,12 @@ function enemyClass() {
 			}
 		}
 
-		for (i=0; i < this.myShotList.length ; i++){
+		for (let i=0; i < this.myShotList.length ; i++){
 			this.myShotList[i].movement();
 		}
-	};
-
-	function aStarSearch(gridArray, base, goal) {
-		// A* using the following as a reference
-		// https://www.redblobgames.com/pathfinding/a-star/implementation.html
-		// Differences from Dijkstra's and A* can be found in the "Algorithm Changes" section
-		// https://www.redblobgames.com/pathfinding/a-star/implementation.html#algorithm
-		function heuristic( first, second ) {
-			// Manhattan distance
-			const value = 
-			  Math.abs(first.tileCol - second.tileCol) +
-			  Math.abs(first.tileRow - second.tileRow); 
-			return value;
-		}
-		class PriorityQueue {
-			#data = [];
-
-			#prioritize(i, j) {
-				return i.priority - j.priority;
-			}
-
-			join(element, priority) {
-				this.#data.push({element, priority});
-			}
-
-			pick() {
-				this.#data.sort(this.#prioritize);
-				return this.#data.shift().element;
-			}
-
-			empty() {
-				return this.#data.length == 0;
-			}
-		}
-
-		let frontier = new PriorityQueue();
-		frontier.join(base, 0);
-		let pathToHere = Array(ROOM_COLS * ROOM_ROWS).fill(null);
-		let costToHere = Array(ROOM_COLS * ROOM_ROWS).fill(0);
-
-		const max_loops = PATHFINDING_MAX_SEARCH_LOOPS;
-		let pathIndex = 0;
-		while (!frontier.empty() && pathIndex < max_loops) {
-			let current = frontier.pick();
-			const currentIndex = rowColToArrayIndex(current.tileCol, current.tileRow);
-
-			if (current == goal) { break; }
-
-			let neighbors = {
-				n : { tileCol : current.tileCol, tileRow : current.tileRow - 1 },
-				s : { tileCol : current.tileCol, tileRow : current.tileRow + 1 },
-				e : { tileCol : current.tileCol + 1, tileRow : current.tileRow },
-				w : { tileCol : current.tileCol - 1, tileRow : current.tileRow }
-			};
-
-			Object.entries(neighbors).forEach( ([_, next]) => {
-				if (next.tileCol < 0 || next.tileCol >= ROOM_COLS ||
-					next.tileRow < 0 || next.tileRow >= ROOM_ROWS) {
-					return;
-				}
-
-				const nextIndex = rowColToArrayIndex(next.tileCol, next.tileRow);
-				const newCost = costToHere[currentIndex] + gridArray[nextIndex] * GRID_WEIGHT_INFLUENCE_FACTOR;
-
-				if (!costToHere.hasOwnProperty(next) || newCost < costToHere[next]) {
-					// use new cost to get to the next tile
-					costToHere[nextIndex] = newCost;
-					const priority = newCost + heuristic(next, goal);
-					frontier.join(next, priority);
-					pathToHere[currentIndex] = nextIndex;
-				}
-			});
-
-			pathIndex++;
-		}
-
-		return { path: pathToHere, cost: costToHere};
 	}
 
-	this.pathfinding = function() {
+	pathfinding() {
 		if (!this.pathfinding.frameCount) {
 			this.pathfinding.frameCount = 0;
 			this.pathfinding.path = [];
@@ -361,7 +363,7 @@ function enemyClass() {
 		}
 	}
 
-	this.randomMovements = function(){
+	randomMovements(){
 		var whichDirection = Math.round(Math.random() * 10);        //* Keeping enemy still while testing combat */
 		this.movementTimer--;
 		if(this.meleeAttacking){
@@ -425,14 +427,14 @@ function enemyClass() {
 		}
 	};
 	
-	this.resetDirections = function(){
+	resetDirections(){
 		this.moveNorth = false;
 		this.moveWest = false;
 		this.moveSouth = false;
 		this.moveEast = false;
 	}	
 	
-	this.checkCollisionsAgainst = function(otherHumanoid){
+	checkCollisionsAgainst(otherHumanoid){
 		if(this.collisionTest(otherHumanoid)){
 			if(this.moveNorth){
 				this.canMoveNorth = false;
@@ -463,7 +465,7 @@ function enemyClass() {
 		}
 	}
 	
-	this.collisionTest = function(otherHumanoid){
+	collisionTest(otherHumanoid){
 		if(	this.x > otherHumanoid.x - 20 && this.x < otherHumanoid.x + 20 &&
 			this.y > otherHumanoid.y - 20 && this.y < otherHumanoid.y + 20){
 				return true;
@@ -471,7 +473,7 @@ function enemyClass() {
 		return false;
 	}
 
-	this.rangedAttack = function(){
+	rangedAttack(){
 		crashIntoConeSound.play();
 
 //		if(this.myShotList.length < this.totalShots){
@@ -481,7 +483,7 @@ function enemyClass() {
 //		} 
 	}
 
-	this.checkForMeleeCombatRange = function(){
+	checkForMeleeCombatRange(){
 		let playerTile = getTileIndexAtPixelCoord(playerOne.x,playerOne.y);
 		let enemyTile = getTileIndexAtPixelCoord(this.x,this.y)
 		
@@ -538,8 +540,8 @@ function enemyClass() {
 		}
 	}
 		
-	this.draw = function(){
-		for (i=0; i < this.myShotList.length ; i++){
+	draw(){
+		for (let i=0; i < this.myShotList.length ; i++){
 			this.myShotList[i].draw();
 		}
 
@@ -568,7 +570,7 @@ function enemyClass() {
 		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
 	}
 
-	this.animateEnemy = function(){
+	animateEnemy(){
 		this.drawTimer++;
 		if(this.drawTimer == 8){
 			this.offSetWidth = this.offSetWidth + this.width;
