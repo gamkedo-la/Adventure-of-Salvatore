@@ -35,41 +35,43 @@ function aStarSearch(gridArray, base, goal) {
     frontier.join(base, 0);
     let pathToHere = Array(ROOM_COLS * ROOM_ROWS).fill(null);
     let costToHere = Array(ROOM_COLS * ROOM_ROWS).fill(0);
+    let directions = [
+        { dx: 0, dy: -1 },
+        { dx: -1, dy: 0 },
+        { dx: 1, dy: 0 },
+        { dx: 0, dy: 1 }
+    ];
 
     const max_loops = PATHFINDING_MAX_SEARCH_LOOPS;
-    let pathIndex = 0;
-    while (!frontier.empty() && pathIndex < max_loops) {
+    let counter = 0;
+    while (!frontier.empty() && counter < max_loops) {
         let current = frontier.pick();
         const currentIndex = rowColToArrayIndex(current.tileCol, current.tileRow);
 
-        if (current == goal) { break; }
+        if (current.tileCol == goal.tileCol &&
+            current.tileRow == goal.tileRow) { break; }
 
-        let neighbors = {
-            n : { tileCol : current.tileCol, tileRow : current.tileRow - 1 },
-            s : { tileCol : current.tileCol, tileRow : current.tileRow + 1 },
-            e : { tileCol : current.tileCol + 1, tileRow : current.tileRow },
-            w : { tileCol : current.tileCol - 1, tileRow : current.tileRow }
-        };
+        for (let { dx, dy } of directions) {
+			let next = { tileCol: current.tileCol + dx, tileRow: current.tileRow + dy };
 
-        Object.entries(neighbors).forEach( ([_, next]) => {
             if (next.tileCol < 0 || next.tileCol >= ROOM_COLS ||
                 next.tileRow < 0 || next.tileRow >= ROOM_ROWS) {
-                return;
+                continue;
             }
 
             const nextIndex = rowColToArrayIndex(next.tileCol, next.tileRow);
             const newCost = costToHere[currentIndex] + gridArray[nextIndex] * GRID_WEIGHT_INFLUENCE_FACTOR;
 
-            if (!costToHere.hasOwnProperty(next) || newCost < costToHere[next]) {
+            if (costToHere[nextIndex] === 0 || newCost < costToHere[nextIndex]) {
                 // use new cost to get to the next tile
                 costToHere[nextIndex] = newCost;
                 const priority = newCost + heuristic(next, goal);
                 frontier.join(next, priority);
                 pathToHere[currentIndex] = nextIndex;
             }
-        });
+        }
 
-        pathIndex++;
+        counter++;
     }
 
     return { path: pathToHere, cost: costToHere};
