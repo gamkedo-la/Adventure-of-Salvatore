@@ -174,69 +174,6 @@ class enemyClass {
 			this.pathfinding.cost = [];
 		}
 
-		const base = getTileCoordAtPixelCoord(this.x, this.y);
-		const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
-
-		// use the pathfinding on just so many frames
-		if (this.pathfinding.frameCount % PATHFINDING_FRAME_LIFETIME == 0) {
-			this.pathfinding.frameCount = 0;
-			const astarResults = aStarSearch(roomGrid, base, goal);
-			this.pathfinding.path = astarResults.path;
-			this.pathfinding.cost = astarResults.cost;
-		}
-
-		console.log("path, cost:", this.pathfinding.path, this.pathfinding.cost);
-		
-		this.pathfinding.frameCount++;
-
-		// get the unit vector from the base to the next tile
-		const baseIndex = rowColToArrayIndex(base.tileCol, base.tileRow);
-		let nextIndex = this.pathfinding.path[baseIndex];
-		if (!nextIndex) { 
-			nextIndex = baseIndex; 
-		}
-		const nextTileCol = nextIndex % ROOM_COLS;
-		const nextTileRow = Math.floor(nextIndex / ROOM_COLS);
-
-		const pathVector = {
-			tileCol: nextTileCol - base.tileCol,
-			tileRow: nextTileRow - base.tileRow
-		};
-		const tileCol = pathVector.tileCol % ROOM_COLS;
-		const tileRow = Math.floor(pathVector.tileRow / ROOM_COLS);
-		const magnitude = Math.sqrt(tileCol * tileCol + tileRow * tileRow);
-		const unitVector = { 
-			tileCol : Math.floor(tileCol / magnitude),
-			tileRow : Math.floor(tileRow / magnitude)
-		};
-
-		console.log(unitVector);
-
-		// get the direction
-		const unitVectorOptions = [
-			// move d to the front of each object in the array
-			{ dir: 1, tileCol: 0, tileRow: -1 },
-			{ dir: 2, tileCol: -1, tileRow: -1 },
-			{ dir: 3, tileCol: -1, tileRow: 0 },
-			{ dir: 4, tileCol: -1, tileRow: 1 },
-			{ dir: 5, tileCol: 0, tileRow: 1 },
-			{ dir: 6, tileCol: 1, tileRow: 1 },
-			{ dir: 7, tileCol: 1, tileRow: 0 },
-			{ dir: 8, tileCol: 1, tileRow: -1 },
-		];
-
-		const whichUnitVectorMatch = 
-			unitVectorOptions.find(( { tileCol, tileRow } ) => 
-				tileCol === unitVector.tileCol && tileRow === unitVector.tileRow 
-			);
-
-		if (!whichUnitVectorMatch) {
-			console.log("path not found");
-			return;
-		}
-
-		const whichDirection = whichUnitVectorMatch.dir;
-
 		this.movementTimer--;
 		if(this.meleeAttacking) {
 			//* Keeping enemy still while testing combat */
@@ -244,6 +181,73 @@ class enemyClass {
 			return;
 		} else {
 			if(this.movementTimer <= 0) {
+				const base = getTileCoordAtPixelCoord(this.x, this.y);
+				const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
+
+				// use the pathfinding on just so many frames
+				if (this.pathfinding.frameCount % PATHFINDING_FRAME_LIFETIME == 0) {
+					this.pathfinding.frameCount = 0;
+					const astarResults = aStarSearch(roomGrid, base, goal);
+					this.pathfinding.path = astarResults.path;
+					this.pathfinding.cost = astarResults.cost;
+				}
+
+				// console.log("path, cost:", this.pathfinding.path, this.pathfinding.cost);
+				
+				this.pathfinding.frameCount++;
+
+				// get the unit vector from the base to the next tile
+				const baseIndex = rowColToArrayIndex(base.tileCol, base.tileRow);
+				let nextIndex = this.pathfinding.path[baseIndex];
+				if (!nextIndex) { 
+					nextIndex = baseIndex; 
+				}
+				const nextTileCol = nextIndex % ROOM_COLS;
+				const nextTileRow = Math.floor(nextIndex / ROOM_COLS);
+
+				const pathVector = {
+					tileCol: nextTileCol - base.tileCol,
+					tileRow: nextTileRow - base.tileRow
+				};
+
+				const magnitude = 
+					Math.sqrt(pathVector.tileCol ** 2 + pathVector.tileRow ** 2);
+
+				const unitVector = { 
+					tileCol : 
+						magnitude === 0 ? 0 : Math.floor(pathVector.tileCol / magnitude),
+					tileRow : 
+						magnitude === 0 ? 0 : Math.floor(pathVector.tileRow / magnitude)
+				}
+
+				// console.log(unitVector);
+
+				// get the direction
+				const unitVectorOptions = [
+					// move d to the front of each object in the array
+					{ dir: 1, tileCol: 0, tileRow: -1 },
+					{ dir: 2, tileCol: -1, tileRow: -1 },
+					{ dir: 3, tileCol: -1, tileRow: 0 },
+					{ dir: 4, tileCol: -1, tileRow: 1 },
+					{ dir: 5, tileCol: 0, tileRow: 1 },
+					{ dir: 6, tileCol: 1, tileRow: 1 },
+					{ dir: 7, tileCol: 1, tileRow: 0 },
+					{ dir: 8, tileCol: 1, tileRow: -1 },
+					{ dir: 9, tileCol: 0, tileRow: 0 },
+				];
+
+				const whichUnitVectorMatch = 
+					unitVectorOptions.find(( { tileCol, tileRow } ) => 
+						tileCol === unitVector.tileCol && tileRow === unitVector.tileRow 
+					);
+
+				if (!whichUnitVectorMatch) {
+					console.log("path not found");
+					return;
+				}
+
+				const whichDirection = whichUnitVectorMatch.dir;
+
 				this.resetDirections();
 				this.movementTimer = 300;
 
