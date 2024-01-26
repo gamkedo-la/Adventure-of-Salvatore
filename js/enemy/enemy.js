@@ -1,6 +1,6 @@
-const GRID_WEIGHT_INFLUENCE_FACTOR = 500;
-const PATHFINDING_FRAME_LIFETIME = 1000;
-const PATHFINDING_MAX_SEARCH_LOOPS = 1000;
+const GRID_WEIGHT_INFLUENCE_FACTOR = 50000;
+const PATHFINDING_PATH_LIFETIME = 25;
+const PATHFINDING_MAX_SEARCH_LOOPS = 250;
 
 orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
 
@@ -42,7 +42,19 @@ class enemyClass {
 	totalShots = 5;
 	canUseRangeAttack = false;
 	meleeAttacking = false;
-	
+
+	// shared path data among enemies for performance as long
+	// as goal location is the single player
+	static pathData = {
+		frameCount : 0,
+		path : [],
+		cost : [],
+		lastGoal : null,
+	}
+	// the last base tile location is specific to each enemy
+	pathBase = null;
+    pathDir = 0;
+
 	enemyReset() {
 		console.log("EnemyClass.enemyReset: "+this.myName);
         this.speed = 3;
@@ -78,10 +90,10 @@ class enemyClass {
 		
 		var nextX = this.x; 
 		var nextY = this.y; 
-        var collisionY = 0;
+        // var collisionY = 0;
 		
-		this.randomMovements();
-		// this.pathfinding();
+		// this.randomMovements();
+		this.pathfinding();
 
 		this.speed = this.randomDirectionSpeed;
 		
@@ -101,7 +113,7 @@ class enemyClass {
 			nextX -= this.speed * Math.cos(45); 
 			nextY -= this.speed * Math.sin(45);
 			this.offSetHeight = this.height * 5;
-			collisionY = nextY;
+			// collisionY = nextY;
 		} else if(this.moveEast){
 			nextX += this.speed * Math.cos(45); 
 			nextY -= this.speed * Math.sin(45);
@@ -136,6 +148,8 @@ class enemyClass {
 			case TILE_KEY_GREEN:
 			case TILE_KEY_RED:
 			case TILE_KEY_YELLOW:
+			case TILE_WOOD_DOOR_OPEN:
+
 				this.x = nextX;
 				this.y = nextY;
 				break;					
@@ -168,90 +182,137 @@ class enemyClass {
 	}
 
 	pathfinding() {
-		if (!this.pathfinding.frameCount) {
-			this.pathfinding.frameCount = 0;
-			this.pathfinding.path = [];
-			this.pathfinding.cost = [];
-		}
-
-		this.movementTimer--;
+		// this.movementTimer--;
+		this.movementTimer = 0;
+		this.meleeAttacking = false;
 		if(this.meleeAttacking) {
 			//* Keeping enemy still while testing combat */
 			this.speed = 0;
 			return;
 		} else {
+			let pathData = enemyClass.pathData;
+
 			if(this.movementTimer <= 0) {
 				const base = getTileCoordAtPixelCoord(this.x, this.y);
 				const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
 
-				// use the pathfinding on just so many frames
-				if (this.pathfinding.frameCount % PATHFINDING_FRAME_LIFETIME == 0) {
-					this.pathfinding.frameCount = 0;
-					const astarResults = aStarSearch(roomGrid, base, goal);
-					this.pathfinding.path = astarResults.path;
-					this.pathfinding.cost = astarResults.cost;
-				}
-
-				// console.log("path, cost:", this.pathfinding.path, this.pathfinding.cost);
-				
-				this.pathfinding.frameCount++;
-
-				// get the unit vector from the base to the next tile
-				const baseIndex = rowColToArrayIndex(base.tileCol, base.tileRow);
-				let nextIndex = this.pathfinding.path[baseIndex];
-				if (!nextIndex) { 
-					nextIndex = baseIndex; 
-				}
-				const nextTileCol = nextIndex % ROOM_COLS;
-				const nextTileRow = Math.floor(nextIndex / ROOM_COLS);
-
-				const pathVector = {
-					tileCol: nextTileCol - base.tileCol,
-					tileRow: nextTileRow - base.tileRow
-				};
-
-				const magnitude = 
-					Math.sqrt(pathVector.tileCol ** 2 + pathVector.tileRow ** 2);
-
-				const unitVector = { 
-					tileCol : 
-						magnitude === 0 ? 0 : Math.floor(pathVector.tileCol / magnitude),
-					tileRow : 
-						magnitude === 0 ? 0 : Math.floor(pathVector.tileRow / magnitude)
-				}
-
-				// console.log(unitVector);
-
-				// get the direction
-				const unitVectorOptions = [
-					// move d to the front of each object in the array
-					{ dir: 1, tileCol: 0, tileRow: -1 },
-					{ dir: 2, tileCol: -1, tileRow: -1 },
-					{ dir: 3, tileCol: -1, tileRow: 0 },
-					{ dir: 4, tileCol: -1, tileRow: 1 },
-					{ dir: 5, tileCol: 0, tileRow: 1 },
-					{ dir: 6, tileCol: 1, tileRow: 1 },
-					{ dir: 7, tileCol: 1, tileRow: 0 },
-					{ dir: 8, tileCol: 1, tileRow: -1 },
-					{ dir: 9, tileCol: 0, tileRow: 0 },
-				];
-
-				const whichUnitVectorMatch = 
-					unitVectorOptions.find(( { tileCol, tileRow } ) => 
-						tileCol === unitVector.tileCol && tileRow === unitVector.tileRow 
-					);
-
-				if (!whichUnitVectorMatch) {
-					console.log("path not found");
+				if (!base || !goal) {
+					console.log("pathfinding(): base and goal not found");
 					return;
 				}
 
-				const whichDirection = whichUnitVectorMatch.dir;
+				// last base is an instance property and 
+				// last goal is a class property 
+				// while the base will change among instances, 
+				// the goal is to be playerOne may not have moved
+				if (!this.pathBase) { this.pathBase = base; }
+				if (!pathData.lastGoal) { pathData.lastGoal = goal; }
+
+				const baseHasMoved = 
+					base.tileCol != this.pathBase.tileCol ||
+					base.tileRow != this.pathBase.tileRow;
+
+				const goalHasMoved =
+					goal.tileCol != pathData.lastGoal.tileCol ||
+					goal.tileRow != pathData.lastGoal.tileRow;
+
+				this.pathBase = base;
+				pathData.lastGoal = goal;
+
+				const baseIndex = rowColToArrayIndex(base.tileCol, base.tileRow);
+
+				const resetPath = 
+					// if frame lifetime has passed
+					pathData.frameCount 
+						% PATHFINDING_PATH_LIFETIME === 0 ||
+					// if goal has moved
+					baseHasMoved ||
+					// if goal has moved
+					goalHasMoved ||
+					// if path is empty
+					pathData.path.length === 0 ||
+					// if cost is empty
+					pathData.cost.length === 0;
+
+				// see if base location is missing from path
+				const appendPath = 
+					pathData.path.length > 0 && !pathData.path[baseIndex];
+
+				// use the pathfinding if we need path from base to goal or every few frames
+				if (resetPath || appendPath) {
+					pathData.frameCount = 0;
+
+					const astarResults = aStarSearch(roomGrid, base, goal);
+
+					// append on any new paths towards the current goal
+					if (resetPath && !appendPath) {
+						pathData.path = astarResults.path;
+						pathData.cost = astarResults.cost;
+					} else {
+						pathData.path = 
+							pathData.path.map((item , index ) => 
+								!item ? astarResults.path[index] : item
+							);
+						pathData.cost = 
+							pathData.cost.map((item , index ) => 
+								!item ? astarResults.cost[index] : item
+							);
+					}
+				
+					// get the unit vector from the base to the next tile
+					const nextIndex = !pathData.path[baseIndex] ? baseIndex : pathData.path[baseIndex];
+
+					const nextTileCol = Math.floor(nextIndex % ROOM_COLS);
+					const nextTileRow = Math.floor(nextIndex / ROOM_COLS);
+	
+					const pathVector = {
+						tileCol: nextTileCol - base.tileCol,
+						tileRow: nextTileRow - base.tileRow
+					};
+	
+					const magnitude = 
+						Math.sqrt(pathVector.tileCol ** 2 + pathVector.tileRow ** 2);
+
+					const unitVector = { 
+						tileCol : 
+					    	Math.round(pathVector.tileCol / magnitude),
+						tileRow : 
+							Math.round(pathVector.tileRow / magnitude),
+					}
+	
+					// get the direction
+					const unitVectorOptions = [
+						// move d to the front of each object in the array
+						{ dir: 1, tileCol: 0, tileRow: -1 },
+						{ dir: 2, tileCol: -1, tileRow: -1 },
+						{ dir: 3, tileCol: -1, tileRow: 0 },
+						{ dir: 4, tileCol: -1, tileRow: 1 },
+						{ dir: 5, tileCol: 0, tileRow: 1 },
+						{ dir: 6, tileCol: 1, tileRow: 1 },
+						{ dir: 7, tileCol: 1, tileRow: 0 },
+						{ dir: 8, tileCol: 1, tileRow: -1 },
+						{ dir: 9, tileCol: 0, tileRow: 0 },
+					];
+	
+					const whichUnitVectorMatch = 
+						unitVectorOptions.find(( { tileCol, tileRow } ) => 
+							tileCol === unitVector.tileCol && tileRow === unitVector.tileRow 
+						);
+	
+					if (!whichUnitVectorMatch) {
+						console.log("path not found");
+						return;
+					}
+
+					this.pathDir = whichUnitVectorMatch.dir;
+				}
+
+				pathData.frameCount++;
 
 				this.resetDirections();
 				this.movementTimer = 300;
 
-				switch(whichDirection) {
+				switch(this.pathDir) {
 				case 0:
 				case 1:
 					this.moveNorth = true;					
@@ -495,9 +556,38 @@ class enemyClass {
 		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
 		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
+
+        // display intended path
+        this.drawPath();
 	}
 
-	animateEnemy(){
+	// work in progress - does not function
+    drawPath() {
+        return;
+        
+        if (!enemyClass.pathData) return;
+        if (!enemyClass.pathData.path) return;
+        if (enemyClass.pathData.path[0] == -1) return; // strange
+        // hmm - code never reaches past the above FIXME
+
+        // hmm WHY do multiple enemies share a path? they are in different locations? 
+        // FIXME this feels wrong
+        let mypath = enemyClass.pathData.path;
+        console.log("drawing an enemy path!");
+        for (let i=0; i<mypath.length; i++) {
+            // what a strange way to calculate isometric coords!
+            let mapindex = mypath[i];
+            let tx = Math.floor(mapindex % ROOM_COLS);
+			let ty = Math.floor(mapindex / ROOM_COLS);
+            tileCoordToIsoCoord(tx, ty);
+			let px = isoDrawX;//-ISO_GRID_W/2; // huh??
+            let py = isoDrawY;//-ISO_TILE_GROUND_Y;
+            colorRect(px, py, px+2, py+2, "magenta"); // draw a dot
+            //console.log("- path dot at "+px+","+py);
+        }
+    }
+    
+    animateEnemy(){
 		this.drawTimer++;
 		if(this.drawTimer == 8){
 			this.offSetWidth = this.offSetWidth + this.width;
