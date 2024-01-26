@@ -556,9 +556,38 @@ class enemyClass {
 		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
 		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
+
+        // display intended path
+        this.drawPath();
 	}
 
-	animateEnemy(){
+	// work in progress - does not function
+    drawPath() {
+        return;
+        
+        if (!enemyClass.pathData) return;
+        if (!enemyClass.pathData.path) return;
+        if (enemyClass.pathData.path[0] == -1) return; // strange
+        // hmm - code never reaches past the above FIXME
+
+        // hmm WHY do multiple enemies share a path? they are in different locations? 
+        // FIXME this feels wrong
+        let mypath = enemyClass.pathData.path;
+        console.log("drawing an enemy path!");
+        for (let i=0; i<mypath.length; i++) {
+            // what a strange way to calculate isometric coords!
+            let mapindex = mypath[i];
+            let tx = Math.floor(mapindex % ROOM_COLS);
+			let ty = Math.floor(mapindex / ROOM_COLS);
+            tileCoordToIsoCoord(tx, ty);
+			let px = isoDrawX;//-ISO_GRID_W/2; // huh??
+            let py = isoDrawY;//-ISO_TILE_GROUND_Y;
+            colorRect(px, py, px+2, py+2, "magenta"); // draw a dot
+            //console.log("- path dot at "+px+","+py);
+        }
+    }
+    
+    animateEnemy(){
 		this.drawTimer++;
 		if(this.drawTimer == 8){
 			this.offSetWidth = this.offSetWidth + this.width;
