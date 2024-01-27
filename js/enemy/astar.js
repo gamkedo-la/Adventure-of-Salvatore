@@ -99,8 +99,6 @@ function aStarSearch(gridArray, base, goal) {
 				case TILE_COIN:
 				case TILE_WALL_LEVER_1:
 				case TILE_WALL_LEVER_2:
-
-
 					nextTileCost = 1;
 					break;					
 				default:
@@ -140,5 +138,4 @@ function aStarSearch(gridArray, base, goal) {
 	})();
 
 	return { path: pathToLast, cost: costToHere };
-	// return { path: pathToHere, cost: costToHere };
 }

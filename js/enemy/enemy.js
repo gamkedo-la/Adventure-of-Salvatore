@@ -1,10 +1,29 @@
 const GRID_WEIGHT_INFLUENCE_FACTOR = 50000;
-const PATHFINDING_PATH_LIFETIME = 25;
+const PATHFINDING_PATH_LIFETIME = 10;
 const PATHFINDING_MAX_SEARCH_LOOPS = 250;
+
+const DIR_N = 1;
+const DIR_NE = 2;
+const DIR_E = 3;
+const DIR_SE = 4;
+const DIR_S = 5;
+const DIR_SW = 6;
+const DIR_W = 7;
+const DIR_NW = 8;
+const DIR_NO = 9;
 
 orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
 
 ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];     
+
+// get the direction
+const directionOptions = [
+	directionNoMove, 
+	directionN,	directionNE,
+	directionE,	directionSE,
+	directionS,	directionSW,
+	directionW,	directionNW,
+];
 
 class enemyClass {
 	x = 600;
@@ -26,9 +45,12 @@ class enemyClass {
 	
 	movementTimer = 0;
 	moveNorth = false;
-	keyHeld_East = false;
-	keyHeld_South = false;
-	keyHeld_West = false;
+	moveSouth = false;
+	moveEast = false;
+	moveWest = false;
+	// keyHeld_East = false;
+	// keyHeld_South = false;
+	// keyHeld_West = false;
 	canMoveNorth = true;
 	canMoveEast = true;
 	canMoveSouth = true;
@@ -46,11 +68,12 @@ class enemyClass {
 	// shared path data among enemies for performance as long
 	// as goal location is the single player
 	static pathData = {
-		frameCount : 0,
+		frame : 0,
 		path : [],
 		cost : [],
-		lastGoal : null,
+		goal : null,
 	}
+
 	// the last base tile location is specific to each enemy
 	pathBase = null;
     pathDir = 0;
@@ -87,7 +110,6 @@ class enemyClass {
 	}	
 	 
 	movement() {
-		
 		var nextX = this.x; 
 		var nextY = this.y; 
         // var collisionY = 0;
@@ -182,8 +204,7 @@ class enemyClass {
 	}
 
 	pathfinding() {
-		// this.movementTimer--;
-		this.movementTimer = 0;
+		this.movementTimer--;
 		this.meleeAttacking = false;
 		if(this.meleeAttacking) {
 			//* Keeping enemy still while testing combat */
@@ -206,49 +227,52 @@ class enemyClass {
 				// while the base will change among instances, 
 				// the goal is to be playerOne may not have moved
 				if (!this.pathBase) { this.pathBase = base; }
-				if (!pathData.lastGoal) { pathData.lastGoal = goal; }
+				if (!pathData.goal) { pathData.goal = goal; }
 
-				const baseHasMoved = 
-					base.tileCol != this.pathBase.tileCol ||
-					base.tileRow != this.pathBase.tileRow;
-
-				const goalHasMoved =
-					goal.tileCol != pathData.lastGoal.tileCol ||
-					goal.tileRow != pathData.lastGoal.tileRow;
+				// const baseHasMoved = 
+				// 	base.tileCol != this.pathBase.tileCol ||
+				// 	base.tileRow != this.pathBase.tileRow;
+				const goalHasMoved = 
+					goal.tileCol != pathData.goal.tileCol ||
+					goal.tileRow != pathData.goal.tileRow;
 
 				this.pathBase = base;
-				pathData.lastGoal = goal;
-
+				pathData.goal = goal;
+	
 				const baseIndex = rowColToArrayIndex(base.tileCol, base.tileRow);
 
-				const resetPath = 
+				const resetFrame = pathData.frame % PATHFINDING_PATH_LIFETIME === 0;
+				const pathIsEmpty = pathData.path.length === 0;
+				const costIsEmpty = pathData.cost.length === 0;
+				const baseNotInPath = !pathData.path[baseIndex];
+
+				const resetPathData = 
 					// if frame lifetime has passed
-					pathData.frameCount 
-						% PATHFINDING_PATH_LIFETIME === 0 ||
-					// if goal has moved
-					baseHasMoved ||
-					// if goal has moved
+					resetFrame ||
+					// if goal has moved to tile not in path
 					goalHasMoved ||
-					// if path is empty
-					pathData.path.length === 0 ||
-					// if cost is empty
-					pathData.cost.length === 0;
+					// if path array is empty
+					pathIsEmpty ||
+					// if cost array is empty
+					costIsEmpty;
 
 				// see if base location is missing from path
-				const appendPath = 
-					pathData.path.length > 0 && !pathData.path[baseIndex];
+				const appendPathData = 
+					// enemy has moved to tile not in path
+					baseNotInPath;
 
-				// use the pathfinding if we need path from base to goal or every few frames
-				if (resetPath || appendPath) {
-					pathData.frameCount = 0;
+				// renew pathfinding if we need path from base to goal or every few frames
+				if (resetPathData || appendPathData) {
+					pathData.frame = 0;
 
 					const astarResults = aStarSearch(roomGrid, base, goal);
 
-					// append on any new paths towards the current goal
-					if (resetPath && !appendPath) {
+					if (resetPathData) {
+						// reset the path and cost
 						pathData.path = astarResults.path;
 						pathData.cost = astarResults.cost;
 					} else {
+						// append on any new paths towards the current goal
 						pathData.path = 
 							pathData.path.map((item , index ) => 
 								!item ? astarResults.path[index] : item
@@ -280,73 +304,29 @@ class enemyClass {
 							Math.round(pathVector.tileRow / magnitude),
 					}
 	
-					// get the direction
-					const unitVectorOptions = [
-						// move d to the front of each object in the array
-						{ dir: 1, tileCol: 0, tileRow: -1 },
-						{ dir: 2, tileCol: -1, tileRow: -1 },
-						{ dir: 3, tileCol: -1, tileRow: 0 },
-						{ dir: 4, tileCol: -1, tileRow: 1 },
-						{ dir: 5, tileCol: 0, tileRow: 1 },
-						{ dir: 6, tileCol: 1, tileRow: 1 },
-						{ dir: 7, tileCol: 1, tileRow: 0 },
-						{ dir: 8, tileCol: 1, tileRow: -1 },
-						{ dir: 9, tileCol: 0, tileRow: 0 },
-					];
-	
-					const whichUnitVectorMatch = 
-						unitVectorOptions.find(( { tileCol, tileRow } ) => 
-							tileCol === unitVector.tileCol && tileRow === unitVector.tileRow 
+					const direction = 
+						directionOptions.find( ( dir ) =>
+							dir.move(unitVector.tileCol, unitVector.tileRow)
 						);
-	
-					if (!whichUnitVectorMatch) {
+
+					if (!direction) {
 						console.log("path not found");
 						return;
 					}
 
-					this.pathDir = whichUnitVectorMatch.dir;
+					this.pathDir = direction;
 				}
 
-				pathData.frameCount++;
+				pathData.frame++;
+				this.movementTimer = 1;
 
+				// move in the path direction
 				this.resetDirections();
-				this.movementTimer = 300;
 
-				switch(this.pathDir) {
-				case 0:
-				case 1:
-					this.moveNorth = true;					
-					break;
-				case 2:
-					this.moveNorth = true;
-					this.moveWest = true;					
-					break;
-				case 3:
-					this.moveWest = true;
-					break;
-				case 4:
-					this.moveWest = true;
-					this.moveSouth = true;
-					break;
-				case 5:
-					this.moveSouth = true;
-					break;
-				case 6:
-					this.moveSouth = true;
-					this.moveEast = true;
-					break;
-				case 7:
-					this.moveEast = true;
-					break;
-				case 8:
-					this.moveNorth = true;
-					this.moveEast = true;					
-					break;
-				case 9:
-				case 10:
-				default:
-					break;
-				}
+				this.moveNorth = this.pathDir.moveNorth;
+				this.moveEast = this.pathDir.moveEast;
+				this.moveSouth = this.pathDir.moveSouth;
+				this.moveWest = this.pathDir.moveWest;
 			}
 		}
 	}
@@ -361,52 +341,52 @@ class enemyClass {
 				if(this.movementTimer <= 0){
 				switch(whichDirection){
 					case 0:
-					case 1:
+					case DIR_N:
 						this.resetDirections();
 						this.moveNorth = true;					
 						this.movementTimer = 300;
 						break;
-					case 2:
+					case DIR_NE:
 						this.resetDirections();
 						this.moveNorth = true;
 						this.moveWest = true;					
 						this.movementTimer = 300;
 					//	break;
-					case 3:
+					case DIR_E:
 						this.resetDirections();
 						this.moveWest = true;
 						this.movementTimer = 300;
 						break;
-					case 4:
+					case DIR_SE:
 						this.resetDirections();
 						this.moveWest = true;
 						this.moveSouth = true;
 						this.movementTimer = 300;
 					//	break;
-					case 5:
+					case DIR_S:
 						this.resetDirections();
 						this.moveSouth = true;
 						this.movementTimer = 300;
 						break;
-					case 6:
+					case DIR_SW:
 						this.resetDirections();
 						this.moveSouth = true;
 						this.moveEast = true;
 						this.movementTimer = 300;
 					//	break;
-					case 7:
+					case DIR_W:
 						this.resetDirections();
 						this.moveEast = true;
 						this.movementTimer = 300;
 						break;
-					case 8:
+					case DIR_NW:
 						this.resetDirections();
 						this.moveNorth = true;
 						this.moveEast = true;					
 						this.movementTimer = 300;
 					//	break;
-					case 9:
-					case 10:
+					case DIR_NO:
+					default:
 						this.resetDirections();
 						this.movementTimer = 300;
 						break;
