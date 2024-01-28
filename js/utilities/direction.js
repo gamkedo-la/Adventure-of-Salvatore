@@ -42,3 +42,13 @@ const directionNW = new Direction(-1, -1, true, false, false, true);
 // class DirectionSW extends Direction(-1, 1, false, false, true, true) {}
 // class DirectionW extends Direction(-1, 0, false, false, false, true) {}
 // class DirectionNW extends Direction(-1, -1, true, false, false, true) {}
+
+// get the direction
+const directionOptions = [
+	directionNoMove, 
+	directionN,	directionNE,
+	directionE,	directionSE,
+	directionS,	directionSW,
+	directionW,	directionNW,
+];
+

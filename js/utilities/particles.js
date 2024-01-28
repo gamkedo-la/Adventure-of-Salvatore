@@ -1,4 +1,3 @@
-var smokeList = [];
 
 function particleClass(xPos, yPos, amountOfParticles, duration) {
 	this.x = xPos;

@@ -1,5 +1,3 @@
-var itemScreen = false;
-
 function itemScreenDisplay(){
     canvasContext.drawImage(itemBackgroundPic, 0, 0);
     //belt

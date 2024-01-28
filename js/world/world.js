@@ -1,24 +1,3 @@
-const FADE_WALLS_THAT_OBSCURE_PLAYER = false; // set to true for transparent walls
-const ISO_GRID_W = 50;
-const ISO_GRID_H = ISO_GRID_W / 2;
-const ISO_TILE_GROUND_Y = 85;
-const ISO_TILE_DRAW_W = 50;
-const ISO_TILE_DRAW_H = 50;
-const ROOM_W = 50;
-const ROOM_H = ROOM_W;
-const ROOM_COLS = 45;
-const ROOM_ROWS = 37;
-
-
-var isoDrawX = 0;
-var isoDrawY = 0;
-
-var sharedAnimCycle = 0;
-
-var levelList = [levelOne, levelTwo, levelThree];
-var levelNow = 0;
-var roomGrid = [];
-
 var levelOne = [ 
 	
 	1, 11, 42, 43,  1,  1,  1, 42, 43,  1,  1, 42, 43,  1,  1, 42, 43,  1, 11,  1, 42, 43,  1, 11,  1, 42, 43,  1, 11,  1, 42, 43,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  
@@ -139,6 +118,8 @@ var levelTwo = [
 		1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,
 		1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  1,  0,  0,  0,  0,  0,  1,
 		1,  1, 99,  1,  1,  1, 99,  1,  1,  1,  1, 99,  1,  1,  1,  1, 99,  1,  1,  1,  1, 99,  1,  1,  1,  1, 99,  1,  1,  1,  1, 99,  1,  1,  1,  1,  1, 99,  1,  1,  1,  1, 99,  1,  1];
+
+	var levelList = [levelOne, levelTwo, levelThree];
 	
 	const TILE_ROAD = 0;
 	const TILE_WALL = 1;

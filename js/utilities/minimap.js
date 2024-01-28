@@ -3,18 +3,6 @@
 // that we draw in a single draw call on the gui
 // it does not need to be updated every frame
 
-const MINIMAP_GUI_X = 630;
-const MINIMAP_GUI_Y = 6;
-const MINIMAP_GUI_W = 50;
-const MINIMAP_GUI_H = 320; // is this too big?
-const MINIMAP_DOT_W = 4;
-const MINIMAP_DOT_H = 4;
-const MINIMAP_OPACITY = 1;
-
-var minimapCanvas = document.createElement("canvas");
-var minimapContext = minimapCanvas.getContext("2d");
-var minimapFrameCount = 0;
-
 // draw the minimap onto the main game canvas
 function drawMinimap() {
     

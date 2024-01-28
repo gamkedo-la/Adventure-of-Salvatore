@@ -1,30 +1,3 @@
-var warriorPic = document.createElement("img");
-var warriorAttackingPic = document.createElement('img');
-var miniCyclopPic = document.createElement("img");
-var blobPic = document.createElement("img");
-var skeletonPic = document.createElement("img");
-var shadowPic = document.createElement("img");
-var feedbackGUIPic = document.createElement("img");
-var healthbarPic = document.createElement("img");
-var healthPic = document.createElement("img");
-var rockBulletPic = document.createElement("img");
-var worldBackgroundPic = document.createElement("img");
-var guiBorderPic = document.createElement("img");
-var guiButtonPic = document.createElement("img");
-var guiPotionHolderPic = document.createElement("img");
-var guiCompassPic = document.createElement("img");
-var itemBackgroundPic = document.createElement("img");
-var worldMapPic = document.createElement("img");
-
-var vignetteBorderPic = document.createElement("img");
-const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is
-
-//var titlepagePic = document.createElement("img");
-var trackPics = [];
-
-
-var picsToLoad = 0;
-
 //All pictures prior to launching the game.  If a picture doesn't load, the game doesn't launch.
 function countLoadedImagesAndLaunchIfReady(){
 		picsToLoad--;

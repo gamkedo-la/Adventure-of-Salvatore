@@ -1,7 +1,3 @@
-miniCyclopNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz", 
-				"Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm", 
-				"Kiok", "Wrokx", "Fiog", "Goziord"];
-
 class MiniCyclop extends enemyClass { 
 	
     constructor() {

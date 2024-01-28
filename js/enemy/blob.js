@@ -1,5 +1,3 @@
-blobNames = ["Ooze"];
-
 blobClass.prototype = new enemyClass();
 function blobClass() {
 	this.canUseRangeAttack = false;

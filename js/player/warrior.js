@@ -1,11 +1,3 @@
-const ISO_CHAR_FOOT_Y = 8;
-const ISO_SHADOW_OFFSET_Y = 5;
-const COLLIDE_BUMP_MULT = 2; // this needs to be improved.  This could potentially cause enemy or player in an illegal position (wall)
-
-// this is at 0 because it makes it very hard to get through doors, 
-// but at around 15 or 20 there's no more wall pop-in...
-const PLAYER_COLLISION_RADIUS = 20; // don't stand too close to things (avoid wall popping in front of player)
-
 function warriorClass() {
 	this.x = 600;
 	this.y = 800;

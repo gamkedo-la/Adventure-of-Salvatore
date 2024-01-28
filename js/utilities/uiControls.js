@@ -1,35 +1,3 @@
-const KEY_W = 87; 
-const KEY_S = 83; 
-const KEY_A = 65; 
-const KEY_D = 68; 
-const KEY_B = 66; //Mute
-const KEY_M = 77; //Menu
-const KEY_N = 78; //Map
-const KEY_P = 80; //Pause
-const KEY_I = 73; //Items
-
-const KEY_Z = 90;
-const KEY_X = 88;
-const KEY_C = 67;
-
-const KEY_SPACEBAR = 32; 
-const KEY_1 = 49;
-const KEY_2 = 50;
-
-const KEY_LEFT_ARROW = 37;
-const KEY_UP_ARROW = 38;
-const KEY_RIGHT_ARROW = 39;
-const KEY_DOWN_ARROW = 40;
-
-
-var MousePosX = 0;
-var MousePosY = 0;
-var MouseIsHeldDown = false;
-var MouseJustClicked = false;
-
-var displayQuickKeysOn = true;
-var displayQuickKeysTimer = 300;
-
 function initInput(){
 	
 	canvas.addEventListener('mousemove', function(evt) {

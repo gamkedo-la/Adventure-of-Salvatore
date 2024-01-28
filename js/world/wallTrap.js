@@ -1,6 +1,3 @@
-var rockBulletList = [];
-var wallTrapList = [];
-
 function removeBulletFromList(){
 	for(var i = 0; i < rockBulletList.length; i++){
 	  if(rockBulletList[i].dead){

@@ -1,31 +1,3 @@
-const GRID_WEIGHT_INFLUENCE_FACTOR = 50000;
-const PATHFINDING_PATH_LIFETIME = 10;
-const PATHFINDING_MAX_SEARCH_LOOPS = 250;
-const RANDOM_MOVEMENT_TIMER_MAX = 12;
-
-const DIR_N = 1;
-const DIR_NE = 2;
-const DIR_E = 3;
-const DIR_SE = 4;
-const DIR_S = 5;
-const DIR_SW = 6;
-const DIR_W = 7;
-const DIR_NW = 8;
-const DIR_NO = 9;
-
-orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
-
-ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];     
-
-// get the direction
-const directionOptions = [
-	directionNoMove, 
-	directionN,	directionNE,
-	directionE,	directionSE,
-	directionS,	directionSW,
-	directionW,	directionNW,
-];
-
 class enemyClass {
 	x = 600;
 	y = 800;

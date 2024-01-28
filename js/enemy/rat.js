@@ -1,5 +1,3 @@
-ratNames = [ "rat"];
-
 ratClass.prototype = new enemyClass();
 function ratClass() {
 	this.width = 58; // This should go into the Rat Init

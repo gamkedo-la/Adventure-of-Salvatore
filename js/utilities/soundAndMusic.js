@@ -1,13 +1,7 @@
-var audioFormat;
-var isMuted = false;
-var soundSetforMeetings = false; //make false to hear at normal level
-
 //sounds
 var crashIntoConeSound = new SoundOverlapsClass("crashCone");
 var swordSwingSound = new SoundOverlapsClass("sword_3");
-var swordSwing2Sound = new SoundOverlapsClass("sword_swing_genAI")
-var mainBackgroundMusic = new BackgroundMusicClass();
-
+var swordSwing2Sound = new SoundOverlapsClass("sword_swing_genAI");
 
 function setFormat() {
     var audio = new Audio();
@@ -17,6 +11,8 @@ function setFormat() {
 		audioFormat = ".ogg";
     }
 }
+
+var mainBackgroundMusic = new BackgroundMusicClass();
 
 function SoundOverlapsClass(filenameWithPath) {
     setFormat();

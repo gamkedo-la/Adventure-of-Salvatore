@@ -1,6 +1,3 @@
-var camPanX = 0;
-var camPanY = 0;
-
 function updatedCameraPosition(){
 	gameCoordToIsoCoord(playerOne.x,playerOne.y);
 	camPanX = isoDrawX - canvas.width/2;

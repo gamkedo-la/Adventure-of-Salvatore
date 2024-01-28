@@ -1,6 +1,3 @@
-var canvas;
-var canvasContext;
-
 //characters (Player, NPC's, Enemies)
 var playerOne = new warriorClass();
 var miniCyclopList = [];
@@ -8,22 +5,12 @@ var blobList = [];
 var skeletonList = [];
 var entities = [playerOne];
 
-const XRAY_VISION_ENABLED = true; // can we see player through walls?
-const XRAY_VISION_OPACITY = 0.1;
-
 function resetEnemyLists(){
 	miniCyclopList = [];
 	skeletonList = [];
 	blobList = [];
 	entities = [playerOne];
 }
-
-//game states
-var liveGame = true;
-var pauseScreen = false;
-var inventoryScreen = false;
-var mainMenu = false;
-
 
 window.onload = function(){
 			
