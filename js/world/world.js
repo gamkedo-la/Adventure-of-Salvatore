@@ -590,3 +590,16 @@ function isBlockingSightOfPlayer(x, y) {
 			playerOne.y < y && 
 			playerOne.y > y -100;
 }
+
+function getTileCoordsAtTileIndex(tileIndex) {
+	var tileCol = ROOM_COLS > 0 ? tileIndex % ROOM_COLS : 0;
+	var tileRow = ROOM_COLS > 0 ? Math.floor(tileIndex / ROOM_COLS) : 0;
+	return { tileCol: tileCol, tileRow: tileRow };
+}
+
+function getPixelCoordAtTileIndex(tileIndex) {
+	var tileCoords = getTileCoordsAtTileIndex(tileIndex);
+	var pixelX = tileCoords.tileCol * ROOM_W;
+	var pixelY = tileCoords.tileRow * ROOM_H;
+	return { x: pixelX, y: pixelY };
+}

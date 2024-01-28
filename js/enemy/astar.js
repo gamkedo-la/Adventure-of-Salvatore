@@ -78,6 +78,7 @@ function aStarSearch(gridArray, base, goal) {
 				case TILE_TREASURE:
 				case TILE_FINISH:
 				case TILE_WOOD_DOOR_OPEN:
+				case TILE_WOOD_DOOR_2_OPEN:
 				case TILE_YELLOW_DOOR_OPEN:
 				case TILE_YELLOW_DOOR_2_OPEN:
 				case TILE_BLUE_DOOR_OPEN:
@@ -85,7 +86,6 @@ function aStarSearch(gridArray, base, goal) {
 				case TILE_GREEN_DOOR_OPEN:
 				case TILE_GREEN_DOOR_2_OPEN:
 				case TILE_RED_DOOR_OPEN:
-				case TILE_WOOD_DOOR_2_OPEN:
 				case TILE_RED_CARPET:
 				case TILE_SPIKES_UNARMED:	
 				case TILE_PITTRAP_UNARMED:

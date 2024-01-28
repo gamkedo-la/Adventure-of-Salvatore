@@ -113,9 +113,14 @@ class enemyClass {
 		var nextX = this.x; 
 		var nextY = this.y; 
         // var collisionY = 0;
-		
-		// this.randomMovements();
-		this.pathfinding();
+
+		// if no path is found that enemy can wander around
+		if (this.pathfinding()) { 
+			// console.log(this.myName, "is following a path");
+		} else {
+			// console.log(this.myName, "is taking a random walk");
+			this.randomMovements(); 
+		}
 
 		this.speed = this.randomDirectionSpeed;
 		
@@ -171,21 +176,41 @@ class enemyClass {
 			case TILE_KEY_RED:
 			case TILE_KEY_YELLOW:
 			case TILE_WOOD_DOOR_OPEN:
-
+			case TILE_WOOD_DOOR_2_OPEN:
+			case TILE_YELLOW_DOOR_OPEN:
+			case TILE_YELLOW_DOOR_2_OPEN:
+			case TILE_BLUE_DOOR_OPEN:
+			case TILE_BLUE_DOOR_2_OPEN:
+			case TILE_GREEN_DOOR_OPEN:
+			case TILE_GREEN_DOOR_2_OPEN:
+			case TILE_RED_DOOR_OPEN:
+			case TILE_RED_CARPET:
+			case TILE_SPIKES_UNARMED:	
+			case TILE_PITTRAP_UNARMED:
+			case TILE_TREASURE:	
+			case TILE_KEY_YELLOW:	
+			case TILE_KEY_BLUE:	
+			case TILE_KEY_GREEN:	
+			case TILE_KEY_RED:
+			case TILE_HEALING_POTION:
+			case TILE_SPEED_POTION:
+			case TILE_COIN:
+			case TILE_WALL_LEVER_1:
+			case TILE_WALL_LEVER_2:
 				this.x = nextX;
 				this.y = nextY;
 				break;					
-			case TILE_WALL:
-			case TILE_SPIKES_ARMED:
-			case TILE_SPIKES_UNARMED:
-			case TILE_PITTRAP_ARMED:
-			case TILE_PITTRAP_UNARMED:
-			case TILE_TREASURE:
-			case TILE_FINISH:			
-			case TILE_YELLOW_DOOR:
-			case TILE_RED_DOOR:
-			case TILE_BLUE_DOOR:
-			case TILE_TABLE:
+			// case TILE_WALL:
+			// case TILE_SPIKES_ARMED:
+			// case TILE_SPIKES_UNARMED:
+			// case TILE_PITTRAP_ARMED:
+			// case TILE_PITTRAP_UNARMED:
+			// case TILE_TREASURE:
+			// case TILE_FINISH:			
+			// case TILE_YELLOW_DOOR:
+			// case TILE_RED_DOOR:
+			// case TILE_BLUE_DOOR:
+			// case TILE_TABLE:
 			default:
 				this.movementTimer = 0;
 				break;
@@ -204,22 +229,24 @@ class enemyClass {
 	}
 
 	pathfinding() {
+		// returns true if pathfinding is in progress and a direction taken
+		// returns false if pathfinding is not in progress
 		this.movementTimer--;
 		this.meleeAttacking = false;
 		if(this.meleeAttacking) {
 			//* Keeping enemy still while testing combat */
 			this.speed = 0;
-			return;
+			return true;
 		} else {
-			let pathData = enemyClass.pathData;
-
 			if(this.movementTimer <= 0) {
+				let pathData = enemyClass.pathData;
+
 				const base = getTileCoordAtPixelCoord(this.x, this.y);
 				const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
 
 				if (!base || !goal) {
 					console.log("pathfinding(): base and goal not found");
-					return;
+					return false;
 				}
 
 				// last base is an instance property and 
@@ -285,13 +312,10 @@ class enemyClass {
 				
 					// get the unit vector from the base to the next tile
 					const nextIndex = !pathData.path[baseIndex] ? baseIndex : pathData.path[baseIndex];
-
-					const nextTileCol = Math.floor(nextIndex % ROOM_COLS);
-					const nextTileRow = Math.floor(nextIndex / ROOM_COLS);
-	
+					const nextTileCoord = getTileCoordAtTileIndex(nextIndex);
 					const pathVector = {
-						tileCol: nextTileCol - base.tileCol,
-						tileRow: nextTileRow - base.tileRow
+						tileCol: nextTileCoord.tileCol - base.tileCol,
+						tileRow: nextTileCoord.tileRow - base.tileRow
 					};
 	
 					const magnitude = 
@@ -299,9 +323,9 @@ class enemyClass {
 
 					const unitVector = { 
 						tileCol : 
-					    	Math.round(pathVector.tileCol / magnitude),
+							magnitude > 0 ? Math.round(pathVector.tileCol / magnitude) : 0,
 						tileRow : 
-							Math.round(pathVector.tileRow / magnitude),
+							magnitude > 0 ? Math.round(pathVector.tileRow / magnitude) : 0,
 					}
 	
 					const direction = 
@@ -309,24 +333,31 @@ class enemyClass {
 							dir.move(unitVector.tileCol, unitVector.tileRow)
 						);
 
-					if (!direction) {
+					if (direction) {
+						this.pathDir = direction;
+					} else {
 						console.log("path not found");
-						return;
+						return false;
 					}
-
-					this.pathDir = direction;
 				}
 
-				pathData.frame++;
-				this.movementTimer = 1;
+				if (this.pathDir) {
+					pathData.frame++;
+					this.movementTimer = 2;
+					this.resetDirections();
+	
+					// move in the path's direction towards goal
+					this.moveNorth = this.pathDir.moveNorth;
+					this.moveEast = this.pathDir.moveEast;
+					this.moveSouth = this.pathDir.moveSouth;
+					this.moveWest = this.pathDir.moveWest;
 
-				// move in the path direction
-				this.resetDirections();
-
-				this.moveNorth = this.pathDir.moveNorth;
-				this.moveEast = this.pathDir.moveEast;
-				this.moveSouth = this.pathDir.moveSouth;
-				this.moveWest = this.pathDir.moveWest;
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				return true;
 			}
 		}
 	}
@@ -339,56 +370,47 @@ class enemyClass {
 			return;
 		} else {
 				if(this.movementTimer <= 0){
-				switch(whichDirection){
+					this.resetDirections();
+					this.movementTimer = Math.floor(Math.random() * 30);
+					switch(whichDirection){
 					case 0:
 					case DIR_N:
-						this.resetDirections();
 						this.moveNorth = true;					
-						this.movementTimer = 300;
 						break;
-					case DIR_NE:
-						this.resetDirections();
-						this.moveNorth = true;
-						this.moveWest = true;					
-						this.movementTimer = 300;
-					//	break;
+					// Changed and re-commented out non-animated movement until ready 
+					// Disabled non-animated for now. -- Vince McKeown 
+					// case DIR_NE:
+					// 	this.moveNorth = true;
+					// 	this.moveEast = true;					
+					// 	break;
 					case DIR_E:
-						this.resetDirections();
-						this.moveWest = true;
-						this.movementTimer = 300;
+						this.moveEast = true;
 						break;
-					case DIR_SE:
-						this.resetDirections();
-						this.moveWest = true;
-						this.moveSouth = true;
-						this.movementTimer = 300;
-					//	break;
+					// Changed and re-commented out non-animated movement until ready 
+					// Disabled non-animated for now. -- Vince McKeown 
+					// case DIR_SE:
+					// 	this.moveSouth = true;
+					// 	this.moveEast = true;
+					// 	break;
 					case DIR_S:
-						this.resetDirections();
 						this.moveSouth = true;
-						this.movementTimer = 300;
 						break;
-					case DIR_SW:
-						this.resetDirections();
-						this.moveSouth = true;
-						this.moveEast = true;
-						this.movementTimer = 300;
-					//	break;
+					// Changed and re-commented out non-animated movement until ready 
+					// Disabled non-animated for now. -- Vince McKeown 
+					// case DIR_SW:
+					// 	this.moveWest = true;
+					// 	this.moveSouth = true;
+					// 	break;
 					case DIR_W:
-						this.resetDirections();
-						this.moveEast = true;
-						this.movementTimer = 300;
+						this.moveWest = true;
 						break;
-					case DIR_NW:
-						this.resetDirections();
-						this.moveNorth = true;
-						this.moveEast = true;					
-						this.movementTimer = 300;
-					//	break;
+					// Disabled non-animated for now. -- Vince McKeown 
+					// case DIR_NW:
+					// 	this.moveNorth = true;
+					// 	this.moveWest = true;					
+					// 	break;
 					case DIR_NO:
 					default:
-						this.resetDirections();
-						this.movementTimer = 300;
 						break;
 				}
 			}
