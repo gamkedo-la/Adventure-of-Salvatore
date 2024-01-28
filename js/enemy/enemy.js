@@ -1,6 +1,7 @@
 const GRID_WEIGHT_INFLUENCE_FACTOR = 50000;
 const PATHFINDING_PATH_LIFETIME = 10;
 const PATHFINDING_MAX_SEARCH_LOOPS = 250;
+const RANDOM_MOVEMENT_TIMER_MAX = 12;
 
 const DIR_N = 1;
 const DIR_NE = 2;
@@ -371,7 +372,8 @@ class enemyClass {
 		} else {
 				if(this.movementTimer <= 0){
 					this.resetDirections();
-					this.movementTimer = Math.floor(Math.random() * 30);
+					this.movementTimer = 
+						Math.floor(Math.random() * RANDOM_MOVEMENT_TIMER_MAX);
 					switch(whichDirection){
 					case 0:
 					case DIR_N:
