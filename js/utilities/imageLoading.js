@@ -27,6 +27,7 @@ function loadImages() {
 			{varName: skeletonPic, theFile: "skeleton.png"},
 			{varName: blobPic, theFile: "blob.png"},
 			{varName: miniCyclopPic, theFile: "miniCyclop.png"},
+			{varName: roguePic, theFile: "rogue_wip.png"},
 			{varName: shadowPic, theFile: "shadow.png"},
 			{varName: feedbackGUIPic, theFile: "feedbackGUI.png"},
 			{varName: healthbarPic, theFile: "healthbar.png"},

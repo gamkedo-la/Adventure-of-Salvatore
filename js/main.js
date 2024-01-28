@@ -1,6 +1,7 @@
 //characters (Player, NPC's, Enemies)
 var playerOne = new warriorClass();
 var miniCyclopList = [];
+var rogueList = [];
 var blobList = [];
 var skeletonList = [];
 var entities = [playerOne];
@@ -8,6 +9,7 @@ var entities = [playerOne];
 function resetEnemyLists(){
 	miniCyclopList = [];
 	skeletonList = [];
+	rogueList = [];
 	blobList = [];
 	entities = [playerOne];
 }
@@ -95,6 +97,12 @@ function addMiniCyclop(){
 	entities.push(tempEnemy);
 }
 
+function addRogue(){
+    var tempEnemy = new rogue();
+	rogueList.push(tempEnemy);
+	entities.push(tempEnemy);
+}
+
 function addBlob(){
 	var tempEnemy = new blobClass();
 	blobList.push(tempEnemy);
@@ -123,6 +131,9 @@ function loadLevel(whichLevel) {
 	for(var i = 0; i < roomGrid.length; i++){
 		if(roomGrid[i] == TILE_MINICYCLOP){
 			addMiniCyclop();
+		}
+		if(roomGrid[i] == TILE_ROGUE){
+			addRogue();
 		} 
 		if(roomGrid[i] == TILE_BLOB){
 			addBlob();
@@ -147,6 +158,9 @@ function loadLevel(whichLevel) {
 	console.log("initializing "+skeletonList.length+" skeletons via loadlevel");
 	for(var i = 0; i < skeletonList.length; i++){
 		skeletonList[i].init(skeletonPic, skeletonNames[i], TILE_SKELETON);
+	}
+	for(var i = 0; i < rogueList.length; i++){
+		rogueList[i].init(roguePic, rogueNames[i], TILE_ROGUE);
 	}
 
 	console.log("Finish Load Level");
@@ -180,6 +194,14 @@ function checkAllPlayerAndEnemyCollisions(){
 		for(var ii = i+1; ii < miniCyclopList.length; ii++){
 			miniCyclopList[i].checkCollisionsAgainst(miniCyclopList[ii]);
 			miniCyclopList[i].checkCollisionsAgainst(playerOne);
+		}
+	}
+	//check Rogue
+	for(var i = 0; i < rogueList.length; i++){
+		playerOne.checkCollisionsAgainst(rogueList[i]);
+		for(var ii = i+1; ii < rogueList.length; ii++){
+			rogueList[i].checkCollisionsAgainst(rogueList[ii]);
+			rogueList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
 	//check Blobs

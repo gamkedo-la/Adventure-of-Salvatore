@@ -7,6 +7,7 @@ miniCyclopNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz",
 				"Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm", 
 				"Kiok", "Wrokx", "Fiog", "Goziord"];
 ratNames = [ "rat"];
+rogueNames = ["Artemis"];
 
 const GRID_WEIGHT_INFLUENCE_FACTOR = 50000;
 const PATHFINDING_PATH_LIFETIME = 10;
@@ -40,6 +41,7 @@ var camPanY = 0;
 var warriorPic = document.createElement("img");
 var warriorAttackingPic = document.createElement('img');
 var miniCyclopPic = document.createElement("img");
+var roguePic = document.createElement("img");
 var blobPic = document.createElement("img");
 var skeletonPic = document.createElement("img");
 var shadowPic = document.createElement("img");
