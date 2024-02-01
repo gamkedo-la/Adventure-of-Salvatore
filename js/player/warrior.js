@@ -17,6 +17,7 @@ function warriorClass() {
 	this.canMoveEast = true;
 	this.canMoveSouth = true;
 	this.canMoveWest = true;	
+	this.alive = true;
 	this.health = 4;
 	this.maxHealth = 4;
 	this.trapCoolDownTimer = 0;
@@ -380,26 +381,33 @@ function warriorClass() {
 	}
 		
 	this.draw = function(){
-		if(this.offSetHeight == 0 && !this.playerAttacking){ //player is standing still
-			let toAnimatePlayerNumber = getRndInteger(0, 1000);
-			if(toAnimatePlayerNumber > 995){
-				this.animatePlayerStandingStill = true;
+		if(this.alive){
+			if(this.offSetHeight == 0 && !this.playerAttacking){ //player is standing still
+				let toAnimatePlayerNumber = getRndInteger(0, 1000);
+				if(toAnimatePlayerNumber > 995){
+					this.animatePlayerStandingStill = true;
+				}
+				if(this.animatePlayerStandingStill){
+					this.frames = 8;
+					this.animateWarrior()
+				}
+			} else if (this.playerAttacking){ //player not standing still and attacking
+				this.myBitmap = warriorAttackingPic;
+				this.width = 80;
+				this.height = 60;
+				this.frames = 2;
+				this.offSetHeight = this.offSetHeight - this.height
+				this.animateWarrior();
+		
+			} else { //player is moving and NOT attacking
+				this.frames = 3;
+				this.animateWarrior();
 			}
-			if(this.animatePlayerStandingStill){
-				this.frames = 8;
-				this.animateWarrior()
-			}
-		} else if (this.playerAttacking){ //player not standing still and attacking
-			this.myBitmap = warriorAttackingPic;
-			this.width = 80;
-			this.height = 60;
-			this.frames = 2;
-			this.offSetHeight = this.offSetHeight - this.height
-			this.animateWarrior();
-		} else { //player is moving and NOT attacking
-			this.frames = 3;
-			this.animateWarrior();
-		}
+		} else {
+			this.frames = 9;
+			this.animateDeath();
+		} 
+
 		gameCoordToIsoCoord(this.x,this.y);
 		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height + ISO_SHADOW_OFFSET_Y);
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
@@ -451,6 +459,23 @@ function warriorClass() {
 			this.width = 40;
 			this.height = 40;
 			this.myBitmap = warriorPic;
+		}
+	}
+
+	this.animateDeath = function(){
+		this.offSetHeight = 40 * 9;
+		this.myBitmap = warriorPic;
+		this.width = 40;
+		this.height = 40;
+		this.frames = 6;
+
+		this.drawTimer++;
+		if(this.drawTimer == 16){
+			this.offSetWidth = this.offSetWidth + this.width;
+			this.drawTimer = 0;
+		}
+		if(this.offSetWidth > (this.frames * this.width)){
+			this.offSetWidth = 40 * 4;		
 		}
 	}
 		
