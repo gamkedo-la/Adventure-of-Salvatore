@@ -94,255 +94,262 @@ function warriorClass() {
 	}	
 	 
 	this.movement = function() {
-		if(this.swordCharge){
-			this.swordChargeTimer++;
-			if(this.swordChargeTimer >= 50){
-				this.swordReady = true;
-				this.swordCharge = false;
-				this.swordChargeTimer = 0;
-			}
-		}
-		
-		if(this.speedIncrease){
-			this.playerMovementSpeed = 6;
-			this.speedIncreaseTimer--;
-			this.displaySpeedIncreaseTimer = true;
-			if(this.speedIncreaseTimer == 0){
-				this.speedIncrease = false;
-				this.displaySpeedIncreaseTimer = false;
-			}
+		if(this.health <= 0){
+			this.alive = false;
 		} else {
-			this.playerMovementSpeed = 3;
+			this.alive = true;
 		}
-
-		var nextX = this.x; 
-		var nextY = this.y; 
-        
-        // NOTE: this.canMove* is false when blocked by entities but not walls!
-        // so we look ahead a little
-		var aheadX = this.x; 
-		var aheadY = this.y; 
-
-		if(this.keyHeld_North && this.keyHeld_West){
-			nextX -= this.playerMovementSpeed;
-            aheadX -= PLAYER_COLLISION_RADIUS;
-			this.offSetHeight = this.height * 6;
-			this.miniMapX -= this.playerMovementSpeed/15;
-		} else if(this.keyHeld_North && this.keyHeld_East){
-			nextY -= this.playerMovementSpeed;
-            aheadY -= PLAYER_COLLISION_RADIUS;
-			this.offSetHeight = this.height * 4;
-			this.miniMapY -= this.playerMovementSpeed/15;
-		} else if(this.keyHeld_South && this.keyHeld_West){
-			nextY += this.playerMovementSpeed;
-			aheadY += PLAYER_COLLISION_RADIUS;
-			this.offSetHeight = this.height * 8;
-			this.miniMapY += this.playerMovementSpeed/15;
-		} else if(this.keyHeld_South && this.keyHeld_East){
-			nextX += this.playerMovementSpeed;
-            aheadX += PLAYER_COLLISION_RADIUS;
-			this.offSetHeight = this.height * 2;
-			this.miniMapX += this.playerMovementSpeed/15;
-		} else if(this.keyHeld_North && this.canMoveNorth){
-			nextX -= this.playerMovementSpeed * Math.cos(45); 
-			nextY -= this.playerMovementSpeed * Math.sin(45);
-			aheadX -= PLAYER_COLLISION_RADIUS * Math.cos(45); 
-			aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
-			this.offSetHeight = this.height * 5;
-			collisionY = nextY;
-		} else if(this.keyHeld_East && this.canMoveEast){
-			nextX += this.playerMovementSpeed * Math.cos(45); 
-			nextY -= this.playerMovementSpeed * Math.sin(45);
-			aheadX += PLAYER_COLLISION_RADIUS * Math.cos(45); 
-			aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
-			this.offSetHeight = this.height * 3 
-			this.miniMapX += this.playerMovementSpeed/10;
-			this.miniMapY -= this.playerMovementSpeed/10;
-		} else if(this.keyHeld_South && this.canMoveSouth){
-			nextX += this.playerMovementSpeed * Math.cos(45); 
-			nextY += this.playerMovementSpeed * Math.sin(45);
-			aheadX += PLAYER_COLLISION_RADIUS * Math.cos(45); 
-			aheadY += PLAYER_COLLISION_RADIUS * Math.sin(45);
-			this.offSetHeight = this.height * 1;
-			this.miniMapX += this.playerMovementSpeed/10;
-			this.miniMapY += this.playerMovementSpeed/10; 
-		} else if(this.keyHeld_West && this.canMoveWest){
-			nextX -= this.playerMovementSpeed * Math.cos(45);
-			nextY += this.playerMovementSpeed * Math.sin(45);
-			aheadX -= PLAYER_COLLISION_RADIUS * Math.cos(45);
-			aheadY += PLAYER_COLLISION_RADIUS * Math.sin(45);
-			this.offSetHeight = this.height * 7 
-			this.miniMapX += this.playerMovementSpeed/10;
-			this.miniMapY += this.playerMovementSpeed/10;
-		} else {
-			this.offSetHeight = 0;
-		}
-		
-        // fixme: the player might not actually move to nextX/Y
-        this.miniMapX = nextX;
-		this.miniMapY = nextY;
-		
-		var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
-        var walkIntoTileType = roomGrid[walkIntoTileIndex];
-        if (walkIntoTileType==undefined) walkIntoTileType = TILE_WALL;
-        
-        var lookAheadTileIndex = getTileIndexAtPixelCoord(aheadX,aheadY);
-        var lookAheadTileType = roomGrid[lookAheadTileIndex];
-        
-        //console.log("walkInto "+nextX+","+nextY+"="+walkIntoTileType+" lookahead "+aheadX+","+aheadY+"="+lookAheadTileType);
-        var blockedUpAhead = UNWALKABLE_TILES.includes(lookAheadTileType);
-		
-		switch(walkIntoTileType) {
-			case TILE_ROAD:
-			case TILE_RED_CARPET:
-			case TILE_SPIKES_UNARMED:	
-			case TILE_PITTRAP_UNARMED:
-			case TILE_GREEN_DOOR_OPEN:
-			case TILE_GREEN_DOOR_2_OPEN:
-			case TILE_BLUE_DOOR_OPEN:
-			case TILE_BLUE_DOOR_2_OPEN:
-			case TILE_WOOD_DOOR_OPEN:	
-			case TILE_WOOD_DOOR_2_OPEN:
-			case TILE_WALL_3:
-                if (!blockedUpAhead) {
-                    // the path in not blocked: update player position
-				    this.x = nextX;
-				    this.y = nextY;
-                }
-				break;
-			case TILE_WOOD_DOOR:
-					roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_OPEN;
-				break;
-			case TILE_WOOD_DOOR_2:
-				roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_2_OPEN;
-			break;
-			case TILE_YELLOW_DOOR:
-				if(this.yellowKeysHeld > 0){
-					this.yellowKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_OPEN;
+		if(this.alive){
+			if(this.swordCharge){
+				this.swordChargeTimer++;
+				if(this.swordChargeTimer >= 50){
+					this.swordReady = true;
+					this.swordCharge = false;
+					this.swordChargeTimer = 0;
 				}
-				break;
-			case TILE_YELLOW_DOOR_2:
-				if(this.yellowKeysHeld > 0){
-					this.yellowKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_2_OPEN;
+			}
+			
+			if(this.speedIncrease){
+				this.playerMovementSpeed = 6;
+				this.speedIncreaseTimer--;
+				this.displaySpeedIncreaseTimer = true;
+				if(this.speedIncreaseTimer == 0){
+					this.speedIncrease = false;
+					this.displaySpeedIncreaseTimer = false;
 				}
+			} else {
+				this.playerMovementSpeed = 3;
+			}
+
+			var nextX = this.x; 
+			var nextY = this.y; 
+			
+			// NOTE: this.canMove* is false when blocked by entities but not walls!
+			// so we look ahead a little
+			var aheadX = this.x; 
+			var aheadY = this.y; 
+
+			if(this.keyHeld_North && this.keyHeld_West){
+				nextX -= this.playerMovementSpeed;
+				aheadX -= PLAYER_COLLISION_RADIUS;
+				this.offSetHeight = this.height * 6;
+				this.miniMapX -= this.playerMovementSpeed/15;
+			} else if(this.keyHeld_North && this.keyHeld_East){
+				nextY -= this.playerMovementSpeed;
+				aheadY -= PLAYER_COLLISION_RADIUS;
+				this.offSetHeight = this.height * 4;
+				this.miniMapY -= this.playerMovementSpeed/15;
+			} else if(this.keyHeld_South && this.keyHeld_West){
+				nextY += this.playerMovementSpeed;
+				aheadY += PLAYER_COLLISION_RADIUS;
+				this.offSetHeight = this.height * 8;
+				this.miniMapY += this.playerMovementSpeed/15;
+			} else if(this.keyHeld_South && this.keyHeld_East){
+				nextX += this.playerMovementSpeed;
+				aheadX += PLAYER_COLLISION_RADIUS;
+				this.offSetHeight = this.height * 2;
+				this.miniMapX += this.playerMovementSpeed/15;
+			} else if(this.keyHeld_North && this.canMoveNorth){
+				nextX -= this.playerMovementSpeed * Math.cos(45); 
+				nextY -= this.playerMovementSpeed * Math.sin(45);
+				aheadX -= PLAYER_COLLISION_RADIUS * Math.cos(45); 
+				aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
+				this.offSetHeight = this.height * 5;
+				collisionY = nextY;
+			} else if(this.keyHeld_East && this.canMoveEast){
+				nextX += this.playerMovementSpeed * Math.cos(45); 
+				nextY -= this.playerMovementSpeed * Math.sin(45);
+				aheadX += PLAYER_COLLISION_RADIUS * Math.cos(45); 
+				aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
+				this.offSetHeight = this.height * 3 
+				this.miniMapX += this.playerMovementSpeed/10;
+				this.miniMapY -= this.playerMovementSpeed/10;
+			} else if(this.keyHeld_South && this.canMoveSouth){
+				nextX += this.playerMovementSpeed * Math.cos(45); 
+				nextY += this.playerMovementSpeed * Math.sin(45);
+				aheadX += PLAYER_COLLISION_RADIUS * Math.cos(45); 
+				aheadY += PLAYER_COLLISION_RADIUS * Math.sin(45);
+				this.offSetHeight = this.height * 1;
+				this.miniMapX += this.playerMovementSpeed/10;
+				this.miniMapY += this.playerMovementSpeed/10; 
+			} else if(this.keyHeld_West && this.canMoveWest){
+				nextX -= this.playerMovementSpeed * Math.cos(45);
+				nextY += this.playerMovementSpeed * Math.sin(45);
+				aheadX -= PLAYER_COLLISION_RADIUS * Math.cos(45);
+				aheadY += PLAYER_COLLISION_RADIUS * Math.sin(45);
+				this.offSetHeight = this.height * 7 
+				this.miniMapX += this.playerMovementSpeed/10;
+				this.miniMapY += this.playerMovementSpeed/10;
+			} else {
+				this.offSetHeight = 0;
+			}
+			
+			// fixme: the player might not actually move to nextX/Y
+			this.miniMapX = nextX;
+			this.miniMapY = nextY;
+			
+			var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
+			var walkIntoTileType = roomGrid[walkIntoTileIndex];
+			if (walkIntoTileType==undefined) walkIntoTileType = TILE_WALL;
+			
+			var lookAheadTileIndex = getTileIndexAtPixelCoord(aheadX,aheadY);
+			var lookAheadTileType = roomGrid[lookAheadTileIndex];
+			
+			//console.log("walkInto "+nextX+","+nextY+"="+walkIntoTileType+" lookahead "+aheadX+","+aheadY+"="+lookAheadTileType);
+			var blockedUpAhead = UNWALKABLE_TILES.includes(lookAheadTileType);
+			
+			switch(walkIntoTileType) {
+				case TILE_ROAD:
+				case TILE_RED_CARPET:
+				case TILE_SPIKES_UNARMED:	
+				case TILE_PITTRAP_UNARMED:
+				case TILE_GREEN_DOOR_OPEN:
+				case TILE_GREEN_DOOR_2_OPEN:
+				case TILE_BLUE_DOOR_OPEN:
+				case TILE_BLUE_DOOR_2_OPEN:
+				case TILE_WOOD_DOOR_OPEN:	
+				case TILE_WOOD_DOOR_2_OPEN:
+				case TILE_WALL_3:
+					if (!blockedUpAhead) {
+						// the path in not blocked: update player position
+						this.x = nextX;
+						this.y = nextY;
+					}
+					break;
+				case TILE_WOOD_DOOR:
+						roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_OPEN;
+					break;
+				case TILE_WOOD_DOOR_2:
+					roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_2_OPEN;
 				break;
-			case TILE_RED_DOOR:
-				if(this.redKeysHeld > 0){
-					this.redKeysHeld--;
+				case TILE_YELLOW_DOOR:
+					if(this.yellowKeysHeld > 0){
+						this.yellowKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_OPEN;
+					}
+					break;
+				case TILE_YELLOW_DOOR_2:
+					if(this.yellowKeysHeld > 0){
+						this.yellowKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_2_OPEN;
+					}
+					break;
+				case TILE_RED_DOOR:
+					if(this.redKeysHeld > 0){
+						this.redKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					}
+					break;
+				case TILE_BLUE_DOOR:
+					if(this.blueKeysHeld > 0){
+						this.blueKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_OPEN;
+					}
+					break;
+				case TILE_BLUE_DOOR_2:
+					if(this.blueKeysHeld > 0){
+						this.blueKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_2_OPEN;
+					}
+					break;
+				case TILE_GREEN_DOOR:
+					if(this.greenKeysHeld > 0){
+						this.greenKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_OPEN;
+					}
+					break;
+				case TILE_GREEN_DOOR_2:
+					if(this.greenKeysHeld > 0){
+						this.greenKeysHeld--;
+						roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_2_OPEN;
+					}
+					break;	
+				case TILE_TREASURE:	
+					this.yellowKeysHeld--;
 					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;
+				case TILE_KEY_YELLOW:	
+					this.yellowKeysHeld++;			
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;
+				case TILE_KEY_BLUE:	
+					this.blueKeysHeld++;			
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;	
+				case TILE_KEY_GREEN:	
+					this.greenKeysHeld++;			
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;
+				case TILE_KEY_RED:
+					this.redKeysHeld++;			
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;				
+				case TILE_FINISH:
+				case TILE_STAIRS_DOWN:
+					console.log("Stair 1");
+					loadLevel(levelOne);
+					break;
+				case TILE_STAIRS:
+					console.log("Stair 2");
+					loadLevel(levelTwo);
+					break;
+				case TILE_STAIRS_3:
+					console.log("Stair 3");
+					loadLevel(levelThree);
+					break;			
+				case TILE_PITTRAP_ARMED:
+					this.takeDamageFromTrap(1);
+					roomGrid[walkIntoTileIndex] = TILE_PITTRAP_UNARMED;
+					crashIntoConeSound.play();
+					break;
+				case TILE_SPIKES_ARMED:
+					this.takeDamageFromTrap(1);
+					roomGrid[walkIntoTileIndex] = TILE_SPIKES_UNARMED;
+					crashIntoConeSound.play();
+					break;
+				case TILE_HEALING_POTION:
+					this.healthPotion++;
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;
+				case TILE_SPEED_POTION:
+					this.speedPotion++;
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;
+				case TILE_COIN:
+					this.coins++;
+					roomGrid[walkIntoTileIndex] = TILE_ROAD;
+					break;
+				case TILE_WALL_LEVER_1:
+					if(!this.leverCoolDownActive){
+						roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_2;
+						console.log("Walked in Lever 1");
+						this.leverCoolDownActive = true;
+						roomGrid[884] = TILE_WALL;
+					}
+					break;
+				case TILE_WALL_LEVER_2:
+					if(!this.leverCoolDownActive){
+						roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_1;
+						console.log("Walked in Lever 2");
+						this.leverCoolDownActive = true;
+						roomGrid[884] = TILE_WALL_3;
+					}
+					break;
+				case TILE_WALL:
+				case TILE_WALL_WITH_TORCH:
+				case TILE_TABLE:
+				case TILE_BOOKSHELF:
+				default:
+					// do not update player position: we are blocked
+					break;
+			} // END OF SWITCH CASE		
+			this.trapCoolDown();
+			if(this.leverCoolDownActive){
+				this.leverCoolDown++;
+				if(this.leverCoolDown == 100){
+					this.leverCoolDown = 0;
+					this.leverCoolDownActive = false
 				}
-				break;
-			case TILE_BLUE_DOOR:
-				if(this.blueKeysHeld > 0){
-					this.blueKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_OPEN;
-				}
-				break;
-			case TILE_BLUE_DOOR_2:
-				if(this.blueKeysHeld > 0){
-					this.blueKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_2_OPEN;
-				}
-				break;
-			case TILE_GREEN_DOOR:
-				if(this.greenKeysHeld > 0){
-					this.greenKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_OPEN;
-				}
-				break;
-			case TILE_GREEN_DOOR_2:
-				if(this.greenKeysHeld > 0){
-					this.greenKeysHeld--;
-					roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_2_OPEN;
-				}
-				break;	
-			case TILE_TREASURE:	
-				this.yellowKeysHeld--;
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;
-			case TILE_KEY_YELLOW:	
-				this.yellowKeysHeld++;			
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;
-			case TILE_KEY_BLUE:	
-				this.blueKeysHeld++;			
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;	
-			case TILE_KEY_GREEN:	
-				this.greenKeysHeld++;			
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;
-			case TILE_KEY_RED:
-				this.redKeysHeld++;			
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;				
-			case TILE_FINISH:
-			case TILE_STAIRS_DOWN:
-				console.log("Stair 1");
-				loadLevel(levelOne);
-				break;
-			case TILE_STAIRS:
-				console.log("Stair 2");
-				loadLevel(levelTwo);
-				break;
-			case TILE_STAIRS_3:
-				console.log("Stair 3");
-				loadLevel(levelThree);
-				break;			
-			case TILE_PITTRAP_ARMED:
-				this.takeDamageFromTrap(1);
-				roomGrid[walkIntoTileIndex] = TILE_PITTRAP_UNARMED;
-				crashIntoConeSound.play();
-				break;
-			case TILE_SPIKES_ARMED:
-				this.takeDamageFromTrap(1);
-				roomGrid[walkIntoTileIndex] = TILE_SPIKES_UNARMED;
-				crashIntoConeSound.play();
-				break;
-			case TILE_HEALING_POTION:
-				this.healthPotion++;
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;
-			case TILE_SPEED_POTION:
-				this.speedPotion++;
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;
-			case TILE_COIN:
-				this.coins++;
-				roomGrid[walkIntoTileIndex] = TILE_ROAD;
-				break;
-			case TILE_WALL_LEVER_1:
-				if(!this.leverCoolDownActive){
-					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_2;
-					console.log("Walked in Lever 1");
-					this.leverCoolDownActive = true;
-					roomGrid[884] = TILE_WALL;
-				}
-				break;
-			case TILE_WALL_LEVER_2:
-				if(!this.leverCoolDownActive){
-					roomGrid[walkIntoTileIndex] = TILE_WALL_LEVER_1;
-					console.log("Walked in Lever 2");
-					this.leverCoolDownActive = true;
-					roomGrid[884] = TILE_WALL_3;
-				}
-				break;
-			case TILE_WALL:
-			case TILE_WALL_WITH_TORCH:
-			case TILE_TABLE:
-			case TILE_BOOKSHELF:
-			default:
-                // do not update player position: we are blocked
-				break;
-		} // END OF SWITCH CASE		
-		this.trapCoolDown();
-		if(this.leverCoolDownActive){
-			this.leverCoolDown++;
-			if(this.leverCoolDown == 100){
-				this.leverCoolDown = 0;
-				this.leverCoolDownActive = false
 			}
 		}
 	};	// END OF THIS.MOVEMENT
