@@ -27,11 +27,11 @@ function shotClass(){
 		var playerLeftOfUs = playerOne.x < enemy.x;
 		var playerTopOfUs = playerOne.y < enemy.y;
 		var playerBottomOfUs = playerOne.y > enemy.y;
-		console.log(playerTopOfUs, playerRightOfUs, playerBottomOfUs, playerLeftOfUs  )
+		console.log(enemy.moveNorth, enemy.moveEast, enemy.moveSouth, enemy.moveWest  )
 
 		if(enemy.moveNorth && enemy.moveEast){
 			this.xv = 0;
-			this.yv = SHOT_SPEED;
+			this.yv = -SHOT_SPEED;
 			this.x = enemy.x;
 			this.y = enemy.y;
 			didFire = playerTopOfUs;
@@ -58,7 +58,7 @@ function shotClass(){
 			this.yv = -SHOT_SPEED 
 			this.x = enemy.x-45;
 			this.y = enemy.y-60;
-			didFire = playerLeftOfUs && playerTopOfUs;
+			didFire = playerRightOfUs && playerTopOfUs;
 		} else if (enemy.moveEast){
 			this.xv = SHOT_SPEED 
 			this.yv = -SHOT_SPEED 
@@ -70,7 +70,7 @@ function shotClass(){
 			this.yv = SHOT_SPEED 
 			this.x = enemy.x-45;
 			this.y = enemy.y-20;
-			didFire = playerRightOfUs && playerBottomOfUs;
+			didFire = playerLeftOfUs && playerBottomOfUs;
 		} else if (enemy.moveWest){
 			this.xv = -SHOT_SPEED 
 			this.yv = SHOT_SPEED 
