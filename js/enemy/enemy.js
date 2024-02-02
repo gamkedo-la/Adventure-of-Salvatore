@@ -438,12 +438,10 @@ class enemyClass {
 	}
 
 	rangedAttack(){
-		crashIntoConeSound.play();
 
 //		if(this.myShotList.length < this.totalShots){
 			let tempShot = new shotClass();
-			tempShot.shootFrom(this);
-			this.myShotList.push(tempShot);
+			tempShot.shootFrom(this, true);
 //		} 
 	}
 
