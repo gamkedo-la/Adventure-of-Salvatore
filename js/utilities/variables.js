@@ -44,6 +44,7 @@ var miniCyclopPic = document.createElement("img");
 var roguePic = document.createElement("img");
 var blobPic = document.createElement("img");
 var skeletonPic = document.createElement("img");
+var kregPic = document.createElement("img");
 var shadowPic = document.createElement("img");
 var feedbackGUIPic = document.createElement("img");
 var healthbarPic = document.createElement("img");

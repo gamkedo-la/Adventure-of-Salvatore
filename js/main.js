@@ -4,6 +4,7 @@ var miniCyclopList = [];
 var rogueList = [];
 var blobList = [];
 var skeletonList = [];
+var kregList = [];
 var entities = [playerOne];
 
 function resetEnemyLists(){
@@ -115,6 +116,12 @@ function addSkeleton(){
 	entities.push(tempEnemy);
 }
 
+function addKreg(){
+	var tempEnemy = new kregClass();
+	kregList.push(tempEnemy);
+	entities.push(tempEnemy);
+}
+
 function nextLevel() {
 	levelNow++;
 	if(levelNow > levelList.length) {
@@ -141,6 +148,9 @@ function loadLevel(whichLevel) {
 		if(roomGrid[i] == TILE_SKELETON){
 			addSkeleton();
 		}
+		if(roomGrid[i] == TILE_KREG){
+			addKreg();
+		}
 	}
 
     console.log('testing OOP!');
@@ -161,6 +171,9 @@ function loadLevel(whichLevel) {
 	}
 	for(var i = 0; i < rogueList.length; i++){
 		rogueList[i].init(roguePic, rogueNames[i], TILE_ROGUE);
+	}
+	for(var i = 0; i < kregList.length; i++){
+		kregList[i].init(kregPic, kregNames[i], TILE_KREG);
 	}
 
 	console.log("Finish Load Level");
@@ -202,6 +215,14 @@ function checkAllPlayerAndEnemyCollisions(){
 		for(var ii = i+1; ii < rogueList.length; ii++){
 			rogueList[i].checkCollisionsAgainst(rogueList[ii]);
 			rogueList[i].checkCollisionsAgainst(playerOne);
+		}
+	}
+	//check Kreg
+	for(var i = 0; i < kregList.length; i++){
+		playerOne.checkCollisionsAgainst(kregList[i]);
+		for(var ii = i+1; ii < kregList.length; ii++){
+			kregList[i].checkCollisionsAgainst(kregList[ii]);
+			kregList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
 	//check Blobs

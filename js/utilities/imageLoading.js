@@ -25,6 +25,7 @@ function loadImages() {
 			{varName: warriorPic, theFile: "warrior.png"},
 			{varName: warriorAttackingPic, theFile: "warriorAttackAnimation.png"},
 			{varName: skeletonPic, theFile: "skeleton.png"},
+			{varName: kregPic, theFile: "kreg.png"},
 			{varName: blobPic, theFile: "blob.png"},
 			{varName: miniCyclopPic, theFile: "miniCyclop.png"},
 			{varName: roguePic, theFile: "rogue_wip.png"},

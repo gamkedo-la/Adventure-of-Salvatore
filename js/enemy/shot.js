@@ -27,7 +27,6 @@ function shotClass(){
 		var playerLeftOfUs = playerOne.x < enemy.x;
 		var playerTopOfUs = playerOne.y < enemy.y;
 		var playerBottomOfUs = playerOne.y > enemy.y;
-		console.log(enemy.moveNorth, enemy.moveEast, enemy.moveSouth, enemy.moveWest  )
 
 		if(enemy.moveNorth && enemy.moveEast){
 			this.xv = 0;
