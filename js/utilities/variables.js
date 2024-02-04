@@ -47,6 +47,7 @@ var skeletonPic = document.createElement("img");
 var kregPic = document.createElement("img");
 var shadowPic = document.createElement("img");
 var feedbackGUIPic = document.createElement("img");
+var coinGUIPic = document.createElement("img");
 var healthbarPic = document.createElement("img");
 var healthPic = document.createElement("img");
 var rockBulletPic = document.createElement("img");
@@ -151,5 +152,8 @@ var liveGame = true;
 var pauseScreen = false;
 var inventoryScreen = false;
 var mainMenu = false;
+
+var feedbacktoPlayerLine1 = "You have arrived at Castle Rocky."
+var feedbacktoPlayerLine2 = "Clear the castle to claim reward."
 
 

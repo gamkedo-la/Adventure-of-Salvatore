@@ -154,7 +154,8 @@ function drawUserInterface(){
 	canvasContext.drawImage(guiButtonPic,canvas.width - 120,525);
 	colorText("MAP", canvas.width - 90, 547, 'white', '18px serif');
 	canvasContext.drawImage(feedbackGUIPic,canvas.width - 335,538);
-	colorText("Feedback to player", canvas.width - 315, 555, 'BLACK', '12px serif');
+	colorText(feedbacktoPlayerLine1, canvas.width - 315, 555, 'BLACK', '12px serif');
+	colorText(feedbacktoPlayerLine2, canvas.width - 315, 575, 'BLACK', '12px serif');
 	
 	let startX = 150
 	let startY = 561
@@ -185,7 +186,8 @@ function drawUserInterface(){
 	for(var i = 0; i < playerOne.health; i++){
 		canvasContext.drawImage(healthPic, healthBarHolderX +25 + (i*9),healthBarHolderY);
 	}
-	colorText("Coins: " + playerOne.coins, canvas.width - 100, 585, 'BLACK', '16px serif');
+	canvasContext.drawImage(coinGUIPic, canvas.width - 120,561);
+	colorText(playerOne.coins, canvas.width - 60, 585, 'white', '16px serif');
 	if(displayQuickKeysOn){
 		displayQuickKeys()
 	};

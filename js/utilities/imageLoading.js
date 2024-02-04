@@ -32,6 +32,7 @@ function loadImages() {
 			{varName: shadowPic, theFile: "shadow.png"},
 			{varName: feedbackGUIPic, theFile: "feedbackGUI.png"},
 			{varName: healthbarPic, theFile: "healthbar.png"},
+			{varName: coinGUIPic, theFile: "GUI Coins.png"},
 			{varName: healthPic, theFile: "health.png"},
 			{varName: rockBulletPic, theFile: "rockBullet.png"},
             {varName: vignetteBorderPic, theFile: "vignetteBorder.png"},
