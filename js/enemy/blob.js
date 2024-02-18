@@ -1,10 +1,10 @@
-blobClass.prototype = new enemyClass();
-function blobClass() {
-	this.canUseRangeAttack = false;
-
+class blobClass extends enemyClass {
+	canUseRangeAttack = false;
+	canUseMeleeAttack = true;
 	
-	this.superClassReset = this.reset;
-	this.reset  = function() {
+	superClassReset = super.enemyReset;
+	reset = function() {
+		this.superClassReset();
 		this.speed = 2;
 		this.hitPoints = this.maxHitPoints;
 		this.width = 50; 
@@ -14,20 +14,21 @@ function blobClass() {
 		this.offSetWidth = 0;
 		this.offSetHeight = 0;
 		this.canUseRangeAttack = false;
+		this.canUseMeleeAttack = true;
 	}
 					
-	this.superClassInitialize = this.init;
-	this.init = function(whichGraphic, whichName, whichTile) {
+	superClassInitialize = super.init;
+	init = function(whichGraphic, whichName, whichTile) {
 		this.superClassInitialize(whichGraphic, whichName, whichTile);		
 		this.reset();
 	}	
 		
-	this.superClassMove = this.movement;
-	this.movement = function() {
+	superClassMove = super.movement;
+	movement = function() {
 		this.superClassMove();
 	}
 	
-	this.draw = function(){
+	draw = function(){
 		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
 			isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
 	}

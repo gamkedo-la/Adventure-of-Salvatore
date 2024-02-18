@@ -233,7 +233,7 @@ function checkAllPlayerAndEnemyCollisions(){
 			blobList[i].checkCollisionsAgainst(playerOne);
 		}
 	}
-	//check Blobs
+	//check Skeletons
 	for(var i = 0; i < skeletonList.length; i++){
 		playerOne.checkCollisionsAgainst(skeletonList[i]);
 		for(var ii = i+1; ii < skeletonList.length; ii++){

@@ -33,7 +33,7 @@ function rockBulletClass(xPos, yPos){
 	this.moveEast = false;
 	this.moveSouth = true;
 	this.moveWest = false;
-	this.moveNorth = true;
+	this.canMoveNorth = true;
 	this.canMoveEast = true;
 	this.canMoveSouth = true;
 	this.canMoveWest = true;

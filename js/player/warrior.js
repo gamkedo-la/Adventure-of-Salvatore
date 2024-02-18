@@ -20,8 +20,9 @@ function warriorClass() {
 	this.alive = true;
 	this.health = 4;
 	this.maxHealth = 4;
-	this.trapCoolDownTimer = 0;
-	this.trapCoolDownCounter = 0;
+	this.damageCoolDownTimer = true;
+	this.damageCoolDownCounter = 0;
+
 	this.frames = 8;
 	this.drawTimer = 0;
 	this.animatePlayerStandingStill = false;
@@ -43,7 +44,7 @@ function warriorClass() {
 	this.swordCharge = false;
 	this.swordChargeTimer = 0;
 	this.playerAttacking = false;
-	
+
 	this.setupControls = function(
             northKey,eastKey,southKey,westKey,swordKey,
             northKey2,eastKey2,southKey2,westKey2,swordKey2) {
@@ -352,6 +353,7 @@ function warriorClass() {
 					break;
 			} // END OF SWITCH CASE		
 			this.trapCoolDown();
+			this.damageCoolDown();
 			if(this.leverCoolDownActive){
 				this.leverCoolDown++;
 				if(this.leverCoolDown == 100){
@@ -386,10 +388,13 @@ function warriorClass() {
 			this.canMoveWest = true;
 		}
 	};
-	
+
 	this.collisionTest = function(otherHumanoid){
-		if(	this.x > otherHumanoid.x - 20 && this.x < otherHumanoid.x + 20 &&
-			this.y > otherHumanoid.y - 20 && this.y < otherHumanoid.y + 20){
+		let wMod = Math.max(20, otherHumanoid.width/2);
+		let hMod = Math.max(20, otherHumanoid.height/2);
+
+		if(	this.x > otherHumanoid.x - wMod && this.x < otherHumanoid.x + wMod &&
+			this.y > otherHumanoid.y - hMod && this.y < otherHumanoid.y + hMod){
 				return true;
 		}
 		return false;
@@ -496,20 +501,30 @@ function warriorClass() {
 		
 	//this delivers damage to the player when setting off a trap
 	this.takeDamageFromTrap = function(howMuchDamage){
-		if(this.trapCoolDownCounter == 0){
+		this.takeDamage(howMuchDamage);
+	}
+
+	//this delivers damage
+	this.takeDamage = function(howMuchDamage){
+		if(this.damageCoolDownCounter == 0){
 			this.health = this.health - howMuchDamage;
 		}
-		trapCoolDownTimer = true;
+		damageCoolDownTimer = true;
 	}
 	
 	//this is used to keep traps from constantly causing damage to the player
 	this.trapCoolDown = function(){
-		if(this.trapCoolDownTimer == true){
-			this.trapCoolDownCounter++
+		this.damageCoolDown(TRAP_COOL_DOWN_DELAY);
+	}
+
+	//this is used to keep damage from occuring too frequently
+	this.damageCoolDown = function(coolDownDelay = DAMAGE_RECEIVED_DELAY){
+		if(this.damageCoolDownTimer == true){
+			this.damageCoolDownCounter++
 		}
-		if(this.trapCoolDownCounter == 120){
-			this.trapCoolDownCounter = 0;
-			this.trapCoolDownTimer = false;
+		if(this.damageCoolDownCounter == coolDownDelay){
+			this.damageCoolDownCounter = 0;
+			this.damageCoolDownTimer = false;
 		}
 	}
 

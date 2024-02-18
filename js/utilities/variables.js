@@ -34,6 +34,14 @@ const PLAYER_COLLISION_RADIUS = 20; // don't stand too close to things (avoid wa
 const SHOT_SPEED = 6.0;
 const SHOT_LIFE = 30;
 const SHOT_DISPLAY_RADIUS = 2.0;
+const MELEE_ATTACK_SPEED = 8.0;
+const MELEE_ATTACK_LIFE = 3;
+const ATTACK_DEFAULT_LIFE = 0;
+const TRAP_COOL_DOWN_DELAY = 120;
+const DAMAGE_RECEIVED_DELAY = 120;
+const MELEE_ATTACK_DELAY = 80;
+const RANGE_ATTACK_DELAY = 60;
+const DAMAGE_DEFAULT = 1;
 
 var camPanX = 0;
 var camPanY = 0;
@@ -58,6 +66,8 @@ var guiPotionHolderPic = document.createElement("img");
 var guiCompassPic = document.createElement("img");
 var itemBackgroundPic = document.createElement("img");
 var worldMapPic = document.createElement("img");
+var meleeAttackPic = document.createElement("img");
+
 
 var vignetteBorderPic = document.createElement("img");
 const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is

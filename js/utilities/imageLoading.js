@@ -43,6 +43,7 @@ function loadImages() {
 			{varName: guiCompassPic, theFile: "compass.png"},
 			{varName: itemBackgroundPic, theFile: "itemBackground.png"},
             {varName: worldMapPic, theFile: "world_map.png"},
+			{varName: meleeAttackPic, theFile: "meleeHitSpark.png"},
 	
 			{trackType: TILE_ROAD, theFile: "track_road.png"},
 			{trackType: TILE_WALL, theFile:  "track_wall.png"},	

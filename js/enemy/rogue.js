@@ -1,16 +1,18 @@
 class rogue extends enemyClass { 
-	
     constructor() {
         console.log("Rogue constructor!");
         super(); // run enemyClass constructor first
         this.maxHealth = 2;
         this.speed = 6;
         this.canUseRangeAttack = true;
+		this.canUseMeleeAttack = false;
     }
 	
 	rogueReset() {
         console.log("rogueReset");
 		this.canUseRangeAttack = true;
+		this.canUseMeleeAttack = false;
+
 		this.speed = 6;
 		this.width = 32; 
 		this.height = 48;

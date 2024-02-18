@@ -6,11 +6,13 @@ class MiniCyclop extends enemyClass {
         this.maxHealth = 4;
         this.speed = 4;
         this.canUseRangeAttack = true;
+		this.canUseMeleeAttack = false;
     }
 	
 	miniCyclopReset() {
         console.log("miniCyclopReset");
 		this.canUseRangeAttack = true;
+		this.canUseMeleeAttack = false;
 		this.speed = 4;
 		this.width = 40; 
 		this.height = 41;

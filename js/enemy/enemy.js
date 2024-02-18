@@ -17,10 +17,98 @@ class enemyClass {
 	health = this.maxHealth;
 	
 	movementTimer = 0;
-	moveNorth = false;
-	moveSouth = false;
-	moveEast = false;
-	moveWest = false;
+
+	#moveNorth = false;
+	#moveEast = false;
+	#moveSouth = false;
+	#moveWest = false;
+	#facingNorth = false;
+	#facingEast = false;
+	#facingSouth = false;
+	#facingWest = false;
+
+	get moveNorth() { return this.#moveNorth; }
+	get moveEast() { return this.#moveEast; }
+	get moveSouth() { return this.#moveSouth; }
+	get moveWest() { return this.#moveWest; }
+	set moveNorth(value) {
+		if (typeof value === "boolean") {
+			this.#moveNorth = value;
+			if (value) { 
+				this.#moveSouth = false;
+				this.faceToward("north"); 
+			}
+		}
+	}
+	set moveSouth(value) {
+		if (typeof value === "boolean") {
+			this.#moveSouth = value;
+			if (value) { 
+				this.#moveNorth = false;
+				this.faceToward("south"); 
+			}
+		}
+	}
+	set moveEast(value) {
+		if (typeof value === "boolean") {
+			this.#moveEast = value;
+			if (value) { 
+				this.#moveWest = false;
+				this.faceToward("east"); 
+			}
+		}
+	}
+	set moveWest(value) {
+		if (typeof value === "boolean") {
+			this.#moveWest = value;
+			if (value) { 
+				this.#moveEast = false;
+				this.faceToward("west"); 
+			}
+		}
+	}
+
+	get facingNorth() { return this.#facingNorth; }
+	get facingEast() { return this.#facingEast; }
+	get facingSouth() { return this.#facingSouth; }
+	get facingWest() { return this.#facingWest; }
+	set facingNorth(value) { 
+		if (typeof value === "boolean") {
+			console.log(this.myName, "facingNorth", value);
+			this.#facingNorth = value;
+			if (value) { this.#facingSouth = false; }
+		} else {
+			console.log(this.myName, "facingNorth failed");
+		}
+	}
+	set facingEast(value) {
+		if (typeof value === "boolean") {
+			console.log(this.myName, "facingEast", value);
+			this.#facingEast = value;
+			if (value) { this.#facingWest = false; }
+		} else {
+			console.log(this.myName, "facingEast failed");
+		}
+	}
+	set facingSouth(value) {
+		if (typeof value === "boolean") {
+			console.log(this.myName, "facingSouth", value);
+			this.#facingSouth = value;
+			if (value) { this.#facingNorth = false; }
+		} else {
+			console.log(this.myName, "facingSouth failed");
+		}
+	}
+	set facingWest(value) {
+		if (typeof value === "boolean") {
+			console.log(this.myName, "facingWest", value);
+			this.#facingWest = value;
+			if (value) { this.#facingEast = false; }
+		} else {
+			console.log(this.myName, "facingWest failed");
+		}
+	}	
+
 	// keyHeld_East = false;
 	// keyHeld_South = false;
 	// keyHeld_West = false;
@@ -29,13 +117,48 @@ class enemyClass {
 	canMoveSouth = true;
 	canMoveWest = true;
 
+	faceToward(direction) {
+		if (direction === "north") {
+			this.facingNorth = true;
+		} else if (direction === "south") {
+			this.facingSouth = true;
+		} else if (direction === "east") {
+			this.facingEast = true;
+		} else if (direction === "west") {
+			this.facingWest = true;
+		} else if (direction === "northeast") {
+			factToward("north");
+			factToward("east");
+		} else if (direction === "southeast") {
+			factToward("south");
+			factToward("east");
+		} else if (direction === "southwest") {
+			factToward("south");
+			factToward("west");
+		} else if (direction === "northwest") {
+			factToward("north");
+			factToward("west");
+		} else {
+			// if not facing a direction, then face the screen (direction SE)
+			factToward("south");
+			factToward("east");
+		}
+	}
+
 	animateEnemyStandingStill = false;
 	drawTimer = 0;
 	frames = 3;
+	damageCoolDownTimer = true;
+	damageCoolDownCounter = 0;
+	meleeAttackRecoveryTimer = true;
+	meleeAttackRecoveryCounter = 0;
+	rangeAttackRecoveryTimer = true;
+	rangeAttackRecoveryCounter = 0;
 
 	myShotList = [];
 	totalShots = 5;
 	canUseRangeAttack = false;
+	canUseMeleeAttack = false;
 	meleeAttacking = false;
 
 	// shared path data among enemies for performance as long
@@ -55,7 +178,7 @@ class enemyClass {
 		console.log("EnemyClass.enemyReset: "+this.myName);
         this.speed = 3;
 		this.hitPoints = this.maxHitPoints;
-				
+		
 		if(this.homeX == undefined) {
 			for(var i=0; i<roomGrid.length; i++){
 				if( roomGrid[i] == this.myTile) {
@@ -93,6 +216,14 @@ class enemyClass {
 		} else {
 			// console.log(this.myName, "is taking a random walk");
 			this.randomMovements(); 
+		}
+
+		if (this.meleeAttacking) {
+			this.speed = 0;
+			this.offSetHeight = this.height * 5;
+			// playerOne.takeDamage(DAMAGE_DEFAULT);
+			this.meleeAttacking = false;
+			return;
 		}
 
 		this.speed = this.randomDirectionSpeed;
@@ -188,16 +319,36 @@ class enemyClass {
 				this.movementTimer = 0;
 				break;
 		} 
+		this.damageCoolDown();
+		this.meleeAttackCoolDown();
+		this.rangeAttackCoolDown();
 
 		let toAttack = Math.round(Math.random() * 1000);
-		if(toAttack > 990){
-			if(this.canUseRangeAttack){
+		// if(toAttack > 1) {
+			if(this.meleeAttackRecoveryCounter <= 0 && this.canUseMeleeAttack){
+				this.checkForMeleeCombatRange();
+				if(this.meleeAttacking){
+					this.meleeAttack();
+				}
+			} else if(this.rangeAttackRecoveryCounter <= 0 && this.canUseRangeAttack){
 				this.rangedAttack();
 			}
-		}
+		// }
 
-		for (let i=0; i < this.myShotList.length ; i++){
+		for (let i=0; i < this.myShotList.length; i++){
 			this.myShotList[i].movement();
+			let shot = this.myShotList[i];
+			if (shot) {
+				if(shot.hitTest(playerOne)){
+					playerOne.takeDamage(shot.damageAmount());
+					shot.reset();
+				} else if(shot.done()){
+					shot.reset();
+				}
+				if(shot.readyToRemove){
+					this.myShotList.splice(i,1);
+				}
+			}
 		}
 	}
 
@@ -205,7 +356,6 @@ class enemyClass {
 		// returns true if pathfinding is in progress and a direction taken
 		// returns false if pathfinding is not in progress
 		this.movementTimer--;
-		this.meleeAttacking = false;
 		if(this.meleeAttacking) {
 			//* Keeping enemy still while testing combat */
 			this.speed = 0;
@@ -430,19 +580,28 @@ class enemyClass {
 	}
 	
 	collisionTest(otherHumanoid){
-		if(	this.x > otherHumanoid.x - 20 && this.x < otherHumanoid.x + 20 &&
-			this.y > otherHumanoid.y - 20 && this.y < otherHumanoid.y + 20){
+		let wMod = Math.max(20, otherHumanoid.width/2);
+		let hMod = Math.max(20, otherHumanoid.height/2);
+
+		if(	this.x > otherHumanoid.x - wMod && this.x < otherHumanoid.x + wMod &&
+			this.y > otherHumanoid.y - hMod && this.y < otherHumanoid.y + hMod){
 				return true;
 		}
 		return false;
 	}
 
 	rangedAttack(){
-
 //		if(this.myShotList.length < this.totalShots){
 			let tempShot = new shotClass();
-			tempShot.shootFrom(this, true);
+			tempShot.attackFrom(this, true);
+			this.rangeAttackRecoveryTimer = true;
 //		} 
+	}
+
+	meleeAttack(){
+		let tempMeleeHit = new meleeAttackClass();
+		tempMeleeHit.attackFrom(this, true);
+		this.meleeAttackRecoveryTimer = true;
 	}
 
 	checkForMeleeCombatRange(){
@@ -454,49 +613,49 @@ class enemyClass {
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 5;
-			swordSwing2Sound.play();		
+			// swordSwing2Sound.play();		
 		} else if(playerTile == enemyTile - 1){
 			console.log("player NW, attack");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 6;
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else if(playerTile == enemyTile + ROOM_COLS - 1){
 			console.log("player W, attack");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 7; 
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else if (playerTile == enemyTile + ROOM_COLS){
 			console.log("player SW, attack ");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 8;
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else if (playerTile == enemyTile + ROOM_COLS + 1){
 			console.log("player S, attack ");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 1;
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else if (playerTile == enemyTile + 1){
 			console.log("player SE, attack");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 2;
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else if (playerTile == enemyTile - ROOM_COLS + 1){
 			console.log("player E, attack ");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 3;
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else if (playerTile == enemyTile - ROOM_COLS){
 			console.log("player NE, attack ");
 			this.meleeAttacking = true;
 			this.speed = 0;
 			this.offSetHeight = this.height * 4;
-			swordSwing2Sound.play();
+			// swordSwing2Sound.play();
 		} else {
 			this.meleeAttacking = false;
 		}
@@ -561,7 +720,46 @@ class enemyClass {
         }
     }
     
-    animateEnemy(){
+	//this delivers damage
+	takeDamage(howMuchDamage){
+		if(this.damageCoolDownCounter == 0){
+			this.health = this.health - howMuchDamage;
+		}
+		this.damageCoolDownTimer = true;
+	}
+
+	//this is used to keep damage from occuring too frequently
+	damageCoolDown(coolDownDelay = DAMAGE_RECEIVED_DELAY){
+		if(this.damageCoolDownTimer == true){
+			this.damageCoolDownCounter++
+		}
+		if(this.damageCoolDownCounter >= coolDownDelay){
+			this.damageCoolDownCounter = 0;
+			this.damageCoolDownTimer = false;
+		}
+	}
+
+	meleeAttackCoolDown(coolDownDelay = MELEE_ATTACK_DELAY){	
+		if(this.meleeAttackRecoveryTimer == true){
+			this.meleeAttackRecoveryCounter++;
+		}
+		if(this.meleeAttackRecoveryCounter >= coolDownDelay){
+			this.meleeAttackRecoveryCounter = 0;
+			this.meleeAttackRecoveryTimer = false;
+		}
+	}
+
+	rangeAttackCoolDown(coolDownDelay = RANGE_ATTACK_DELAY){	
+		if(this.rangeAttackRecoveryTimer == true){
+			this.rangeAttackRecoveryCounter++;
+		}
+		if(this.rangeAttackRecoveryCounter >= coolDownDelay){
+			this.rangeAttackRecoveryCounter = 0;
+			this.rangeAttackRecoveryTimer = false;
+		}
+	}
+
+	animateEnemy(){
 		this.drawTimer++;
 		if(this.drawTimer == 8){
 			this.offSetWidth = this.offSetWidth + this.width;
@@ -570,6 +768,12 @@ class enemyClass {
 		if(this.offSetWidth > (this.frames * this.width)){
 			this.offSetWidth = 0;
 			this.animateEnemyStandingStill = false;
+		}
+	}
+
+	addAttack(attack){
+		if (attack) {
+			this.myShotList.push(attack)
 		}
 	}
 }

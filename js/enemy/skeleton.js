@@ -1,38 +1,40 @@
 skeletonNames = ["Ralf"];
 
-skeletonClass.prototype = new enemyClass();
-function skeletonClass() {
-	this.width = 20; 
-	this.height = 40; 
-	this.maxHealth = 4;
-	this.speed = 6;
-	this.totalShots = 0;
-	this.canUseRangeAttack = false;
-	
-	this.superClassReset = this.enemyReset;
-	this.reset = function() {
+class skeletonClass extends enemyClass {
+	width = 20; 
+	height = 40; 
+	maxHealth = 4;
+	speed = 6;
+	totalShots = 0;
+	canUseRangeAttack = false;
+	canUseMeleeAttack = true;
+
+	superClassReset = super.enemyReset;
+	reset = function() {
 		this.superClassReset();
 		this.speed = 6;
 		this.totalShots = 0;
 		this.hitPoints = this.maxHitPoints;
 		this.canUseRangeAttack = false;
+		this.canUseMeleeAttack = true;
 	}
 					
-	this.superClassInitialize = this.init;
-	this.init = function(whichGraphic, whichName, whichTile) {
+	superClassInitialize = super.init;
+	init = function(whichGraphic, whichName, whichTile) {
 		this.superClassInitialize(whichGraphic, whichName, whichTile);	
-		this.canUseRangeAttack = true;
+		this.canUseRangeAttack = false;
+		this.canUseMeleeAttack = true;
 		this.reset();
 	}	
 		
-	this.superClassMove = this.movement;
-	this.movement = function() {
+	superClassMove = super.movement;
+	movement = function() {
 		this.superClassMove();
-		this.checkForMeleeCombatRange();
+		// this.checkForMeleeCombatRange();
 	}
 	
-	this.superClassDraw = this.draw;
-	this.draw = function(){
+	superClassDraw = super.draw;
+	draw = function(){
 		this.superClassDraw();
 	}
 }

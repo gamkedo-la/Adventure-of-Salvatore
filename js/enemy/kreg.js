@@ -1,38 +1,36 @@
 kregNames = ["Kreg"];
 
-kregClass.prototype = new enemyClass();
-function kregClass() {
-	this.width = 65; 
-	this.height = 66; 
-	this.maxHealth = 15;
-	this.speed = 4;
-	this.totalShots = 0;
-	this.canUseRangeAttack = false;
+class kregClass extends enemyClass {
+	width = 65; 
+	height = 66; 
+	maxHealth = 15;
+	speed = 4;
+	totalShots = 0;
+	canUseRangeAttack = false;
+	canUseMeleeAttack = true;
 	
-	this.superClassReset = this.enemyReset;
-	this.reset = function() {
-		this.superClassReset();
+	reset() {
+		super.enemyReset();
 		this.speed = 4;
 		this.totalShots = 0;
 		this.hitPoints = this.maxHitPoints;
 		this.canUseRangeAttack = false;
+		this.canUseMeleeAttack = true;
 	}
 					
-	this.superClassInitialize = this.init;
-	this.init = function(whichGraphic, whichName, whichTile) {
-		this.superClassInitialize(whichGraphic, whichName, whichTile);	
-		this.canUseRangeAttack = true;
+	init(whichGraphic, whichName, whichTile) {
+		super.init(whichGraphic, whichName, whichTile);	
+		this.canUseRangeAttack = false;
+		this.canUseMeleeAttack = true;
 		this.reset();
 	}	
 		
-	this.superClassMove = this.movement;
-	this.movement = function() {
-		this.superClassMove();
-		this.checkForMeleeCombatRange();
+	movement() {
+		super.movement();
+		// this.checkForMeleeCombatRange();
 	}
 	
-	this.superClassDraw = this.draw;
-	this.draw = function(){
-		this.superClassDraw();
+	draw() {
+		super.draw();
 	}
 }
