@@ -36,6 +36,13 @@ function keyPressed(evt) {
 	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
 	var healingPotion = KEY_2;
+	var startGame = KEY_SPACEBAR;
+
+	if(!liveGame){
+		if(startGame = evt.keyCode){
+			liveGame = true;
+		}
+	} 
 
 	if(paused == evt.keyCode){
 		changePauseState();
@@ -53,7 +60,7 @@ function keyPressed(evt) {
 	} else if (itemKey == evt.keyCode){
 		itemScreen = !itemScreen;
 		liveGame = !liveGame;
-	} 
+	}
 }
 
 function keyReleased(evt) {

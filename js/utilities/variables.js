@@ -148,7 +148,7 @@ const XRAY_VISION_ENABLED = true; // can we see player through walls?
 const XRAY_VISION_OPACITY = 0.1;
 
 //game states
-var liveGame = true;
+var liveGame = false;
 var pauseScreen = false;
 var inventoryScreen = false;
 var mainMenu = false;

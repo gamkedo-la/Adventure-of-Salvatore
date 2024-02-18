@@ -348,7 +348,9 @@ function drawEverything() {
         drawUserInterface();
         drawMinimap();
         if (worldMapCurrentlyVisible) drawWorldMap();
-    }
+    } else {
+		drawStartPage();
+	}
 
     if(itemScreen){
 		itemScreenDisplay();
