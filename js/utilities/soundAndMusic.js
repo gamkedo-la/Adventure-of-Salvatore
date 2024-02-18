@@ -2,6 +2,7 @@
 var crashIntoConeSound = new SoundOverlapsClass("crashCone");
 var swordSwingSound = new SoundOverlapsClass("sword_3");
 var swordSwing2Sound = new SoundOverlapsClass("sword_swing_genAI");
+var doorOpenSound = new SoundOverlapsClass("door-opening-AoS-genAI")
 
 function setFormat() {
     var audio = new Audio();

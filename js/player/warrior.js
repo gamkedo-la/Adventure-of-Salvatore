@@ -218,20 +218,24 @@ function warriorClass() {
 					break;
 				case TILE_WOOD_DOOR:
 						roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_OPEN;
+						doorOpenSound.play(); 
 					break;
 				case TILE_WOOD_DOOR_2:
 					roomGrid[walkIntoTileIndex] = TILE_WOOD_DOOR_2_OPEN;
+					doorOpenSound.play();
 				break;
 				case TILE_YELLOW_DOOR:
 					if(this.yellowKeysHeld > 0){
 						this.yellowKeysHeld--;
 						roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_OPEN;
+						doorOpenSound.play();
 					}
 					break;
 				case TILE_YELLOW_DOOR_2:
 					if(this.yellowKeysHeld > 0){
 						this.yellowKeysHeld--;
 						roomGrid[walkIntoTileIndex] = TILE_YELLOW_DOOR_2_OPEN;
+						doorOpenSound.play();
 					}
 					break;
 				case TILE_RED_DOOR:
@@ -244,24 +248,28 @@ function warriorClass() {
 					if(this.blueKeysHeld > 0){
 						this.blueKeysHeld--;
 						roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_OPEN;
+						doorOpenSound.play();
 					}
 					break;
 				case TILE_BLUE_DOOR_2:
 					if(this.blueKeysHeld > 0){
 						this.blueKeysHeld--;
 						roomGrid[walkIntoTileIndex] = TILE_BLUE_DOOR_2_OPEN;
+						doorOpenSound.play();
 					}
 					break;
 				case TILE_GREEN_DOOR:
 					if(this.greenKeysHeld > 0){
 						this.greenKeysHeld--;
 						roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_OPEN;
+						doorOpenSound.play();
 					}
 					break;
 				case TILE_GREEN_DOOR_2:
 					if(this.greenKeysHeld > 0){
 						this.greenKeysHeld--;
 						roomGrid[walkIntoTileIndex] = TILE_GREEN_DOOR_2_OPEN;
+						doorOpenSound.play();
 					}
 					break;	
 				case TILE_TREASURE:	
