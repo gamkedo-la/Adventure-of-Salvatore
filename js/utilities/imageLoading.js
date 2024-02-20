@@ -44,7 +44,7 @@ function loadImages() {
 			{varName: itemBackgroundPic, theFile: "itemBackground.png"},
             {varName: worldMapPic, theFile: "world_map.png"},
 			{varName: meleeAttackPic, theFile: "meleeHitSpark.png"},
-	
+			
 			{trackType: TILE_ROAD, theFile: "track_road.png"},
 			{trackType: TILE_WALL, theFile:  "track_wall.png"},	
 			{trackType: TILE_WALL_WITH_TORCH, theFile:  "track_wall_with_torch.png"},
