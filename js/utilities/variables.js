@@ -67,6 +67,7 @@ var guiCompassPic = document.createElement("img");
 var itemBackgroundPic = document.createElement("img");
 var worldMapPic = document.createElement("img");
 var meleeAttackPic = document.createElement("img");
+var mainScreenBackgroundPic = document.createElement("img");
 
 
 var vignetteBorderPic = document.createElement("img");
