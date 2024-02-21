@@ -1,7 +1,8 @@
 skeletonNames = ["Ralf"];
 
 class skeletonClass extends enemyClass {
-	width = 20; 
+
+    width = 20; 
 	height = 40; 
 	maxHealth = 4;
 	speed = 6;
@@ -11,7 +12,8 @@ class skeletonClass extends enemyClass {
 
 	superClassReset = super.enemyReset;
 	reset = function() {
-		this.superClassReset();
+        this.name="skeleton";
+        this.superClassReset();
 		this.speed = 6;
 		this.totalShots = 0;
 		this.hitPoints = this.maxHitPoints;

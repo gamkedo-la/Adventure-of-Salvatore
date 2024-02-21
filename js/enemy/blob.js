@@ -5,7 +5,8 @@ class blobClass extends enemyClass {
 	superClassReset = super.enemyReset;
 	reset = function() {
 		this.superClassReset();
-		this.speed = 2;
+        this.name="blob";
+        this.speed = 2;
 		this.hitPoints = this.maxHitPoints;
 		this.width = 50; 
 		this.height = 47;

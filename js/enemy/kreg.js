@@ -11,6 +11,7 @@ class kregClass extends enemyClass {
 	
 	reset() {
 		super.enemyReset();
+        this.name="kreg";
 		this.speed = 4;
 		this.totalShots = 0;
 		this.hitPoints = this.maxHitPoints;

@@ -16,7 +16,8 @@ function addRockBullet(xPos, yPos){
 }
 
 function rockBulletClass(xPos, yPos){
-	this.x = xPos || 370;
+    this.name="rockBullet";
+    this.x = xPos || 370;
 	this.y = yPos || 0;
 	this.width = 10;	
     this.height = 10;

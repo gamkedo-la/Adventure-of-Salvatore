@@ -1,5 +1,8 @@
+const DEBUG_ENEMY_MOVEMENT = false; // extremely spammy debug logs
+
 class enemyClass {
-	x = 600;
+    name="enemy";
+    x = 600;
 	y = 800;
 	xv;
 	yv;
@@ -74,38 +77,38 @@ class enemyClass {
 	get facingWest() { return this.#facingWest; }
 	set facingNorth(value) { 
 		if (typeof value === "boolean") {
-			console.log(this.myName, "facingNorth", value);
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingNorth", value);
 			this.#facingNorth = value;
 			if (value) { this.#facingSouth = false; }
 		} else {
-			console.log(this.myName, "facingNorth failed");
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingNorth failed");
 		}
 	}
 	set facingEast(value) {
 		if (typeof value === "boolean") {
-			console.log(this.myName, "facingEast", value);
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingEast", value);
 			this.#facingEast = value;
 			if (value) { this.#facingWest = false; }
 		} else {
-			console.log(this.myName, "facingEast failed");
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingEast failed");
 		}
 	}
 	set facingSouth(value) {
 		if (typeof value === "boolean") {
-			console.log(this.myName, "facingSouth", value);
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingSouth", value);
 			this.#facingSouth = value;
 			if (value) { this.#facingNorth = false; }
 		} else {
-			console.log(this.myName, "facingSouth failed");
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingSouth failed");
 		}
 	}
 	set facingWest(value) {
 		if (typeof value === "boolean") {
-			console.log(this.myName, "facingWest", value);
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingWest", value);
 			this.#facingWest = value;
 			if (value) { this.#facingEast = false; }
 		} else {
-			console.log(this.myName, "facingWest failed");
+			if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "facingWest failed");
 		}
 	}	
 
@@ -212,9 +215,9 @@ class enemyClass {
 
 		// if no path is found that enemy can wander around
 		if (this.pathfinding()) { 
-			// console.log(this.myName, "is following a path");
+			// if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "is following a path");
 		} else {
-			// console.log(this.myName, "is taking a random walk");
+			// if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "is taking a random walk");
 			this.randomMovements(); 
 		}
 
@@ -368,7 +371,7 @@ class enemyClass {
 				const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
 
 				if (!base || !goal) {
-					console.log("pathfinding(): base and goal not found");
+					if (DEBUG_ENEMY_MOVEMENT) console.log("pathfinding(): base and goal not found");
 					return false;
 				}
 
@@ -459,7 +462,7 @@ class enemyClass {
 					if (direction) {
 						this.pathDir = direction;
 					} else {
-						console.log("path not found");
+						if (DEBUG_ENEMY_MOVEMENT) console.log("path not found");
 						return false;
 					}
 				}
@@ -706,7 +709,7 @@ class enemyClass {
         // hmm WHY do multiple enemies share a path? they are in different locations? 
         // FIXME this feels wrong
         let mypath = enemyClass.pathData.path;
-        console.log("drawing an enemy path!");
+        if (DEBUG_ENEMY_MOVEMENT) console.log("drawing an enemy path!");
         for (let i=0; i<mypath.length; i++) {
             // what a strange way to calculate isometric coords!
             let mapindex = mypath[i];
@@ -716,7 +719,7 @@ class enemyClass {
 			let px = isoDrawX;//-ISO_GRID_W/2; // huh??
             let py = isoDrawY;//-ISO_TILE_GROUND_Y;
             colorRect(px, py, px+2, py+2, "magenta"); // draw a dot
-            //console.log("- path dot at "+px+","+py);
+            //if (DEBUG_ENEMY_MOVEMENT) console.log("- path dot at "+px+","+py);
         }
     }
     

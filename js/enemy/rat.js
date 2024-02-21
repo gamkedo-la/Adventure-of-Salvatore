@@ -8,6 +8,7 @@ function ratClass() {
 	this.superClassReset = this.enemyReset;
 	this.ratReset = function() {
 		this.superClassReset();
+        this.name = "rat";
 		this.speed = 4;
 		this.hitPoints = this.maxHitPoints;
 	}

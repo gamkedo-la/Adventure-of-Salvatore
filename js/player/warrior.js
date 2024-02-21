@@ -43,6 +43,7 @@ function warriorClass() {
 	this.swordReady = true;
 	this.swordCharge = false;
 	this.swordChargeTimer = 0;
+    this.swordDamage = 1; // used in checkCollision() if playerAttacking
 	this.playerAttacking = false;
 
 	this.setupControls = function(
@@ -367,7 +368,13 @@ function warriorClass() {
 	this.checkCollisionsAgainst = function(otherHumanoid){
         const COLLISION_PADDING = 10; // give the player a radius
 		if(this.collisionTest(otherHumanoid)){
-			console.log("collision");
+			console.log("warrior bumped into "+otherHumanoid.name);
+            
+            if (this.playerAttacking) {
+                console.log("warrior hit "+otherHumanoid.name+" for "+this.swordDamage+" damage!");
+                otherHumanoid.takeDamage(this.swordDamage);
+            }
+
 			if(this.keyHeld_North){
 				this.canMoveNorth = false;
 				this.y += this.playerMovementSpeed * COLLIDE_BUMP_MULT;
@@ -537,6 +544,6 @@ function warriorClass() {
 		this.swordCharge = true;
 		this.offSetWidth = 0;
 		this.playerAttacking = true;
-		swordSwingSound.play();
+		//swordSwingSound.play(); // fixme: sound doesn't exist yet
 	};	
 }

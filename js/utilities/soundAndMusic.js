@@ -7,10 +7,12 @@ var swordMissSound = new SoundOverlapsClass("sword_miss_genAI");
 
 function setFormat() {
     var audio = new Audio();
-    if (audio.canPlayType("audio/mp3")) {
-		audioFormat = ".mp3";
+    if (audio.canPlayType("audio/mp3")) { 
+        // fully supported by all browsers and platforms
+        // see https://caniuse.com/?search=mp3
+        audioFormat = ".mp3";
     } else {
-		audioFormat = ".ogg";
+		audioFormat = ".ogg"; // never used
     }
 }
 

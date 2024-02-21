@@ -2,6 +2,7 @@ class rogue extends enemyClass {
     constructor() {
         console.log("Rogue constructor!");
         super(); // run enemyClass constructor first
+        this.name = "rogue";
         this.maxHealth = 2;
         this.speed = 6;
         this.canUseRangeAttack = true;
