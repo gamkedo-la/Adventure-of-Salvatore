@@ -10,7 +10,7 @@ function ratClass() {
 		this.superClassReset();
         this.name = "rat";
 		this.speed = 4;
-		this.hitPoints = this.maxHitPoints;
+		this.health = this.maxHealth;
 	}
 					
 	this.superClassInitialize = this.init;

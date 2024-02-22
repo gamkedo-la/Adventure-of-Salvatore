@@ -14,7 +14,7 @@ class kregClass extends enemyClass {
         this.name="kreg";
 		this.speed = 4;
 		this.totalShots = 0;
-		this.hitPoints = this.maxHitPoints;
+		this.health = this.maxHealth;
 		this.canUseRangeAttack = false;
 		this.canUseMeleeAttack = true;
 	}

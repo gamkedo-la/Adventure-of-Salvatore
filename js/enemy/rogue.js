@@ -17,7 +17,7 @@ class rogue extends enemyClass {
 		this.speed = 6;
 		this.width = 32; 
 		this.height = 48;
-		this.hitPoints = this.maxHitPoints;
+		this.health = this.maxHealth;
 	}
 					
 	init(whichGraphic, whichName, whichTile) {

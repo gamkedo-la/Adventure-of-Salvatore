@@ -16,7 +16,7 @@ class skeletonClass extends enemyClass {
         this.superClassReset();
 		this.speed = 6;
 		this.totalShots = 0;
-		this.hitPoints = this.maxHitPoints;
+		this.health = this.maxHealth;
 		this.canUseRangeAttack = false;
 		this.canUseMeleeAttack = true;
 	}

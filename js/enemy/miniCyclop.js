@@ -17,7 +17,7 @@ class MiniCyclop extends enemyClass {
 		this.speed = 4;
 		this.width = 40; 
 		this.height = 41;
-		this.hitPoints = this.maxHitPoints;
+		this.health = this.maxHealth;
 	}
 					
 	init(whichGraphic, whichName, whichTile) {

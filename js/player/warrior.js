@@ -22,6 +22,7 @@ function warriorClass() {
 	this.maxHealth = 4;
 	this.damageCoolDownTimer = true;
 	this.damageCoolDownCounter = 0;
+	this.myShotList = [];
 
 	this.frames = 8;
 	this.drawTimer = 0;
@@ -45,6 +46,11 @@ function warriorClass() {
 	this.swordChargeTimer = 0;
     this.swordDamage = 1; // used in checkCollision() if playerAttacking
 	this.playerAttacking = false;
+
+	this.facingNorth = false;
+	this.facingEast = false;
+	this.facingSouth = false;
+	this.facingWest = false;
 
 	this.setupControls = function(
             northKey,eastKey,southKey,westKey,swordKey,
@@ -87,6 +93,12 @@ function warriorClass() {
 		this.y = this.homeY;
 		this.miniMapX = this.homeX + 750;
 		this.miniMapY = this.homeY + 2;
+
+		// face toward the camera (SW)
+		this.facingNorth = false;
+		this.facingEast = false;
+		this.facingSouth = true;
+		this.facingWest = true;
 	}
 					
 	this.init = function(whichGraphic, whichName) {
@@ -136,21 +148,37 @@ function warriorClass() {
 				aheadX -= PLAYER_COLLISION_RADIUS;
 				this.offSetHeight = this.height * 6;
 				this.miniMapX -= this.playerMovementSpeed/15;
+				this.facingNorth = true;
+				this.facingEast = false;
+				this.facingSouth = false;
+				this.facingWest = true;
 			} else if(this.keyHeld_North && this.keyHeld_East){
 				nextY -= this.playerMovementSpeed;
 				aheadY -= PLAYER_COLLISION_RADIUS;
 				this.offSetHeight = this.height * 4;
 				this.miniMapY -= this.playerMovementSpeed/15;
+				this.facingNorth = true;
+				this.facingEast = true;
+				this.facingSouth = false;
+				this.facingWest = false;
 			} else if(this.keyHeld_South && this.keyHeld_West){
 				nextY += this.playerMovementSpeed;
 				aheadY += PLAYER_COLLISION_RADIUS;
 				this.offSetHeight = this.height * 8;
 				this.miniMapY += this.playerMovementSpeed/15;
+				this.facingNorth = false;
+				this.facingEast = false;
+				this.facingSouth = true;
+				this.facingWest = true;
 			} else if(this.keyHeld_South && this.keyHeld_East){
 				nextX += this.playerMovementSpeed;
 				aheadX += PLAYER_COLLISION_RADIUS;
 				this.offSetHeight = this.height * 2;
 				this.miniMapX += this.playerMovementSpeed/15;
+				this.facingNorth = false;
+				this.facingEast = true;
+				this.facingSouth = true;
+				this.facingWest = false;
 			} else if(this.keyHeld_North && this.canMoveNorth){
 				nextX -= this.playerMovementSpeed * Math.cos(45); 
 				nextY -= this.playerMovementSpeed * Math.sin(45);
@@ -158,6 +186,10 @@ function warriorClass() {
 				aheadY -= PLAYER_COLLISION_RADIUS * Math.sin(45);
 				this.offSetHeight = this.height * 5;
 				collisionY = nextY;
+				this.facingNorth = true;
+				this.facingEast = false;
+				this.facingSouth = false;
+				this.facingWest = false;
 			} else if(this.keyHeld_East && this.canMoveEast){
 				nextX += this.playerMovementSpeed * Math.cos(45); 
 				nextY -= this.playerMovementSpeed * Math.sin(45);
@@ -166,6 +198,10 @@ function warriorClass() {
 				this.offSetHeight = this.height * 3 
 				this.miniMapX += this.playerMovementSpeed/10;
 				this.miniMapY -= this.playerMovementSpeed/10;
+				this.facingNorth = false;
+				this.facingEast = true;
+				this.facingSouth = false;
+				this.facingWest = false;
 			} else if(this.keyHeld_South && this.canMoveSouth){
 				nextX += this.playerMovementSpeed * Math.cos(45); 
 				nextY += this.playerMovementSpeed * Math.sin(45);
@@ -174,6 +210,10 @@ function warriorClass() {
 				this.offSetHeight = this.height * 1;
 				this.miniMapX += this.playerMovementSpeed/10;
 				this.miniMapY += this.playerMovementSpeed/10; 
+				this.facingNorth = false;
+				this.facingEast = false;
+				this.facingSouth = true;
+				this.facingWest = false;
 			} else if(this.keyHeld_West && this.canMoveWest){
 				nextX -= this.playerMovementSpeed * Math.cos(45);
 				nextY += this.playerMovementSpeed * Math.sin(45);
@@ -182,6 +222,10 @@ function warriorClass() {
 				this.offSetHeight = this.height * 7 
 				this.miniMapX += this.playerMovementSpeed/10;
 				this.miniMapY += this.playerMovementSpeed/10;
+				this.facingNorth = false;
+				this.facingEast = false;
+				this.facingSouth = false;
+				this.facingWest = true;
 			} else {
 				this.offSetHeight = 0;
 			}
@@ -363,6 +407,35 @@ function warriorClass() {
 				}
 			}
 		}
+
+		// allow attacks to keep going even if the attacker is not longer
+		for (let i=0; i < this.myShotList.length; i++){
+			let shot = this.myShotList[i];
+			if (shot) {
+				if (shot.done()) { 
+					shot.playMissSound();
+					shot.reset(); 
+				}
+				else {
+					shot.movement();
+					const didHit = entities.some( (entity) => {
+						if (entity && entity.alive && entity.takeDamage) {
+							if(shot.hitTest(entity) ){
+								entity.takeDamage(shot.damageAmount());
+								shot.reset();
+								return true;
+							}
+							return false;
+						} 
+					});
+					// TODO: Miss sound plays per frame and needs to play once for attack 
+					// missing player and only if close at some point
+					// if (!didHit) { shot.playMissSound(); }
+				}
+
+				if(shot.readyToRemove){ this.myShotList.splice(i,1); }
+			} 
+		}
 	};	// END OF THIS.MOVEMENT
 		
 	this.checkCollisionsAgainst = function(otherHumanoid){
@@ -408,6 +481,10 @@ function warriorClass() {
 	}
 		
 	this.draw = function(){
+		for (let i=0; i < this.myShotList.length ; i++){
+			this.myShotList[i].draw();
+		}
+
 		if(this.alive){
 			if(this.offSetHeight == 0 && !this.playerAttacking){ //player is standing still
 				let toAnimatePlayerNumber = getRndInteger(0, 1000);
@@ -545,5 +622,25 @@ function warriorClass() {
 		this.offSetWidth = 0;
 		this.playerAttacking = true;
 		//swordSwingSound.play(); // fixme: sound doesn't exist yet
+		this.meleeAttack();
 	};	
+
+	this.rangedAttack = function(){
+		let tempShot = new shotClass();
+		tempShot.attackFrom(this, true);
+		this.rangeAttackRecoveryTimer = true;
+	};
+		
+	this.meleeAttack = function(){
+		let tempMeleeHit = new meleeAttackClass();
+		tempMeleeHit.attackSound = swordSwingSound;
+		tempMeleeHit.attackFrom(this, true);
+		this.meleeAttackRecoveryTimer = true;
+	};
+
+	this.addAttack = function(attack){
+		if (attack) {
+			this.myShotList.push(attack)
+		}
+	}
 }

@@ -18,6 +18,7 @@ class enemyClass {
 	speed = 3;
 	randomDirectionSpeed = 2
 	health = this.maxHealth;
+	alive = true;
 	
 	movementTimer = 0;
 
@@ -180,7 +181,7 @@ class enemyClass {
 	enemyReset() {
 		console.log("EnemyClass.enemyReset: "+this.myName);
         this.speed = 3;
-		this.hitPoints = this.maxHitPoints;
+		this.health = this.maxHealth;
 		
 		if(this.homeX == undefined) {
 			for(var i=0; i<roomGrid.length; i++){
@@ -209,9 +210,16 @@ class enemyClass {
 	}	
 	 
 	movement() {
-		var nextX = this.x; 
-		var nextY = this.y; 
-        // var collisionY = 0;
+		if(this.health <= 0){
+			this.alive = false;
+		} else {
+			this.alive = true;
+		}
+
+		if(this.alive){
+			var nextX = this.x; 
+			var nextY = this.y; 
+			// var collisionY = 0;
 
 		// if no path is found that enemy can wander around
 		if (this.pathfinding()) { 
@@ -221,113 +229,102 @@ class enemyClass {
 			this.randomMovements(); 
 		}
 
-		if (this.meleeAttacking) {
-			this.speed = 0;
-			this.offSetHeight = this.height * 5;
-			// playerOne.takeDamage(DAMAGE_DEFAULT);
-			this.meleeAttacking = false;
-			return;
-		}
+			if (this.meleeAttacking) {
+				this.speed = 0;
+				this.offSetHeight = this.height * 5;
+				// playerOne.takeDamage(DAMAGE_DEFAULT);
+				this.meleeAttacking = false;
+				return;
+			}
 
-		this.speed = this.randomDirectionSpeed;
+			this.speed = this.randomDirectionSpeed;
+			
+			if(this.moveNorth && this.moveWest){
+				nextX -= this.speed;
+				this.offSetHeight = this.height * 6;
+			} else if(this.moveNorth && this.moveEast){
+				nextY -= this.speed;
+				this.offSetHeight = this.height * 4;
+			} else if(this.moveSouth && this.moveWest){
+				nextY += this.speed;
+				this.offSetHeight = this.height * 8;
+			} else if(this.moveSouth && this.moveEast){
+				nextX += this.speed;
+				this.offSetHeight = this.height * 2;
+			} else if(this.moveNorth){
+				nextX -= this.speed * Math.cos(45); 
+				nextY -= this.speed * Math.sin(45);
+				this.offSetHeight = this.height * 5;
+				// collisionY = nextY;
+			} else if(this.moveEast){
+				nextX += this.speed * Math.cos(45); 
+				nextY -= this.speed * Math.sin(45);
+				this.offSetHeight = this.height * 3 
+			} else if(this.moveSouth){
+				nextX += this.speed * Math.cos(45); 
+				nextY += this.speed * Math.sin(45);
+				this.offSetHeight = this.height * 1;
+			} else if(this.moveWest){
+				nextX -= this.speed * Math.cos(45);
+				nextY += this.speed * Math.sin(45);
+				this.offSetHeight = this.height * 7 
+			} else {
+				this.offSetHeight = 0;
+			}
+			this.miniMapX = nextX;
+			this.miniMapY = nextY;
+			this.xv = nextX;
+			this.yv = nextY;
+			
+			var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
+			var walkIntoTileType = TILE_WALL;
+			
+			if(walkIntoTileType != undefined){	
+				walkIntoTileType = roomGrid[walkIntoTileIndex];
+			}
 		
-		if(this.moveNorth && this.moveWest){
-			nextX -= this.speed;
-			this.offSetHeight = this.height * 6;
-		} else if(this.moveNorth && this.moveEast){
-			nextY -= this.speed;
-			this.offSetHeight = this.height * 4;
-		} else if(this.moveSouth && this.moveWest){
-			nextY += this.speed;
-			this.offSetHeight = this.height * 8;
-		} else if(this.moveSouth && this.moveEast){
-			nextX += this.speed;
-			this.offSetHeight = this.height * 2;
-		} else if(this.moveNorth){
-			nextX -= this.speed * Math.cos(45); 
-			nextY -= this.speed * Math.sin(45);
-			this.offSetHeight = this.height * 5;
-			// collisionY = nextY;
-		} else if(this.moveEast){
-			nextX += this.speed * Math.cos(45); 
-			nextY -= this.speed * Math.sin(45);
-			this.offSetHeight = this.height * 3 
-		} else if(this.moveSouth){
-			nextX += this.speed * Math.cos(45); 
-			nextY += this.speed * Math.sin(45);
-			this.offSetHeight = this.height * 1;
-		} else if(this.moveWest){
-			nextX -= this.speed * Math.cos(45);
-			nextY += this.speed * Math.sin(45);
-			this.offSetHeight = this.height * 7 
-		} else {
-			this.offSetHeight = 0;
-		}
-		this.miniMapX = nextX;
-		this.miniMapY = nextY;
-		this.xv = nextX;
-		this.yv = nextY;
-		
-		var walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
-		var walkIntoTileType = TILE_WALL;
-		
-		if(walkIntoTileType != undefined){	
-			walkIntoTileType = roomGrid[walkIntoTileIndex];
-		}
-	
-		switch(walkIntoTileType) {
-			case TILE_ROAD:
-			case TILE_SPEED_POTION:
-			case TILE_KEY_BLUE:
-			case TILE_KEY_GREEN:
-			case TILE_KEY_RED:
-			case TILE_KEY_YELLOW:
-			case TILE_WOOD_DOOR_OPEN:
-			case TILE_WOOD_DOOR_2_OPEN:
-			case TILE_YELLOW_DOOR_OPEN:
-			case TILE_YELLOW_DOOR_2_OPEN:
-			case TILE_BLUE_DOOR_OPEN:
-			case TILE_BLUE_DOOR_2_OPEN:
-			case TILE_GREEN_DOOR_OPEN:
-			case TILE_GREEN_DOOR_2_OPEN:
-			case TILE_RED_DOOR_OPEN:
-			case TILE_RED_CARPET:
-			case TILE_SPIKES_UNARMED:	
-			case TILE_PITTRAP_UNARMED:
-			case TILE_TREASURE:	
-			case TILE_KEY_YELLOW:	
-			case TILE_KEY_BLUE:	
-			case TILE_KEY_GREEN:	
-			case TILE_KEY_RED:
-			case TILE_HEALING_POTION:
-			case TILE_SPEED_POTION:
-			case TILE_COIN:
-			case TILE_WALL_LEVER_1:
-			case TILE_WALL_LEVER_2:
-				this.x = nextX;
-				this.y = nextY;
-				break;					
-			// case TILE_WALL:
-			// case TILE_SPIKES_ARMED:
-			// case TILE_SPIKES_UNARMED:
-			// case TILE_PITTRAP_ARMED:
-			// case TILE_PITTRAP_UNARMED:
-			// case TILE_TREASURE:
-			// case TILE_FINISH:			
-			// case TILE_YELLOW_DOOR:
-			// case TILE_RED_DOOR:
-			// case TILE_BLUE_DOOR:
-			// case TILE_TABLE:
-			default:
-				this.movementTimer = 0;
-				break;
-		} 
-		this.damageCoolDown();
-		this.meleeAttackCoolDown();
-		this.rangeAttackCoolDown();
+			switch(walkIntoTileType) {
+				case TILE_ROAD:
+				case TILE_SPEED_POTION:
+				case TILE_KEY_BLUE:
+				case TILE_KEY_GREEN:
+				case TILE_KEY_RED:
+				case TILE_KEY_YELLOW:
+				case TILE_WOOD_DOOR_OPEN:
+				case TILE_WOOD_DOOR_2_OPEN:
+				case TILE_YELLOW_DOOR_OPEN:
+				case TILE_YELLOW_DOOR_2_OPEN:
+				case TILE_BLUE_DOOR_OPEN:
+				case TILE_BLUE_DOOR_2_OPEN:
+				case TILE_GREEN_DOOR_OPEN:
+				case TILE_GREEN_DOOR_2_OPEN:
+				case TILE_RED_DOOR_OPEN:
+				case TILE_RED_CARPET:
+				case TILE_SPIKES_UNARMED:	
+				case TILE_PITTRAP_UNARMED:
+				case TILE_TREASURE:	
+				case TILE_KEY_YELLOW:	
+				case TILE_KEY_BLUE:	
+				case TILE_KEY_GREEN:	
+				case TILE_KEY_RED:
+				case TILE_HEALING_POTION:
+				case TILE_SPEED_POTION:
+				case TILE_COIN:
+				case TILE_WALL_LEVER_1:
+				case TILE_WALL_LEVER_2:
+					this.x = nextX;
+					this.y = nextY;
+					break;					
+				default:
+					this.movementTimer = 0;
+					break;
+			} 
+			this.damageCoolDown();
+			this.meleeAttackCoolDown();
+			this.rangeAttackCoolDown();
 
-		let toAttack = Math.round(Math.random() * 1000);
-		// if(toAttack > 1) {
+			// let toAttack = Math.round(Math.random() * 1000);
+			// if(toAttack > 1) {
 			if(this.meleeAttackRecoveryCounter <= 0 && this.canUseMeleeAttack){
 				this.checkForMeleeCombatRange();
 				if(this.meleeAttacking){
@@ -336,22 +333,33 @@ class enemyClass {
 			} else if(this.rangeAttackRecoveryCounter <= 0 && this.canUseRangeAttack){
 				this.rangedAttack();
 			}
-		// }
+			// }
+		}
 
+		// allow attacks to keep going even if the attacker is not longer
 		for (let i=0; i < this.myShotList.length; i++){
-			this.myShotList[i].movement();
 			let shot = this.myShotList[i];
 			if (shot) {
-				if(shot.hitTest(playerOne)){
-					playerOne.takeDamage(shot.damageAmount());
-					shot.reset();
-				} else if(shot.done()){
-					shot.reset();
+				if (shot.done()) { 
+					shot.playMissSound();
+					shot.reset(); 
 				}
-				if(shot.readyToRemove){
-					this.myShotList.splice(i,1);
+				else {
+					shot.movement();
+					const didHit = entities.some( (entity) => {
+						if (entity && entity.alive && entity.takeDamage) {
+							if(shot.hitTest(entity) ){
+								entity.takeDamage(shot.damageAmount());
+								shot.reset();
+								return true;
+							}
+							return false;
+						} 
+					});
 				}
-			}
+
+				if(shot.readyToRemove){ this.myShotList.splice(i,1); }
+			} 
 		}
 	}
 
