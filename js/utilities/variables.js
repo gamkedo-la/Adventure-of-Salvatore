@@ -68,7 +68,8 @@ var itemBackgroundPic = document.createElement("img");
 var worldMapPic = document.createElement("img");
 var meleeAttackPic = document.createElement("img");
 var mainScreenBackgroundPic = document.createElement("img");
-
+var mainScreenSwordPic = document.createElement('img'); 
+var theAdventureOfSalvatorePic = document.createElement('img');
 
 var vignetteBorderPic = document.createElement("img");
 const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is

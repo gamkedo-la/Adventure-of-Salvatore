@@ -45,6 +45,9 @@ function loadImages() {
             {varName: worldMapPic, theFile: "world_map.png"},
 			{varName: meleeAttackPic, theFile: "meleeHitSpark.png"},
 			{varName: mainScreenBackgroundPic, theFile: "mainScreenBackground.png"},
+			{varName: mainScreenSwordPic, theFile: "mainScreenSword.png"},
+			{varName: theAdventureOfSalvatorePic, theFile: "TheAdventureOfSaltore.png"},
+
 			
 			{trackType: TILE_ROAD, theFile: "track_road.png"},
 			{trackType: TILE_WALL, theFile:  "track_wall.png"},	
