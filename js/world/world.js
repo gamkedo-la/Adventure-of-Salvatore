@@ -331,17 +331,22 @@ function tileCoordToIsoCoord(tileC, tileR ){
 // fill in the blank areas behind the map
 function drawWorldBackground(){
     // fixme: calculate cols+rows based on world size
-    let cols=8;
-    let rows=8;
+    let cols=12;
+    let rows=12;
     let bgw=256;
     let bgh=256;
+    // start in the negatives to fill in blank space in upper left
+    let originx = -1024; 
+    let originy = -1024;
+    
     // heinous hack kludge: the camera moves in floating point and causes seams unless we slightly overlap
     // fixed by locking camera coords to integers
     // bgw-=0.5;
     // bgh-=0.5;
+
     for (let x=0; x<cols; x++) {
         for (let y=0; y<rows; y++) {
-            canvasContext.drawImage(worldBackgroundPic,x*bgw,y*bgh);
+            canvasContext.drawImage(worldBackgroundPic,originx+(x*bgw),originy+(y*bgh));
         }
     }
 }
