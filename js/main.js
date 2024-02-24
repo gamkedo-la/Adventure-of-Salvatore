@@ -318,7 +318,15 @@ function drawIsometricWorld() {
 
     if (XRAY_VISION_ENABLED) {
         canvasContext.globalAlpha = XRAY_VISION_OPACITY;
+
+        // transparent player over wall
         playerOne.draw();
+
+        // enemies visible behind walls too
+        if (XRAY_VISION_ENABLED_ON_ENEMIES_TOO) {
+            for (let i=0; i<entities.length; i++) { entities[i].draw(); }
+        }
+    
         canvasContext.globalAlpha = 1; // reset so we don't trash the next draw call
     }
 

@@ -157,6 +157,7 @@ var canvas;
 var canvasContext;
 
 const XRAY_VISION_ENABLED = true; // can we see player through walls?
+const XRAY_VISION_ENABLED_ON_ENEMIES_TOO = true; // enemies as well?
 const XRAY_VISION_OPACITY = 0.1;
 
 //game states
