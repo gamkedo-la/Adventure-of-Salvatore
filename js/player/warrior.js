@@ -413,7 +413,9 @@ function warriorClass() {
 			let shot = this.myShotList[i];
 			if (shot) {
 				if (shot.done()) { 
-					shot.playMissSound();
+					// TODO: Miss sound plays per frame and needs to play once for attack 
+					// missing player and only if close at some point
+					// shot.playMissSound();
 					shot.reset(); 
 				}
 				else {
@@ -428,9 +430,6 @@ function warriorClass() {
 							return false;
 						} 
 					});
-					// TODO: Miss sound plays per frame and needs to play once for attack 
-					// missing player and only if close at some point
-					// if (!didHit) { shot.playMissSound(); }
 				}
 
 				if(shot.readyToRemove){ this.myShotList.splice(i,1); }

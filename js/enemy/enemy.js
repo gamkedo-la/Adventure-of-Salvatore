@@ -341,7 +341,9 @@ class enemyClass {
 			let shot = this.myShotList[i];
 			if (shot) {
 				if (shot.done()) { 
-					shot.playMissSound();
+					// TODO: Miss sound plays per frame and needs to play once for attack 
+					// missing player and only if close at some point
+					// shot.playMissSound();
 					shot.reset(); 
 				}
 				else {
