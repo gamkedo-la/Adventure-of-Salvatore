@@ -625,13 +625,13 @@ function warriorClass() {
 	};	
 
 	this.rangedAttack = function(){
-		let tempShot = new shotClass();
+		let tempShot = new shotClass(this);
 		tempShot.attackFrom(this, true);
 		this.rangeAttackRecoveryTimer = true;
 	};
 		
 	this.meleeAttack = function(){
-		let tempMeleeHit = new meleeAttackClass();
+		let tempMeleeHit = new meleeAttackClass(this);
 		tempMeleeHit.attackSound = swordSwingSound;
 		tempMeleeHit.attackFrom(this, true);
 		this.meleeAttackRecoveryTimer = true;

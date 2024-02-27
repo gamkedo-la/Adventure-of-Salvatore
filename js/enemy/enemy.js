@@ -337,20 +337,22 @@ class enemyClass {
 		}
 
 		// allow attacks to keep going even if the attacker is not longer
-		for (let i=0; i < this.myShotList.length; i++){
+		let i = 0;
+		while(i < this.myShotList.length){
 			let shot = this.myShotList[i];
-			if (shot) {
-				if (shot.done()) { 
+			if(shot){
+				if(shot.done()){ 
 					// TODO: Miss sound plays per frame and needs to play once for attack 
 					// missing player and only if close at some point
 					// shot.playMissSound();
 					shot.reset(); 
 				}
-				else {
+				else{
 					shot.movement();
-					const didHit = entities.some( (entity) => {
-						if (entity && entity.alive && entity.takeDamage) {
-							if(shot.hitTest(entity) ){
+					// check for shot collission with entity
+					entities.some( (entity) => {
+						if (entity && entity.alive && entity.takeDamage){
+							if(shot.hitTest(entity)){
 								entity.takeDamage(shot.damageAmount());
 								shot.reset();
 								return true;
@@ -360,7 +362,8 @@ class enemyClass {
 					});
 				}
 
-				if(shot.readyToRemove){ this.myShotList.splice(i,1); }
+				if (shot.readyToRemove) { this.myShotList.splice(i,1); } 
+				else { i++; }
 			} 
 		}
 	}
@@ -369,18 +372,18 @@ class enemyClass {
 		// returns true if pathfinding is in progress and a direction taken
 		// returns false if pathfinding is not in progress
 		this.movementTimer--;
-		if(this.meleeAttacking) {
+		if(this.meleeAttacking){
 			//* Keeping enemy still while testing combat */
 			this.speed = 0;
 			return true;
 		} else {
-			if(this.movementTimer <= 0) {
+			if(this.movementTimer <= 0){
 				let pathData = enemyClass.pathData;
 
 				const base = getTileCoordAtPixelCoord(this.x, this.y);
 				const goal = getTileCoordAtPixelCoord(playerOne.x, playerOne.y);
 
-				if (!base || !goal) {
+				if (!base || !goal){
 					if (DEBUG_ENEMY_MOVEMENT) console.log("pathfinding(): base and goal not found");
 					return false;
 				}
@@ -605,14 +608,14 @@ class enemyClass {
 
 	rangedAttack(){
 //		if(this.myShotList.length < this.totalShots){
-			let tempShot = new shotClass();
+			let tempShot = new shotClass(this);
 			tempShot.attackFrom(this, true);
 			this.rangeAttackRecoveryTimer = true;
 //		} 
 	}
 
 	meleeAttack(){
-		let tempMeleeHit = new meleeAttackClass();
+		let tempMeleeHit = new meleeAttackClass(this);
 		tempMeleeHit.attackFrom(this, true);
 		this.meleeAttackRecoveryTimer = true;
 	}
