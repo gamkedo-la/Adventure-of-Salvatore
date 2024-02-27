@@ -126,14 +126,14 @@ class attackClass {
 		// this.modE = { x: -afw, y: -afh - ahh * 2, xv: 1, yv: -1, targetDirText: "top right" };
 		// this.modS = { x: aqw, y: ahh, xv: 1, yv: 1, targetDirText: "bottom right" };
 		// this.modW = { x: -afw - ahw, y: -afh, xv: -1, yv: 1, targetDirText: "bottom left" };
-		this.modNE = { x: -afw, y: -ahh, xv: 0, yv: -1, targetDirText: "top right" };
-		this.modSE = { x: -ahw, y: -afh, xv: 1, yv: 0, targetDirText: "bottom right" };
-		this.modSW = { x: -afw, y: -ahh, xv: 0, yv: 1, targetDirText: "bottom left"};
-		this.modNW = { x: -afw, y: -afh, xv: -1, yv: 0, targetDirText: "top left" };
-		this.modN = { x: -afw, y: -afw, xv: -1, yv: -1, targetDirText: "top" };
-		this.modE = { x: -afw, y: -afh - ahh * 2, xv: 1, yv: -1, targetDirText: "right" };
-		this.modS = { x: aqw, y: ahh, xv: 1, yv: 1, targetDirText: "bottom" };
-		this.modW = { x: -afw - ahw, y: -afh, xv: -1, yv: 1, targetDirText: "left" };
+		this.modNE = { x: -afw, y: -ahh, xv: 1, yv: -1, targetDirText: "top right" };
+		this.modSE = { x: -ahw, y: -afh, xv: 1, yv: 1, targetDirText: "bottom right" };
+		this.modSW = { x: -afw, y: -ahh, xv: -1, yv: 1, targetDirText: "bottom left"};
+		this.modNW = { x: -afw, y: -afh, xv: -1, yv: -1, targetDirText: "top left" };
+		this.modN = { x: -afw, y: -afw, xv: 0, yv: -1, targetDirText: "top" };
+		this.modE = { x: -afw, y: -afh - ahh * 2, xv: 1, yv: 0, targetDirText: "right" };
+		this.modS = { x: aqw, y: ahh, xv: 0, yv: 1, targetDirText: "bottom" };
+		this.modW = { x: -afw - ahw, y: -afh, xv: -1, yv: 0, targetDirText: "left" };
 
 		this.attackModifiers = [
 			{ n: true, e: true, s: false, w: false, mod: this.modNE },
