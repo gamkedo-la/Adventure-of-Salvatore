@@ -54,7 +54,8 @@ function warriorClass() {
 
 	this.setupControls = function(
             northKey,eastKey,southKey,westKey,swordKey,
-            northKey2,eastKey2,southKey2,westKey2,swordKey2) {
+            northKey2,eastKey2,southKey2,westKey2,swordKey2,
+            blockKey1,blockKey2,blockKey3,blockKey4) {
 		
         this.controlKeyForNorth = northKey;
 		this.controlKeyForEast = eastKey;			
@@ -67,6 +68,11 @@ function warriorClass() {
 		this.controlKeyForSouth2 = southKey2;
 		this.controlKeyForWest2 = westKey2;
 		this.controlKeyForSwordSwing2 = swordKey2;
+
+        this.controlKeyForBlock1 = blockKey1;
+        this.controlKeyForBlock2 = blockKey2;
+        this.controlKeyForBlock3 = blockKey3;
+        this.controlKeyForBlock4 = blockKey4;
 
 	}
 
@@ -108,6 +114,14 @@ function warriorClass() {
 	}	
 	 
 	this.movement = function() {
+
+        if (this.blockFramesleft) {
+            this.blockFramesleft--;
+            if (this.blockFramesleft==0) {
+                console.log("block ended."); // just for debug
+            }
+        }
+
 		if(this.health <= 0){
 			this.alive = false;
 		} else {
@@ -623,7 +637,25 @@ function warriorClass() {
 		}
 	}
 
-	this.swordSwing = function (){
+    // the way inputs are set up this will fire repeatedly
+    this.block = function (){
+
+        if (this.blockFramesleft) {
+            // block already in progress: handled in movement()
+        } else {
+            // start a new block
+            console.log("blocking!");
+            this.blockFramesleft = BLOCK_FRAME_COUNT;
+        }
+
+
+
+        // check state in damage function for less damage
+        // play a nice sound if a hit gets blocked
+
+    }
+
+    this.swordSwing = function (){
 		console.log("Sword Swing");
 		for(var i = 0; i < miniCyclopList.length; i++){
 			this.checkCollisionsAgainst(miniCyclopList[i]);

@@ -113,7 +113,6 @@ const KEY_I = 73; //Items
 
 const KEY_Z = 90;
 const KEY_X = 88;
-const KEY_C = 67;
 
 const KEY_SPACEBAR = 32; 
 const KEY_1 = 49;
@@ -124,6 +123,12 @@ const KEY_UP_ARROW = 38;
 const KEY_RIGHT_ARROW = 39;
 const KEY_DOWN_ARROW = 40;
 
+// keys used for block
+const KEY_E = 69;
+const KEY_F = 70;
+const KEY_C = 67;
+const KEY_LEFTSHIFT = 16;
+const BLOCK_FRAME_COUNT = 20; // how long the block lasts
 
 var MousePosX = 0;
 var MousePosY = 0;

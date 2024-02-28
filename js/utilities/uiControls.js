@@ -21,7 +21,8 @@ function initInput(){
 	document.addEventListener("keyup", keyReleased);
 	
 	playerOne.setupControls(KEY_W, KEY_D, KEY_S, KEY_A, KEY_SPACEBAR,
-        KEY_UP_ARROW, KEY_RIGHT_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW, KEY_X);
+        KEY_UP_ARROW, KEY_RIGHT_ARROW, KEY_DOWN_ARROW, KEY_LEFT_ARROW, KEY_X,
+        KEY_E,KEY_F,KEY_C,KEY_LEFTSHIFT);
 }
 
 function keyPressed(evt) {
@@ -98,6 +99,17 @@ function setKeyHoldState(thisKey, thisWarrior, setTo) {
 				playerOne.swordSwing();
 			}
 		}
+
+        // block
+		if(thisKey == thisWarrior.controlKeyForBlock1
+            || thisKey == thisWarrior.controlKeyForBlock2
+            || thisKey == thisWarrior.controlKeyForBlock3
+            || thisKey == thisWarrior.controlKeyForBlock4
+            ){
+            playerOne.block(); // this gets called a lot. maybe !setTo would help?
+		}        
+
+
 	}
 }
 
