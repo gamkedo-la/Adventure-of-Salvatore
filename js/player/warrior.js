@@ -616,7 +616,13 @@ function warriorClass() {
 	//this delivers damage
 	this.takeDamage = function(howMuchDamage){
 		if(this.damageCoolDownCounter == 0){
-			this.health = this.health - howMuchDamage;
+			if (this.blockFramesleft>0) { 
+                // we are currently blocking! reduce damage
+                howMuchDamage *= BLOCK_DAMAGE_SCALE;
+            }
+            this.health = this.health - howMuchDamage;
+            // debug player health
+            console.log("Warrior took "+howMuchDamage+" damage. Current health is "+this.health);
 		}
 		damageCoolDownTimer = true;
 	}

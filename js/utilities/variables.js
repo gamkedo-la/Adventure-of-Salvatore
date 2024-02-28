@@ -129,6 +129,7 @@ const KEY_F = 70;
 const KEY_C = 67;
 const KEY_LEFTSHIFT = 16;
 const BLOCK_FRAME_COUNT = 20; // how long the block lasts
+const BLOCK_DAMAGE_SCALE = 0.25; // (0=no damage, 1=full damage)
 
 var MousePosX = 0;
 var MousePosY = 0;
