@@ -49,6 +49,7 @@ var camPanX = 0;
 var camPanY = 0;
 
 var warriorPic = document.createElement("img");
+var warriorBlockingPic = document.createElement("img");
 var warriorAttackingPic = document.createElement('img');
 var miniCyclopPic = document.createElement("img");
 var roguePic = document.createElement("img");

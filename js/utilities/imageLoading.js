@@ -23,6 +23,7 @@ function loadImages() {
 		var imageList = [
 			//characters
 			{varName: warriorPic, theFile: "warrior.png"},
+			{varName: warriorBlockingPic, theFile: "warriorBlocking.png"},
 			{varName: warriorAttackingPic, theFile: "warriorAttackAnimation.png"},
 			{varName: skeletonPic, theFile: "skeleton.png"},
 			{varName: kregPic, theFile: "kreg.png"},

@@ -544,8 +544,11 @@ function warriorClass() {
 
 		gameCoordToIsoCoord(this.x,this.y);
 		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height + ISO_SHADOW_OFFSET_Y);
-		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
-								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
+		canvasContext.drawImage(
+                this.blockFramesleft > 0 ? warriorBlockingPic : this.myBitmap, 
+                this.offSetWidth, this.offSetHeight, this.width, this.height, 
+				isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y,
+                this.width, this.height);
 		if(this.displaySpeedIncreaseTimer){
 			let displaySeconds = Math.ceil(this.speedIncreaseTimer/60)
 			colorText("Speed: " + displaySeconds, isoDrawX-40, isoDrawY-60, "green");		
