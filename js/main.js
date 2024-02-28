@@ -274,6 +274,10 @@ function drawIsometricWorld() {
     var maxLength = Math.max(ROOM_ROWS, ROOM_COLS)
     var entityIndex = 0;
     sharedAnimCycle++;
+	const atLeastOneLiveEnemy = entities.some(e => 
+		e !== playerOne && e.health > 0
+	);
+	if (atLeastOneLiveEnemy) { enemyClass.drawPath(); }
     for (var z = 0; z < maxLength; z++) {
         var row = 0;
         var col = z;

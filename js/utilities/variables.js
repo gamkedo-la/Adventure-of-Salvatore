@@ -42,6 +42,8 @@ const DAMAGE_RECEIVED_DELAY = 120;
 const MELEE_ATTACK_DELAY = 80;
 const RANGE_ATTACK_DELAY = 60;
 const DAMAGE_DEFAULT = 1;
+const DEFAULT_ENEMY_WIDTH = 40;
+const DEFAULT_ENEMY_HEIGHT = 41;
 
 var camPanX = 0;
 var camPanY = 0;

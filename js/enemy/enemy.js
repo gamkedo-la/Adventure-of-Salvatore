@@ -6,8 +6,8 @@ class enemyClass {
 	y = 800;
 	xv;
 	yv;
-	width = 40;
-	height = 41;
+	width = DEFAULT_ENEMY_WIDTH;
+	height = DEFAULT_ENEMY_HEIGHT;
 	isoEnemyFootY = 8;
 	offSetWidth = 0;
 	offSetHeight = 0;
@@ -350,8 +350,14 @@ class enemyClass {
 				else{
 					shot.movement();
 					// check for shot collission with entity
-					entities.some( (entity) => {
-						if (entity && entity.alive && entity.takeDamage){
+					const someOneWasHit = entities.some( (entity) => {
+						if (entity && entity.alive && entity.takeDamage &&
+							entity !== shot &&
+							// prevent from hitting enemy attacker 
+							entity != this && entity != shot.attacker && 
+							// prevent from hitting other enemies
+							entity === playerOne
+						){
 							if(shot.hitTest(entity)){
 								entity.takeDamage(shot.damageAmount());
 								shot.reset();
@@ -706,22 +712,21 @@ class enemyClass {
 		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
 		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
 
-        // display intended path
-        this.drawPath();
+        // // display intended path
+        // this.drawPath();
 	}
 
 	// work in progress - does not function
-    drawPath() {
-        return;
-        
+    static drawPath() {
+//        return;
         if (!enemyClass.pathData) return;
         if (!enemyClass.pathData.path) return;
-        if (enemyClass.pathData.path[0] == -1) return; // strange
+        // if (enemyClass.pathData.path[0] == -1) return; // strange
         // hmm - code never reaches past the above FIXME
 
         // hmm WHY do multiple enemies share a path? they are in different locations? 
         // FIXME this feels wrong
-        let mypath = enemyClass.pathData.path;
+        let mypath = enemyClass.pathData.path.filter( (index) => index != -1 );
         if (DEBUG_ENEMY_MOVEMENT) console.log("drawing an enemy path!");
         for (let i=0; i<mypath.length; i++) {
             // what a strange way to calculate isometric coords!
@@ -731,7 +736,8 @@ class enemyClass {
             tileCoordToIsoCoord(tx, ty);
 			let px = isoDrawX;//-ISO_GRID_W/2; // huh??
             let py = isoDrawY;//-ISO_TILE_GROUND_Y;
-            colorRect(px, py, px+2, py+2, "magenta"); // draw a dot
+			// colorRect(px, py, DEFAULT_ENEMY_WIDTH, DEFAULT_ENEMY_HEIGHT, "magenta"); // draw a dot
+			colorRect(px, py, 10, 10, "magenta"); // draw a dot
             //if (DEBUG_ENEMY_MOVEMENT) console.log("- path dot at "+px+","+py);
         }
     }
