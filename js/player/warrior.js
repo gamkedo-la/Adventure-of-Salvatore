@@ -469,7 +469,7 @@ function warriorClass() {
 			let nextX = this.x;
 			let nextY = this.y;
 
-			// if the player is moving, bump them back
+			// if the player is moving, bump player back
 			if(this.keyHeld_North){
 				this.canMoveNorth = false;
 				nextY += bumpEffect;
@@ -502,7 +502,8 @@ function warriorClass() {
 		let wMod = Math.max(20, otherHumanoid.width/2);
 		let hMod = Math.max(20, otherHumanoid.height/2);
 
-		if(	this.x > otherHumanoid.x - wMod && this.x < otherHumanoid.x + wMod &&
+		if(	otherHumanoid && otherHumanoid.alive &&
+			this.x > otherHumanoid.x - wMod && this.x < otherHumanoid.x + wMod &&
 			this.y > otherHumanoid.y - hMod && this.y < otherHumanoid.y + hMod){
 				return true;
 		}
