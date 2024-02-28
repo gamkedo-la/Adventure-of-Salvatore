@@ -1,5 +1,17 @@
 const DEBUG_ENEMY_MOVEMENT = false; // extremely spammy debug logs
 
+function removeEnemyFromList(){
+	for(var i = 0; i < miniCyclopList.length; i++){
+		if(miniCyclopList.readyToRemove == true){
+			miniCyclopList.splice(i,1);
+		}
+	}
+	/*var rogueList = [];
+	var blobList = [];
+	var skeletonList = [];
+	var kregList = []; */
+}
+
 class enemyClass {
     name="enemy";
     x = 600;
@@ -13,6 +25,8 @@ class enemyClass {
 	offSetHeight = 0;
 	miniMapX = 630;
 	miniMapY = 30;
+	dead = false;
+	setFrameToZeroOnce = true;
 	
 	maxHealth = 2;
 	speed = 3;
@@ -214,6 +228,10 @@ class enemyClass {
 			this.alive = false;
 		} else {
 			this.alive = true;
+		}
+
+		if(!this.alive){
+			return;
 		}
 
 		if(this.alive){
@@ -688,32 +706,39 @@ class enemyClass {
 			this.myShotList[i].draw();
 		}
 
-		if(this.offSetHeight == 0){ //enemy is standing still
-			let toAnimateEnemyNumber = getRndInteger(0, 1000);
-			if(toAnimateEnemyNumber > 995){
-				this.animateEnemyStandingStill = true;
-			}
-			if(this.animateEnemyStandingStill){
-				this.frames = 7;
-				this.animateEnemy()
-			}
-		} else { //enemy is moving
-			this.frames = 3;
-			this.animateEnemy();
-		}
-		gameCoordToIsoCoord(this.x,this.y);
-		canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height + ISO_SHADOW_OFFSET_Y);
-		colorText(this.myName, isoDrawX + 20, isoDrawY - 30, "black", "8px Arial Black");
-		canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
-								isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
-		//displays health
-		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
-		colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
-		canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
-		//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
+		if(!this.alive){
+			this.frames = 9;
+			this.offSetHeight = 9;
+			this.animateDeath();
+		} else {
 
-        // // display intended path
-        // this.drawPath();
+			if(this.offSetHeight == 0){ //enemy is standing still
+				let toAnimateEnemyNumber = getRndInteger(0, 1000);
+				if(toAnimateEnemyNumber > 995){
+					this.animateEnemyStandingStill = true;
+				}
+				if(this.animateEnemyStandingStill){
+					this.frames = 7;
+					this.animateEnemy()
+				}
+			} else { //enemy is moving
+				this.frames = 3;
+				this.animateEnemy();
+			}
+			gameCoordToIsoCoord(this.x,this.y);
+			canvasContext.drawImage(shadowPic,isoDrawX-(this.width/2), isoDrawY-this.height + ISO_SHADOW_OFFSET_Y);
+			colorText(this.myName, isoDrawX + 20, isoDrawY - 30, "black", "8px Arial Black");
+			canvasContext.drawImage(this.myBitmap, this.offSetWidth, this.offSetHeight, this.width, this.height, 
+									isoDrawX-(this.width/2), isoDrawY-this.height - ISO_CHAR_FOOT_Y, this.width, this.height);
+			//displays health
+			colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, 24, 9, "red");
+			colorRect(isoDrawX-(this.width/2) + 3, isoDrawY-this.height - 19, (this.health / this.maxHealth) * 24, 9, "green");
+			canvasContext.drawImage(healthbarPic,isoDrawX-(this.width/2), isoDrawY-this.height - 20);
+			//colorRect(this.miniMapX, this.miniMapY, 10, 10, "green");	
+
+			// // display intended path
+			// this.drawPath();
+		}
 	}
 
 	// work in progress - does not function
@@ -790,6 +815,21 @@ class enemyClass {
 		if(this.offSetWidth > (this.frames * this.width)){
 			this.offSetWidth = 0;
 			this.animateEnemyStandingStill = false;
+		}
+	}
+
+	animateDeath(){
+		if(this.setFrameToZeroOnce){
+			this.offSetWidth = 0;
+			this.setFrameToZeroOnce = false;
+		}
+		this.drawTimer++;
+		if(this.drawTimer == 8){
+			this.offSetWidth = this.offSetWidth + this.width;
+			this.drawTimer = 0;
+		}
+		if(this.offSetWidth > (this.frames * this.width)){
+			this.readyToRemove = true;
 		}
 	}
 

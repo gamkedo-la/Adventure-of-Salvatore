@@ -309,6 +309,7 @@ function drawIsometricWorld() {
     while (entityIndex < entities.length) {
         entities[entityIndex].draw();
         entityIndex++;
+		removeEnemyFromList();
     }
     for(var i = 0; i < rockBulletList.length; i++){
         rockBulletList[i].draw();
