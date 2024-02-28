@@ -270,6 +270,10 @@ function warriorClass() {
 				case TILE_WOOD_DOOR_OPEN:	
 				case TILE_WOOD_DOOR_2_OPEN:
 				case TILE_WALL_3:
+				case TILE_YELLOW_DOOR_OPEN:
+				case TILE_YELLOW_DOOR_2_OPEN:
+				case TILE_RED_DOOR_OPEN:
+				case TILE_RED_DOOR_2_OPEN:
 					if (!blockedUpAhead) {
 						// the path in not blocked: update player position
 						this.x = nextX;
