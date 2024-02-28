@@ -70,6 +70,7 @@ var meleeAttackPic = document.createElement("img");
 var mainScreenBackgroundPic = document.createElement("img");
 var mainScreenSwordPic = document.createElement('img'); 
 var theAdventureOfSalvatorePic = document.createElement('img');
+var deathScenePic = document.createElement('img');
 
 var vignetteBorderPic = document.createElement("img");
 const VIGNETTE_BORDER_OPACITY = 0.8; // how dark the black border is
@@ -95,6 +96,8 @@ var smokeList = [];
 var audioFormat;
 var isMuted = false;
 var soundSetforMeetings = false; //make false to hear at normal level
+var deathTimer = 0;
+var playDeathScene = false;
 
 const KEY_W = 87; 
 const KEY_S = 83; 

@@ -47,6 +47,7 @@ function loadImages() {
 			{varName: mainScreenBackgroundPic, theFile: "mainScreenBackground.png"},
 			{varName: mainScreenSwordPic, theFile: "mainScreenSword.png"},
 			{varName: theAdventureOfSalvatorePic, theFile: "TheAdventureOfSaltore.png"},
+			{varName: deathScenePic, theFile: "deathscene.png"},
 
 			
 			{trackType: TILE_ROAD, theFile: "track_road.png"},

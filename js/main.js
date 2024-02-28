@@ -188,6 +188,12 @@ function moveEverything() {
 		for(var i = 0; i < smokeList.length; i++){
 			smokeList[i].move();
 		}
+		if(playerOne.health <= 0){
+			deathTimer++;
+			if(deathTimer > 200){
+				playDeathScene = true;
+			}
+		}
 		removeBulletFromList();
 		removeSmokeFromList();
 		if(MousePosY > 500){
@@ -346,16 +352,22 @@ function drawEverything() {
     colorRect(0,0,canvas.width,canvas.height, 'black');
 
     if(liveGame){
-		shiftForCameraPan();
-		drawWorldBackground();
-		drawFloor();
-        zSort(entities);
-        drawIsometricWorld();
-		finishedCameraPan();
-        drawScreenBorder();
-        drawUserInterface();
-        drawMinimap();
-        if (worldMapCurrentlyVisible) drawWorldMap();
+		if(playDeathScene){
+			drawDeathScene();
+		} else {
+			shiftForCameraPan();
+			drawWorldBackground();
+			drawFloor();
+			zSort(entities);
+			drawIsometricWorld();
+			finishedCameraPan();
+			drawScreenBorder();
+			drawUserInterface();
+			drawMinimap();
+			if (worldMapCurrentlyVisible){ 
+				drawWorldMap();
+			}
+		}
     } else {
 		drawStartPage();
 	}
