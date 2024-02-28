@@ -441,24 +441,36 @@ function warriorClass() {
         const COLLISION_PADDING = 10; // give the player a radius
 		if(this.collisionTest(otherHumanoid)){
 			console.log("warrior bumped into "+otherHumanoid.name);
+			const bumpEffect = this.playerMovementSpeed * COLLIDE_BUMP_MULT;
             
             if (this.playerAttacking) {
                 console.log("warrior hit "+otherHumanoid.name+" for "+this.swordDamage+" damage!");
                 otherHumanoid.takeDamage(this.swordDamage);
             }
 
+			let nextX = this.x;
+			let nextY = this.y;
+
+			// if the player is moving, bump them back
 			if(this.keyHeld_North){
 				this.canMoveNorth = false;
-				this.y += this.playerMovementSpeed * COLLIDE_BUMP_MULT;
+				nextY += bumpEffect;
 			} else if(this.keyHeld_East){
 				this.canMoveEast = false;
-				this.x -= this.playerMovementSpeed * COLLIDE_BUMP_MULT;
+				nextX -= bumpEffect;
 			} else if(this.keyHeld_South){
 				this.canMoveSouth = false;
-				this.y -= this.playerMovementSpeed * COLLIDE_BUMP_MULT;
+				nextY -= bumpEffect;
 			} else if(this.keyHeld_West){
 				this.canMoveWest = false;
-				this.x += this.playerMovementSpeed * COLLIDE_BUMP_MULT;				
+				nextX += bumpEffect;
+			}	
+			const walkIntoTileIndex = getTileIndexAtPixelCoord(nextX,nextY);
+			const walkIntoTileType = roomGrid[walkIntoTileIndex];
+			const keepOnSteppin = !(UNWALKABLE_TILES.includes(walkIntoTileType));
+			if(keepOnSteppin) {
+				this.x = nextX;
+				this.y = nextY;
 			}
 		} else {
 			this.canMoveNorth = true;
