@@ -36,6 +36,8 @@ class enemyClass {
 	
 	movementTimer = 0;
 
+	isPathfinding = false;
+
 	#moveNorth = false;
 	#moveEast = false;
 	#moveSouth = false;
@@ -226,26 +228,24 @@ class enemyClass {
 	movement() {
 		if(this.health <= 0){
 			this.alive = false;
+			return;
 		} else {
 			this.alive = true;
-		}
-
-		if(!this.alive){
-			return;
 		}
 
 		if(this.alive){
 			var nextX = this.x; 
 			var nextY = this.y; 
-			// var collisionY = 0;
 
-		// if no path is found that enemy can wander around
-		if (this.pathfinding()) { 
-			// if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "is following a path");
-		} else {
-			// if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "is taking a random walk");
-			this.randomMovements(); 
-		}
+			// if no path is found that enemy can wander around
+			if (this.pathfinding()) { 
+				// if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "is following a path");
+				this.isPathfinding = true;
+			} else {
+				// if (DEBUG_ENEMY_MOVEMENT) console.log(this.myName, "is taking a random walk");
+				this.randomMovements();
+				this.isPathfinding = false; 
+			}
 
 			if (this.meleeAttacking) {
 				this.speed = 0;
@@ -348,7 +348,11 @@ class enemyClass {
 				if(this.meleeAttacking){
 					this.meleeAttack();
 				}
-			} else if(this.rangeAttackRecoveryCounter <= 0 && this.canUseRangeAttack){
+			} 
+			
+			if(this.rangeAttackRecoveryCounter <= 0 && this.canUseRangeAttack &&
+				this.isPathfinding && !this.meleeAttacking
+			){
 				this.rangedAttack();
 			}
 			// }
