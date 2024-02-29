@@ -16,30 +16,28 @@ function drawDeathScene(){
         
     }
     if(deathBannerBarTimer == 120) {
-        deathBannerBarY = 800
+        deathBannerBarY = 700
     }
     if(deathBannerBarTimer > 120 && deathBannerBarTimer < 2000){
             deathBannerBarY--;
         colorRect(160, deathBannerBarY, 480, 150, 'white', fillAlpha = 0.8);
-        colorText('Game Developed by', 220, deathBannerBarY+36, "black",'36px serif');
-        colorText('HomeTeam Outpost', 220, deathBannerBarY+80, "black",'36px serif');
-        colorText('Led by Vince McKeown', 220, deathBannerBarY+116, "black",'36px serif');
+        colorText('Game Developed by', 240, deathBannerBarY+36, "black",'36px serif');
+        colorText('HomeTeam Outpost', 255, deathBannerBarY+80, "black",'36px serif');
+        colorText('Led by Vince McKeown', 220, deathBannerBarY+124, "black",'36px serif');
 
-        colorRect(160, deathBannerBarY + 400, 480, 600, 'white', fillAlpha = 0.8);
-        colorText('Special thanks to:', 220, deathBannerBarY+436, "black",'36px serif');
-        colorText('Chris DeLeon', 220, deathBannerBarY+480, "black",'36px serif');
-        colorText('Christer McFunkyPants Kaitila', 180, deathBannerBarY+524, "black",'36px serif');
-        colorText('Patrick McKeown', 180, deathBannerBarY+568, "black",'36px serif');
-        colorText('Jason Timms', 180, deathBannerBarY+604, "black",'36px serif');
-        colorText('Gabriel "Adamastor" Da Mota', 180, deathBannerBarY+648, "black",'36px serif');
-        colorText('Randy Tan Shaoxiana', 180, deathBannerBarY+692, "black",'36px serif');
-        colorText('Michael "Misha" Fewkes', 180, deathBannerBarY+738, "black",'36px serif');
-        colorText('Kyle Knutson', 180, deathBannerBarY+782, "black",'36px serif');
-        colorText('and to my wife,', 180, deathBannerBarY+826, "black",'36px serif');
-        colorText('Pauline McKeown', 180, deathBannerBarY+872, "black",'36px serif');
-        colorText('and daughter,', 180, deathBannerBarY+908, "black",'36px serif');
-        colorText('Mary McKeown', 180, deathBannerBarY+952, "black",'36px serif');
-
+        colorRect(160, deathBannerBarY + 400, 480, 580, 'white', fillAlpha = 0.8);
+        colorText('Special thanks to:', 260, deathBannerBarY+444, "black",'36px serif');
+        colorText('Chris DeLeon', 280, deathBannerBarY+488, "black",'36px serif');
+        colorText('Christer McFunkyPants Kaitila', 180, deathBannerBarY+532, "black",'36px serif');
+        colorText('Patrick McKeown', 250, deathBannerBarY+576, "black",'36px serif');
+        colorText('Jason Timms', 270, deathBannerBarY+620, "black",'36px serif');
+        colorText('Gabriel "Adamastor" Da Mota', 180, deathBannerBarY+664, "black",'36px serif');
+        colorText('Randy Tan Shaoxiana', 220, deathBannerBarY+708, "black",'36px serif');
+        colorText('Michael "Misha" Fewkes', 200, deathBannerBarY+752, "black",'36px serif');
+        colorText('Kyle Knutson', 280, deathBannerBarY+796, "black",'36px serif');
+        colorText('and to my wife,', 260, deathBannerBarY+840, "black",'36px serif');
+        colorText('Pauline McKeown', 250, deathBannerBarY+884, "black",'36px serif');
+        colorText('and daughter,', 270, deathBannerBarY+928, "black",'36px serif');
+        colorText('Mary McKeown',270, deathBannerBarY+972, "black",'36px serif');
     }
-    //create a loop to capture the team
 }
