@@ -18,7 +18,7 @@ function warriorClass() {
 	this.canMoveSouth = true;
 	this.canMoveWest = true;	
 	this.alive = true;
-	this.health = 0;
+	this.health = 1;
 	this.maxHealth = 4;
 	this.damageCoolDownTimer = true;
 	this.damageCoolDownCounter = 0;
@@ -372,12 +372,12 @@ function warriorClass() {
 				case TILE_PITTRAP_ARMED:
 					this.takeDamageFromTrap(1);
 					roomGrid[walkIntoTileIndex] = TILE_PITTRAP_UNARMED;
-					crashIntoConeSound.play();
+					pitTrapSound.play();
 					break;
 				case TILE_SPIKES_ARMED:
 					this.takeDamageFromTrap(1);
 					roomGrid[walkIntoTileIndex] = TILE_SPIKES_UNARMED;
-					crashIntoConeSound.play();
+					spikeTrapSound.play();
 					break;
 				case TILE_HEALING_POTION:
 					this.healthPotion++;

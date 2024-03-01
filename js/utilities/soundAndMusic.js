@@ -4,6 +4,8 @@ var swordSwingSound = new SoundOverlapsClass("sword_3");
 var swordSwing2Sound = new SoundOverlapsClass("sword_swing_genAI");
 var doorOpenSound = new SoundOverlapsClass("door-opening-AoS-genAI")
 var swordMissSound = new SoundOverlapsClass("sword_miss_genAI");
+var pitTrapSound = new SoundOverlapsClass("pit_trap_unarmed");
+var spikeTrapSound = new SoundOverlapsClass("spike_trap_unarmed");
 
 function setFormat() {
     var audio = new Audio();
