@@ -6,7 +6,14 @@ var swordTimer = 0;
 var bannerBarTimer = 0;
 var bannerBarY = 400;
 
+var showingCredits = false;
+
 function drawStartPage(){
+    if(showingCredits) {
+        colorRect(200, bannerBarY, 400, 100, 'white', fillAlpha = 0.8);
+        colorText("Press any key to start", 220, bannerBarY+36, "black",'36px serif');
+        return;
+    }
     swordTimer++;
     bannerBarTimer++;
     

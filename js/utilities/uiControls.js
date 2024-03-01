@@ -26,7 +26,6 @@ function initInput(){
 }
 
 function keyPressed(evt) {
-	setKeyHoldState(evt.keyCode, playerOne, true);
 	evt.preventDefault();
 	
 	var paused = KEY_P;
@@ -37,13 +36,21 @@ function keyPressed(evt) {
 	//var addRockBulletKey = KEY_SPACEBAR; // just for troubleshooting wall trap 
 	var speedPotion = KEY_1;
 	var healingPotion = KEY_2;
+	var creditsShow = KEY_C;
 	var startGame = KEY_SPACEBAR;
 
 	if(!liveGame){
-		if(startGame = evt.keyCode){
+		if(showingCredits) { // any key from credits advances game
 			liveGame = true;
+		} else if(startGame == evt.keyCode){
+			liveGame = true;
+		} else if(creditsShow == evt.keyCode) {
+			showingCredits = true;
 		}
+		returnl
 	} 
+
+	setKeyHoldState(evt.keyCode, playerOne, true);
 
 	if(paused == evt.keyCode){
 		changePauseState();
