@@ -1,12 +1,12 @@
 //All Global variables and constants located here.
 
 blobNames = ["Ooze"];
-orcNames = [ "Orc 1", "Orc 2", "Orc 3", "Orc 4", "Orc 5", "Orc 6"];     
-ogreNames = [ "Ogre 1", "Ogre 2", "Ogre 3", "Ogre 4", "Ogre 5", "Ogre 6"];    
-miniCyclopNames = [ "Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz", 
-				"Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm", 
-				"Kiok", "Wrokx", "Fiog", "Goziord"];
-ratNames = [ "rat"];
+orcNames = ["Yurgu Orc 1", "Briga Orc 2", "Karg Orc 3", "Dridgam Orc 4", "Pulgar Orc 5", "Zork Orc 6"];
+ogreNames = ["Horrok Ogre 1", "Fearlok Ogre 2", "Panbok Ogre 3", "Nultok Ogre 4", "Woemok Ogre 5", "Dombok Ogre 6"];
+miniCyclopNames = ["Lalx", "Hosterz", "Wruc", "Arx", "Plex", "Brong", "Bogz",
+   "Stror", "Klerk", "Rizz", "Lals", "Urt", "Xagz", "Slirm",
+   "Kiok", "Wrokx", "Fiog", "Goziord"];
+ratNames = ["rat"];
 rogueNames = ["Artemis"];
 
 const GRID_WEIGHT_INFLUENCE_FACTOR = 50000;
@@ -71,7 +71,7 @@ var itemBackgroundPic = document.createElement("img");
 var worldMapPic = document.createElement("img");
 var meleeAttackPic = document.createElement("img");
 var mainScreenBackgroundPic = document.createElement("img");
-var mainScreenSwordPic = document.createElement('img'); 
+var mainScreenSwordPic = document.createElement('img');
 var theAdventureOfSalvatorePic = document.createElement('img');
 var deathScenePic = document.createElement('img');
 
@@ -102,10 +102,10 @@ var soundSetforMeetings = false; //make false to hear at normal level
 var deathTimer = 0;
 var playDeathScene = false;
 
-const KEY_W = 87; 
-const KEY_S = 83; 
-const KEY_A = 65; 
-const KEY_D = 68; 
+const KEY_W = 87;
+const KEY_S = 83;
+const KEY_A = 65;
+const KEY_D = 68;
 const KEY_B = 66; //Mute
 const KEY_M = 77; //Menu
 const KEY_N = 78; //Map
@@ -115,7 +115,7 @@ const KEY_I = 73; //Items
 const KEY_Z = 90;
 const KEY_X = 88;
 
-const KEY_SPACEBAR = 32; 
+const KEY_SPACEBAR = 32;
 const KEY_1 = 49;
 const KEY_2 = 50;
 
@@ -178,7 +178,7 @@ var pauseScreen = false;
 var inventoryScreen = false;
 var mainMenu = false;
 
-var feedbacktoPlayerLine1 = "You have arrived at Castle Rocky."
+var feedbacktoPlayerLine1 = "You have arrived at Castle Rocky.";
 var feedbacktoPlayerLine2 = "Clear the castle to claim reward."
 
 
