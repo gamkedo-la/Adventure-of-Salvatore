@@ -47,7 +47,7 @@ function keyPressed(evt) {
 		} else if(creditsShow == evt.keyCode) {
 			showingCredits = true;
 		}
-		returnl
+		return;
 	} 
 
 	setKeyHoldState(evt.keyCode, playerOne, true);
