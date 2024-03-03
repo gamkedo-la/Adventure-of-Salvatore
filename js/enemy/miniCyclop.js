@@ -4,7 +4,7 @@ class MiniCyclop extends enemyClass {
         console.log("MiniCyclop constructor!");
         super(); // run enemyClass constructor first
         this.name = "miniCyclop";
-        this.maxHealth = 4;
+        this.maxHealth = 2;
         this.speed = 4;
         this.canUseRangeAttack = true;
 		this.canUseMeleeAttack = false;
