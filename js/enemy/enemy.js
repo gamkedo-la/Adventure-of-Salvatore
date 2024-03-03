@@ -767,7 +767,7 @@ class enemyClass {
 			let px = isoDrawX;//-ISO_GRID_W/2; // huh??
             let py = isoDrawY;//-ISO_TILE_GROUND_Y;
 			// colorRect(px, py, DEFAULT_ENEMY_WIDTH, DEFAULT_ENEMY_HEIGHT, "magenta"); // draw a dot
-			colorRect(px, py, 10, 10, "magenta"); // draw a dot
+			//colorRect(px, py, 10, 10, "magenta"); // draw a dot
             //if (DEBUG_ENEMY_MOVEMENT) console.log("- path dot at "+px+","+py);
         }
     }
